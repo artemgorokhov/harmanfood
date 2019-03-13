@@ -1,14 +1,14 @@
-from flask import Flask, redirect, url_for, send_from_directory
+from flask import Flask, render_template, redirect, url_for, send_from_directory
 import os
 
-app = Flask(__name__, static_folder='../client/')
+app = Flask(__name__, 
+            static_folder='../dist/static',
+            template_folder='../dist')
 
 
 @app.route("/")
 def index():
-    if True:
-        return redirect(url_for('login'))
-    return app.send_static_file('index.html')
+    return render_template('index.html')
 
 @app.route("/login")
 def login():

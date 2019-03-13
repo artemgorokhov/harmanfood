@@ -1,4 +1,8 @@
 # Python gen
 *.pyc
 
+# Flask virtual environment
 webserver/venv
+
+# Static files automatically created by webpack
+dist
