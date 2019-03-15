@@ -1,0 +1,49 @@
+{
+	"build_systems":
+	[
+		{
+			"cmd":
+			[
+				"python3",
+				"-m",
+				"webserver"
+			],
+			"name": "webserver"
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "client"
+		},
+		{
+			"folder_exclude_patterns":
+			[
+				"node_modules"
+			],
+			"path": "frontend"
+		},
+		{
+			"path": "webserver"
+		},
+		{
+			"file_include_patterns":
+			[
+				"harmanfood.*",
+				"README.md",
+				"requirements.txt",
+				".gitignore"
+			],
+			"folder_exclude_patterns":
+			[
+				"**/**"
+			],
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"tab_size": 4
+	},
+	"virtualenv": "/Users/artemgorokhov/.virtualenvs/webserver"
+}

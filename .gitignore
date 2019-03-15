@@ -1,5 +1,6 @@
 # Python gen
 *.pyc
+*.egg-info
 
 # Flask virtual environment
 webserver/venv
