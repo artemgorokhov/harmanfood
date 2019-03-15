@@ -5,11 +5,14 @@ import os
 
 @app.route("/login")
 def login():
-    # return send_from_directory('login', 'login.html')
-    print('Folder: {}'.format(os.path.join(app.static_folder, 'login')))
-    return send_from_directory(os.path.join(app.static_folder, 'login'), 'login.html')
+    return render_template('login.html')
 
 @app.route("/")
 @requires_auth
 def index():
     return render_template('index.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(app.static_folder, 
+                            'favicon.png', mimetype='image/vnd.microsoft.icon')
