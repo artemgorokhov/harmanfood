@@ -1,0 +1,9 @@
+# Python gen
+*.pyc
+*.egg-info
+
+# Flask virtual environment
+webserver/venv
+
+# Static files automatically created by webpack
+dist
