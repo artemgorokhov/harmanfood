@@ -1,16 +1,19 @@
 <template>
   <div>
     <p>Home page, man</p>
-    <main-menu/>
+    <information-block/>
+    <main-content/>
   </div>
 </template>
 
 <script>
-import MainMenu from './mainmenu.vue'
+import InformationBlock from './info.vue'
+import MainContent from './maincontent.vue'
 
 export default{
 	components: {
-		MainMenu
+    InformationBlock,
+    MainContent
 	}
 }
 </script>

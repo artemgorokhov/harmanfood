@@ -5,7 +5,6 @@
 		}
 	],
 	"settings": {
-		"files.autoSave": "afterDelay",
 		"python.venvPath": "${workspaceFolder}/webserver/venv"
 	}
 }
