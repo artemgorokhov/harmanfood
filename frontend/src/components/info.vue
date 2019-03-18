@@ -1,5 +1,5 @@
 <template>
-    <div class="informationBlock">
+    <div class="informationBlock has-background-white-bis">
         Information
     </div>
 </template>
@@ -13,10 +13,10 @@ export default{
 }
 </script>
 
-<style>
-.informationBlock {
+<style lang="sass">
+
+.informationBlock 
     min-width: 100px;
     min-height: 300px;
-    background-color: rgb(189, 147, 228)
-}
+
 </style>

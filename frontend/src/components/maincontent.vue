@@ -1,5 +1,5 @@
 <template>
-  <div class="mainContent">
+  <div class="mainContent has-background-light">
     <p>Main content</p>
   </div>
 </template>
@@ -14,10 +14,10 @@ export default {
 }
 </script>
 
-<style>
-.mainContent {
+<style lang="sass">
+
+.mainContent
     min-width: 300px;
     min-height: 300px;
-    background-color: crimson
-}
+
 </style>
