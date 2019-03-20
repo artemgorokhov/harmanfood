@@ -1,5 +1,7 @@
 <template>
-  <div class="has-background-light">
+  <div class="mainContent 
+              has-background-dark 
+              has-text-light">
     <p>Main content</p>
   </div>
 </template>
@@ -10,3 +12,7 @@ export default {
 }
 </script>
 
+<style lang="sass">
+.mainContent
+    padding: 20px;
+</style>
