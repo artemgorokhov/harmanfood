@@ -1,5 +1,23 @@
 <template>
-  <div>
-    <p>Home page</p>
-  </div>
+  <section class="section is-paddingless">
+    <hero-header/>
+    <div class="columns">
+        <main-content class="column is-half"/>
+        <information-block class="column"/>
+    </div>
+  </section>
 </template>
+
+<script>
+import InformationBlock from './information/info.vue'
+import MainContent from './maincontent.vue'
+import HeroHeader from './header.vue'
+
+export default{
+	components: {
+    HeroHeader,
+    InformationBlock,
+    MainContent
+	}
+}
+</script>

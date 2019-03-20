@@ -7,3 +7,6 @@ webserver/venv
 
 # Static files automatically created by webpack
 dist
+
+harmanfood.sublime-workspace
+package-lock.json
