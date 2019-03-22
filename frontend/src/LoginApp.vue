@@ -1,7 +1,9 @@
 <template>
-  <div id="loginApp">
-    LOGIN
-  </div>
+  <form>
+    Login <input type="text" name="login" placeholder="LOGIN" v-model="login"/><br>
+    Password <input type="text" name="pwd" placeholder="PASSWORD" v-model="passwd"/><br>
+    <button v-on:click="submit" type="button" class="btn" ref="submitButton" disabled>Submit</button>
+  </form>
 </template>
 
 <script>
