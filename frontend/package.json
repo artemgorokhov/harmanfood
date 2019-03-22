@@ -12,10 +12,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "buefy": "^0.7.3",
-    "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
+    "node-sass": "^4.11.0",
+    "buefy": "^0.7.3",
+    "axios": "^0.18.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

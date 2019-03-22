@@ -1,5 +1,5 @@
 <template>
-  <div class="has-background-light">
+  <div class="mainContent has-background-light">
     <p>Main content</p>
   </div>
 </template>
@@ -9,4 +9,3 @@ export default {
     name: 'main-content'
 }
 </script>
-
