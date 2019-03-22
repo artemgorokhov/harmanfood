@@ -5,6 +5,8 @@
 # Flask virtual environment
 webserver/venv
 
+.idea/
+
 # Static files automatically created by webpack
 dist
 
