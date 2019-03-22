@@ -5,21 +5,18 @@
 
 import axios from 'axios'
 
-var eaterCredentials = {
-  login: '',
-  passwd: ''
+
+var formIsInvalid = function (login, passwd) {
+  console.log("Checking form with" + login + " and " + passwd)
+  return !(login.length && passwd.length)
 }
 
-var formIsInvalid = function () {
-  return !(eaterCredentials.login.length && eaterCredentials.passwd.length)
-}
-
-var submitForm = function () {
+var submitForm = function (login, passwd) {
   console.log('Submit button clicked')
-  if (!formIsInvalid()) {
+  if (!formIsInvalid(login, passwd)) {
     axios.post('/api/login', {
-      username: eaterCredentials.login,
-      password: eaterCredentials.passwd
+      username: login,
+      password: passwd
     })
       .then(function (response) {
         if (!response.data.hasOwnProperty('result')) {
@@ -38,4 +35,4 @@ var submitForm = function () {
   }
 }
 
-export { submitForm, eaterCredentials }
+export { submitForm, formIsInvalid }
