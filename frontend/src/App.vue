@@ -10,11 +10,11 @@ export default {
 }
 </script>
 
-<style lang="sass">
+#app
 
 @import "@/assets/css/contrast_theme.scss"
 
-#app
+<style lang="sass">
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
