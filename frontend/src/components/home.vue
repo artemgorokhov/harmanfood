@@ -5,18 +5,21 @@
                has-text-weight-bold
                title">Harman Food</h1>
     <div class="columns">
-        <information-block class="column is-one-third"/>
-        <main-content class="column"/>
+        <main-content class="column is-half"/>
+        <information-block class="column"/>
     </div>
   </section>
+    <hero-header/>
 </template>
 
 <script>
 import InformationBlock from './info.vue'
 import MainContent from './maincontent.vue'
-
+import HeroHeader from './header.vue'
 export default{
+
 	components: {
+    HeroHeader,
     InformationBlock,
     MainContent
 	}

@@ -1,20 +1,23 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <login-form/>
 </template>
 
 <script>
+import LoginForm from '@/components/login/login_form.vue'
+
 export default {
-  name: 'App'
+    name: 'LoginApp',
+    components: {
+        LoginForm
+    }
 }
 </script>
 
-#app
+<style lang="sass">
 
 @import "@/assets/css/main.scss"
 
-<style lang="sass">
+#loginApp
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 

@@ -5,19 +5,7 @@
 </template>
 
 <script>
-import MainMenu from './mainmenu.vue'
-
 export default {
-    components: {
-        MainMenu
-    }
+    name: 'main-content'
 }
 </script>
-
-<style lang="sass">
-
-.mainContent
-    min-width: 300px;
-    min-height: 300px;
-
-</style>
