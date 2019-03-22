@@ -12,7 +12,7 @@ export default {
 
 #app
 
-@import "@/assets/css/main.scss"
+@import "@/assets/css/contrast_theme.scss"
 
 <style lang="sass">
   -webkit-font-smoothing: antialiased;

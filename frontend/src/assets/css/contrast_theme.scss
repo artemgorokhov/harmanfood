@@ -1,0 +1,35 @@
+// 1. Import the initial variables
+@import "../../../node_modules/bulma/sass/utilities/initial-variables";
+@import "../../../node_modules/bulma/sass/utilities/functions";
+
+// 2. Set your own initial variables
+// Update blue
+$blue: #1f435c;
+$green: #afe4cf;
+// Add a serif family
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+$family-serif: "Oswald", "Merriweather", "Georgia", serif;
+
+// 3. Set the derived variables
+$light: #f2faf0;
+$dark: #1f435c;
+$primary: #62c2cb;
+$primary-invert: $light;
+// Use the existing orange as the danger color
+$danger: #672522;
+// Use the new serif family
+$family-primary: $family-serif;
+
+// 4. Setup your Custom Colors
+$accepted: #afe4cf;
+$accepted-invert: $grey;
+
+// 5. Add new color variables to the color map.
+@import "../../../node_modules/bulma/sass/utilities/derived-variables";
+$addColors: (
+  "accepted":($accepted, $accepted-invert)
+);
+$colors: map-merge($colors, $addColors);
+
+// 6. Import the rest of Bulma
+@import "../../../node_modules/bulma";
