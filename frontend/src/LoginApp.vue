@@ -11,7 +11,6 @@ export default {
         LoginForm
     }
 }
-
 </script>
 
 <style lang="sass">
