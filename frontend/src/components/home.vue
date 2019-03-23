@@ -1,7 +1,7 @@
 <template>
-  <section class="section">
+  <section class="section is-paddingless">
     <hero-header/>
-    <div class="columns">
+    <div class="columns is-gapless">
         <main-content class="column is-half"/>
         <information-block class="column"/>
     </div>

@@ -15,7 +15,7 @@ export default {
 
 <style lang="sass">
 
-@import "@/assets/css/main.scss"
+@import "@/assets/css/contrast_theme.scss"
 
 #loginApp
   -webkit-font-smoothing: antialiased;
