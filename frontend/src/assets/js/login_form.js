@@ -7,7 +7,6 @@ import axios from 'axios'
 
 
 var formIsInvalid = function (login, passwd) {
-  console.log("Checking form with" + login + " and " + passwd)
   return !(login.length && passwd.length)
 }
 
@@ -35,4 +34,4 @@ var submitForm = function (login, passwd) {
   }
 }
 
-export { submitForm, formIsInvalid }
+export { submitForm }

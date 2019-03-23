@@ -1,44 +1,46 @@
 <template>
-    <form class="has-background-light
-                 has-text-dark"
+    <div class="box has-background-light
+                has-text-dark"
           id="loginForm">
         <table class="table is-fullwidth">
             <thead>
-                <tr><td><div class="centered">
-                    <i class="far fa-user"></i>
-                </div></td></tr>
+                <tr><td><span class="centered">
+                    <img src="@/assets/img/chef.svg" class="centered"/>
+                </span></td></tr>
             </thead>
             <tfoot>
                 <tr><td>
-                    <button v-on:click="submit" 
-                        type="button" 
-                        class="btn centered" 
-                        ref="submitButton" disabled>Submit</button>
+                    <a v-on:click="submit"
+                       class="button is-success centered" 
+                       ref="submitButton" :disabled="!(login && passwd)">Join in</a>
                 </td></tr>
             </tfoot>
             <tbody>
-                <tr><td>
+                <tr><td><div class="control has-icons-left">
                     <input type="text" 
-                         class="centered"
-                         v-model="login" 
-                         v-on:input="changeSubmitStatus"
+                         class="input"
+                         v-model="login"
                          placeholder="LOGIN"/>
-                </td></tr>
-                <tr><td>
-                    <input type="text" 
-                         class="centered"
+                    <span class="icon is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div></td></tr>
+                <tr><td><div class="control has-icons-left">
+                    <input type="password" 
+                         class="input"
                          v-model="passwd" 
-                         v-on:input="changeSubmitStatus"
                          placeholder="PASSWORD"/>
-                    
-                </td></tr>
+                    <span class="icon is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                </div></td></tr>
             </tbody>
         </table>
-  </form>
+  </div>
 </template>
 
 <script>
-import { submitForm, formIsInvalid } from '@/assets/js/login_form.js'
+import { submitForm } from '@/assets/js/login_form.js'
 
 export default {
   name: 'login-form',
@@ -49,9 +51,6 @@ export default {
   methods: {
     submit: function() {
         submitForm(this.$data.login, this.$data.passwd);
-    },
-    changeSubmitStatus: function() {
-        this.$refs.submitButton.disabled = formIsInvalid(this.$data.login, this.$data.passwd);
     }
   }
 }
@@ -60,17 +59,17 @@ export default {
 
 <style lang="sass">
 #loginForm
-    border: 1px solid gray;
-    max-width: 50%;
+    border: 1px solid gray
+    min-width: 50%
+    max-width: 60%
+
+#loginForm img
+    height: 2.5em
 
 #loginForm table
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0)
 #loginForm table tr td
-    border: none;
-
-#loginForm input
-    font-size: 1em;
-    width: 75%;
+    border: none
 
 .centered
     margin: auto
