@@ -15,8 +15,8 @@ $light: #f9f8ec;
 $dark: #1f435c;
 $primary: #62c2cb;
 $primary-invert: $light;
-// Use the existing orange as the danger color
-$danger: #672522;
+
+$danger: #B43C4C;
 // Use the new serif family
 $family-primary: $family-serif;
 
@@ -24,12 +24,21 @@ $family-primary: $family-serif;
 $accepted: #afe4cf;
 $accepted-invert: $grey;
 
+$light-grey: #a9a8ab;
+$light-grey-invert: $grey;
+
+$title-color: $light;
+
 // 5. Add new color variables to the color map.
 @import "../../../node_modules/bulma/sass/utilities/derived-variables";
 $addColors: (
-  "accepted":($accepted, $accepted-invert)
+  "accepted":($accepted, $accepted-invert),
+  "light-gray": ($light-grey, $light-grey-invert)
 );
 $colors: map-merge($colors, $addColors);
 
+$subtitle-color: $light-grey;
+$navbar-item-color: $light-grey;
+$navbar-item-active-color: $light;
 // 6. Import the rest of Bulma
 @import "../../../node_modules/bulma";

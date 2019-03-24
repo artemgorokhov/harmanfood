@@ -1,12 +1,24 @@
 <template>
-    <nav class="tabs is-right">
-		<div class="container">
-		<ul>
-			<li class="is-active"><a>Мой заказ</a></li>
-			<li><a>Помочь с заказом</a></li>
-			<li><a href="/login">Logout</a></li>
-		</ul>
-		</div>
+    <nav class="navbar" id="mainMenu">
+        <div class="navbar-brand">
+            <div class="navbar-item">
+                <div>
+                <h1 class="title">HarmanFood</h1>
+                <h2 class="subtitle">Обед в компании</h2>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-start is-size-7" id="navMenu">
+            <div class="nav-item">
+                Home
+            </div>
+            <div class="nav-item">
+                Help hand
+            </div>
+            <div class="nav-item">
+                Logout
+            </div>
+        </div>
     </nav>
 </template>
 
@@ -18,3 +30,8 @@ export default {
     })
 }
 </script>
+
+<style lang="sass">
+#navMenu
+    display: none
+</style>

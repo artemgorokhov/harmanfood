@@ -1,5 +1,5 @@
 <template>
-    <div class="has-background-light has-text-gray-dark">
+    <div class="has-background-light has-text-grey-dark">
     <div class="info-block">
         <patron/>
         <participants/>

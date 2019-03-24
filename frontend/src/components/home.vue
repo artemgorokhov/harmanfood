@@ -1,23 +1,22 @@
 <template>
-  <section class="section is-paddingless">
-    <hero-header/>
-    <div class="columns is-gapless">
-        <main-content class="column is-half"/>
+    <div class="container is-fluid columns is-gapless">
+        <main-content class="column is-7"/>
         <information-block class="column"/>
     </div>
-  </section>
 </template>
 
 <script>
-import InformationBlock from './info.vue'
+import InformationBlock from './information/info.vue'
 import MainContent from './maincontent.vue'
-import HeroHeader from './header.vue'
-export default{
 
+export default{
 	components: {
-        HeroHeader,
         InformationBlock,
         MainContent
 	}
 }
 </script>
+
+<style lang="sass">
+
+</style>

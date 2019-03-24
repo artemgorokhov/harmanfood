@@ -1,7 +1,5 @@
 <template>
-  <div class="mainContent 
-              has-background-dark 
-              has-text-light">
+  <div class="mainContent">
     <p>Main content</p>
   </div>
 </template>
