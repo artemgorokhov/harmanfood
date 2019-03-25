@@ -4,6 +4,7 @@ import Router from 'vue-router'
 const routerOptions = [
   { path: '/', component: 'thequestion' },
   { path: '/restaurants', component: 'restaurants' },
+  { path: '/loading', component: 'loading' },
   { path: '/food', component: 'food'}
 ]
 

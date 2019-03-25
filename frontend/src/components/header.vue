@@ -5,7 +5,7 @@
                 <h1 class="title">
                     Harman Food
                 </h1>
-                <h2 class="subtitle">
+                <h2 class="subtitle has-text-centered">
                     Обед в тесном кругу
                 </h2>
             </div>

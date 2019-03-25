@@ -4,7 +4,7 @@
             <div class="navbar-item">
                 <div>
                 <h1 class="title">HarmanFood</h1>
-                <h2 class="subtitle">Обед в компании</h2>
+                <h2 class="subtitle has-text-centered">Обед в компании</h2>
                 </div>
             </div>
         </div>
