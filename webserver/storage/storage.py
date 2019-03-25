@@ -32,3 +32,17 @@ class Storage:
         if not collection:
             return False
         return item.initialize(collection.find_one(item.unique_condition))
+
+    @classmethod
+    def create_new(cls, item):
+        collection = cls.collections.get(item.collection, None)
+        if not collection:
+            return False
+        return collection.insert_one(item.as_dict()).inserted_id
+
+    @classmethod
+    def save(cls, item):
+        collection = cls.collections.get(item.collection, None)
+        if not collection:
+            return False
+        return collection.find_one_and_update(item.unique_condition, item.as_dict())
