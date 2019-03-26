@@ -5,7 +5,6 @@
 
 import axios from 'axios'
 
-
 var formIsInvalid = function (login, passwd) {
   return !(login.length && passwd.length)
 }

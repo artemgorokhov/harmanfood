@@ -31,4 +31,5 @@ export default {
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
 
+// TODO: add overflow-y: hidden property to html
 </style>

@@ -2,7 +2,7 @@
     <div class="container" id="theQuestion">
         <p class="has-text-centered
                    is-size-1">
-               Хочешь пообедать?
+               {{ username }}, хочешь пообедать?
         </p>
         <nav class="level buttons-level">
             <a v-on:click="load"
@@ -20,18 +20,29 @@
 </template>
 
 <script>
-    import Loading from './loading.vue'
-    export default {
-        name: 'the-question',
-        components: {
-            Loading
-        },
-        methods: {
-            load: function() {
-                this.$router.replace( {path: '/loading'} );
-            }
+import Vue from 'vue'
+import Loading from './loading.vue'
+
+export default {
+    name: 'the-question',
+    components: {
+        Loading
+    },
+    methods: {
+        load: function() {
+            // this.$router.replace( {path: '/loading'} );
+            console.log("Old name: " + Vue.getUserName())
+            this.username = 'Артём'
+            console.log("New name: " + Vue.getUserName())
+        }
+    },
+    computed: {
+        username: {
+            get: Vue.getUserName,
+            set: Vue.setUserName
         }
     }
+}
 </script>
 
 <style lang="sass">

@@ -5,7 +5,7 @@ const routerOptions = [
   { path: '/', component: 'thequestion' },
   { path: '/restaurants', component: 'restaurants' },
   { path: '/loading', component: 'loading' },
-  { path: '/food', component: 'food'}
+  { path: '/food', component: 'food' }
 ]
 
 const routes = routerOptions.map(route => {
@@ -19,5 +19,5 @@ Vue.use(Router)
 
 export default new Router({
   routes,
-  mode: 'history'
+  mode: 'abstract'
 })
