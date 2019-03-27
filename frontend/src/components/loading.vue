@@ -10,9 +10,17 @@
 </template>
 
 <style lang="sass">
+@keyframes burger-anim
+  100%
+    transform: rotate(360deg)
+
 img
   -webkit-filter: invert(100%)
   filter: invert(100%)
+  animation-name: burger-anim
+  animation-duration: 3s
+  animation-iteration-count: infinite
+  animation-timing-function: cubic-bezier(.64,0,.01,1)
 
 .is-horizontal-center
   justify-content: center;
