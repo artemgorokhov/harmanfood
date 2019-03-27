@@ -21,25 +21,19 @@
 
 <script>
 import Vue from 'vue'
-import Loading from './loading.vue'
+import { MUTATION_NAMES } from '@/store/consts'
 
 export default {
     name: 'the-question',
-    components: {
-        Loading
-    },
     methods: {
         load: function() {
             // this.$router.replace( {path: '/loading'} );
-            console.log("Old name: " + Vue.getUserName())
-            this.username = 'Артём'
-            console.log("New name: " + Vue.getUserName())
+            this.$store.commit(MUTATION_NAMES.SET_USERNAME, 'Артём')
         }
     },
     computed: {
-        username: {
-            get: Vue.getUserName,
-            set: Vue.setUserName
+        username() {
+            return this.$store.state.user
         }
     }
 }
