@@ -5,12 +5,13 @@
                {{ username }}, хочешь пообедать?
         </p>
         <nav class="level buttons-level">
-            <a v-on:click="load"
+            <a v-on:click="yesIWannaEat"
                class="button 
                     level-left
                     is-success
                     is-large">Да!</a>
-            <a class="button 
+            <a v-on:click="NoIDont"
+               class="button 
                     level-right
                     is-danger
                     is-large
@@ -26,9 +27,11 @@ import { MUTATION_NAMES } from '@/store/consts'
 export default {
     name: 'the-question',
     methods: {
-        load: function() {
-            // this.$router.replace( {path: '/loading'} );
-            this.$store.commit(MUTATION_NAMES.SET_USERNAME, 'Артём')
+        yesIWannaEat: function() {
+            this.$router.replace( {path: '/restaurants'} );
+        },
+        NoIDont: function() {
+            this.$router.replace( {path: '/info'} );
         }
     },
     computed: {
