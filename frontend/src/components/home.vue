@@ -1,5 +1,5 @@
 <template>
-    <div class="container is-fluid columns is-gapless">
+    <div class="container is-fluid columns">
         <div class="mainContent column is-7">
             <router-view/>
         </div>

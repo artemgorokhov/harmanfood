@@ -2,7 +2,7 @@
     <div class="container has-text-centered size-is-4">
     <div class="container is-flex is-horizontal-center">
       <figure class="image is-128x128">
-        <img src="@/assets/img/hamburger_empty.svg"/>
+        <img src="@/assets/img/pizza.svg"/>
       </figure>
     </div>
     <div>Loading...</div>
@@ -23,7 +23,7 @@ img
   animation-timing-function: cubic-bezier(.64,0,.01,1)
 
 .is-horizontal-center
-  justify-content: center;
+  justify-content: center
 </style>
 
 <script>

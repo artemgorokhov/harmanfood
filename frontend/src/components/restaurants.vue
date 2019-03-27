@@ -1,6 +1,6 @@
 <template>
-  <div class="columns is-multiline is-mobile">
-    <div class="card column"
+  <div class="columns is-multiline is-mobile is-7">
+    <div class="card column is-one-quarter"
         v-for="restaurant in restaurants">
         {{ restaurant.name }}
     </div>
