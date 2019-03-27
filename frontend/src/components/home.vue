@@ -1,6 +1,8 @@
 <template>
     <div class="container is-fluid columns is-gapless">
-        <main-content class="column is-7"/>
+        <div class="mainContent column is-7">
+            <router-view/>
+        </div>
         <information-block class="column"/>
     </div>
 </template>
@@ -18,5 +20,6 @@ export default{
 </script>
 
 <style lang="sass">
-
+.mainContent
+    padding: 20px
 </style>

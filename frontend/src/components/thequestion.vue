@@ -28,7 +28,7 @@ export default {
     name: 'the-question',
     methods: {
         yesIWannaEat: function() {
-            this.$router.replace( {path: '/restaurants'} );
+            this.$router.replace( {path: '/home/restaurants'} );
         },
         NoIDont: function() {
             this.$router.replace( {path: '/info'} );
