@@ -31,5 +31,8 @@ export default {
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
 
+.flexBody
+    flex-flow: column
+
 // TODO: add overflow-y: hidden property to html
 </style>

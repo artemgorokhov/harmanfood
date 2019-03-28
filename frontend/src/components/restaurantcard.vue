@@ -22,10 +22,7 @@ export default {
   },
   computed: {
     asset_path: function () {
-      console.log('Asset: ' + this.$props.asset)
-      console.log('title: ' + this.$props.title)
-      console.log('provider: ' + this.$props.provider)
-      return "@/assets/img/places/" + this.$props.asset
+      return require("@/assets/img/places/" + this.$props.asset)
     }
   }
 }
@@ -36,7 +33,19 @@ export default {
   display: flex
   flex-direction: column
   height: 100%
+  cursor: pointer
   margin: auto
+  transition: filter 0.3s ease
+  filter: opacity(90%)
+
+.card-equal-height img
+  filter: grayscale(70%)
+
+.card-equal-height:hover
+  filter: opacity(100%)
+
+.card-equal-height:hover img
+  filter: grayscale(40%)
 
 .card-equal-height .card-footer
   margin-top: auto

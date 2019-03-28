@@ -1,6 +1,6 @@
 <template>
-    <div class="container is-fluid columns">
-        <div class="mainContent column is-7">
+    <div class="container mainContent is-fluid columns">
+        <div class="column is-7">
             <router-view/>
         </div>
         <information-block class="column"/>
@@ -21,5 +21,9 @@ export default{
 
 <style lang="sass">
 .mainContent
-    padding: 20px
+    padding: 1em
+    margin: 0
+
+.flexHome
+    flex: 1 1 100%
 </style>

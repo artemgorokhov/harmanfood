@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 const state = {
   user: 'Anonymous',
-  loaded: false
+  loaded: false,
+  patron: 'Артём Горохов'
 }
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
   },
   [MUTATION_NAMES.FLAG_DATA_LOADED] (state) {
     state.loaded = true
+  },
+  [MUTATION_NAMES.PATRON_NAME] (state, patronname) {
+    state.patron = patronname
   }
 }
 
