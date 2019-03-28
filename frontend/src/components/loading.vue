@@ -2,7 +2,7 @@
     <div class="container has-text-centered size-is-4">
     <div class="container is-flex is-horizontal-center">
       <figure class="image is-128x128">
-        <img src="@/assets/img/pizza.svg"/>
+        <img class="loadingAnimation" src="@/assets/img/pizza.svg"/>
       </figure>
     </div>
     <div>Loading...</div>
@@ -14,7 +14,7 @@
   100%
     transform: rotate(360deg)
 
-img
+img.loadingAnimation
   -webkit-filter: invert(100%)
   filter: invert(100%)
   animation-name: burger-anim
