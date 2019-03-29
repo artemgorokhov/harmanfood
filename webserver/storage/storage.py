@@ -45,4 +45,6 @@ class Storage:
         collection = cls.collections.get(item.collection, None)
         if not collection:
             return False
-        return collection.find_one_and_update(item.unique_condition, item.as_dict())
+        return collection.find_one_and_update(item.unique_condition,
+                                              {"$set": item.as_dict()},
+                                              upsert=(item.get_id() is None))

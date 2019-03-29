@@ -40,3 +40,6 @@ class DBItem:
             return func(*args, **kwds)
 
         return wrapper
+
+    def as_dict(self):
+        return {key: value for (key, value) in self.__dict__.items() if key != '_id'}

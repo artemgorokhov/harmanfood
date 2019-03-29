@@ -6,6 +6,7 @@ blank_user = {
     'username': '',
     'firstName': '',
     'lastName': '',
+    'email': '',
     'pwdHash': '',
     'phone': '',
     'admin': False,
