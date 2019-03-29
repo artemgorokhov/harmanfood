@@ -1,4 +1,5 @@
 from webserver.storage import DBItem
+from passlib.hash import pbkdf2_sha256
 
 
 blank_user = {
@@ -21,14 +22,6 @@ class User(DBItem):
         super().__init__(blank_user)
         self.username = username
 
-    @DBItem.is_initialized
-    def check_password(self, pwd):
-        if self.pwdReset is True:
-            print("I'll register you")
-            return True
-        print("Checking your password")
-        return True
-
     def keys(self):
         return tuple(self.__dict__)
 
@@ -49,3 +42,23 @@ class User(DBItem):
 
     def __repr__(self):
         return str(self.__dict__)
+
+    @classmethod
+    def generate_password_hash(cls, password):
+        return pbkdf2_sha256.encrypt(password, rounds=100, salt_size=16)
+
+    @DBItem.is_initialized
+    def verify_password(self, password):
+        print("verifying the password {}".format(password))
+        try:
+            return pbkdf2_sha256.verify(password, self.pwdHash)
+        except ValueError:
+            return False
+
+    @DBItem.is_initialized
+    def password_to_be_reset(self, password):
+        if self.pwdReset:
+            self.pwdHash = self.generate_password_hash(password)
+            self.pwdReset = False
+            return True
+        return False

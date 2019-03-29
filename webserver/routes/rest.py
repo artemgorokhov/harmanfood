@@ -7,7 +7,7 @@ from webserver.auth import do_the_login
 def login_request():
     if request.method == "POST":
         payload = request.get_json()
-        username = payload.get("username", "")
+        username = payload.get("username", "").lower()
         password = payload.get("password", "")
         if do_the_login(username, password):
             resp = jsonify(result='success')

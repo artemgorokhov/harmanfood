@@ -1,6 +1,8 @@
 from functools import wraps
 from flask import Response, redirect, url_for
 from flask import session
+from webserver.storage import Storage
+from webserver.entities import User
 
 
 def do_the_login(username, password):
@@ -15,8 +17,19 @@ def do_the_logout():
 
 
 def check_auth(username, password):
-    """ Implement this function when choose database """
-    return username == 'admin' and password == 'pass'
+    print("Checking auth for user {}".format(username))
+    user = User(username)
+    Storage.load_to(user)
+    if user.get_id() is None:
+        print("There is no user {} in database".format(username))
+        return False
+    if user.password_to_be_reset(password):
+        Storage.save(user)
+        return True
+    if not user.verify_password(password):
+        print("Wrong password for user {}".format(username))
+        return False
+    return True
 
 
 def authenticate():
