@@ -12,7 +12,7 @@
                 <tr><td>
                     <a v-on:click="submit"
                        class="button is-success centered" 
-                       ref="submitButton" :disabled="!(login && passwd)">Join in</a>
+                       :disabled="!(login && passwd)">Join in</a>
                 </td></tr>
             </tfoot>
             <tbody>
@@ -28,6 +28,8 @@
                 <tr><td><div class="control has-icons-left">
                     <input type="password" 
                          class="input"
+                         :class="{'is-danger':wrongPasswd}"
+                         v-on:focus="(wrongPasswd = false)"
                          v-model="passwd" 
                          placeholder="PASSWORD"/>
                     <span class="icon is-left">
@@ -46,11 +48,21 @@ export default {
   name: 'login-form',
   data: () => ({
     login: '',
-    passwd: ''
+    passwd: '',
+    wrongPasswd: false
   }),
   methods: {
+    login_success: function (response) {
+        console.log('All right, redirecting to home page')
+        window.location.href = '/'
+    },
+    login_failure: function (error) {
+        this.$data.wrongPasswd = true
+    },
     submit: function() {
-        submitForm(this.$data.login, this.$data.passwd);
+        submitForm(this.$data.login, this.$data.passwd,
+                this.login_success, this.login_failure);
+        this.$data.passwd = ''
     }
   }
 }

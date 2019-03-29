@@ -9,27 +9,17 @@ var formIsInvalid = function (login, passwd) {
   return !(login.length && passwd.length)
 }
 
-var submitForm = function (login, passwd) {
-  console.log('Submit button clicked')
+var submitForm = function (login, passwd, successCb, errorCb) {
   if (!formIsInvalid(login, passwd)) {
+    // instance - only for development
+    // const instance = axios.create({baseURL: 'http://localhost:5000'})
+    // instance.post('/api/login', {
     axios.post('/api/login', {
       username: login,
       password: passwd
     })
-      .then(function (response) {
-        if (!response.data.hasOwnProperty('result')) {
-          console.log('Response without result...')
-        }
-        if (response.data.result === 'success') {
-          console.log('All right, redirecting to home page')
-          window.location.href = '/'
-        } else {
-          console.log('Wrong credentials!')
-        }
-      })
-      .catch(function (error) {
-        console.log('Error: ' + error)
-      })
+      .then(successCb)
+      .catch(errorCb)
   }
 }
 

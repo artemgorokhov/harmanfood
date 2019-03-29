@@ -8,6 +8,7 @@ from webserver.entities import User
 def do_the_login(username, password):
     if not check_auth(username, password):
         return False
+    print("Fine, session-username = {}".format(username))
     session["username"] = username
     return True
 
@@ -44,6 +45,7 @@ def authenticate():
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
+        print("Session get: {}".format(session.get("username")))
         if not session.get("username"):
             return redirect(url_for('login'))
         return f(*args, **kwargs)

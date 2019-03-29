@@ -2,7 +2,7 @@
     <div class="container has-text-centered size-is-4">
     <div class="container is-flex is-horizontal-center">
       <figure class="image is-128x128">
-        <img class="loadingAnimation" src="@/assets/img/pizza.svg"/>
+        <img class="loadingAnimation" src="@/assets/img/pizza_empty.svg"/>
       </figure>
     </div>
     <div>Loading...</div>

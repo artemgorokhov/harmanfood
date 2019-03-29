@@ -1,6 +1,6 @@
-from flask import request, jsonify
+from flask import request, jsonify, Response
 from webserver import app
-from webserver.auth import do_the_login
+from webserver.auth import do_the_login, authenticate
 
 
 @app.route("/api/login", methods=["POST"])
@@ -10,8 +10,7 @@ def login_request():
         username = payload.get("username", "").lower()
         password = payload.get("password", "")
         if do_the_login(username, password):
-            resp = jsonify(result='success')
-            return resp
+            return Response('Success', 200)
         else:
-            err_resp = jsonify(result='error')
+            err_resp = authenticate()
             return err_resp
