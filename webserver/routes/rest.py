@@ -1,6 +1,8 @@
-from flask import request, jsonify, Response
+from flask import request, jsonify, Response, session
 from webserver import app
-from webserver.auth import do_the_login, authenticate
+from webserver.auth import do_the_login, authenticate, requires_auth
+from webserver.entities import User
+from webserver.storage import Storage
 
 
 @app.route("/api/login", methods=["POST"])
@@ -14,3 +16,16 @@ def login_request():
         else:
             err_resp = authenticate()
             return err_resp
+
+
+@app.route("/api/initial_data", methods=["POST"])
+@requires_auth
+def initial_request():
+	if request.method == "POST":
+		user = User(session["username"])
+		Storage.load_to(user)
+		if user.get_id() is None:
+			return authenticate()
+		return jsonify(firstName=user.firstName,
+						lastName=user.lastName,
+						phone=user.phone)

@@ -20,6 +20,7 @@
                     <input type="text" 
                          class="input"
                          v-model="login"
+                         v-on:keyup.enter="submit"
                          placeholder="LOGIN"/>
                     <span class="icon is-left">
                         <i class="fas fa-user"></i>
@@ -29,6 +30,7 @@
                     <input type="password" 
                          class="input"
                          :class="{'is-danger':wrongPasswd}"
+                         v-on:keyup.enter="submit"
                          v-on:focus="(wrongPasswd = false)"
                          v-model="passwd" 
                          placeholder="PASSWORD"/>
@@ -60,6 +62,9 @@ export default {
         this.$data.wrongPasswd = true
     },
     submit: function() {
+        if (!(this.$data.login && this.$data.passwd)) {
+            return false;
+        }
         submitForm(this.$data.login, this.$data.passwd,
                 this.login_success, this.login_failure);
         this.$data.passwd = ''

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { MUTATION_NAMES, ACTION_NAMES } from './consts.js'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -25,14 +26,23 @@ const mutations = {
 
 const actions = {
   [ACTION_NAMES.GET_USER_INFO] ({commit}) {
-    // Here we will need to make async call to server to get data
-    // For now there is a async-like mock
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        commit(MUTATION_NAMES.SET_USERNAME, 'Артём')
-        commit(MUTATION_NAMES.FLAG_DATA_LOADED)
-        resolve()
-      }, 2000)
+      // const instance = axios.create({baseURL: 'http://localhost:5000'})
+      // instance.post('/api/initial_data')
+        axios.post('/api/initial_data')
+              .then((response) => {
+                console.log('Response is: ' + response.data)
+                if (!response.data.firstName) {
+                  throw new Error('Wrong payload')
+                }
+                commit(MUTATION_NAMES.SET_USERNAME, response.data.firstName)
+                commit(MUTATION_NAMES.FLAG_DATA_LOADED)
+                resolve()
+              })
+              .catch((error) => {
+                console.log("error response: " + error)
+                reject()
+              })
     })
   }
 }

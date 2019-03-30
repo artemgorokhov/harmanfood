@@ -4,15 +4,15 @@
                    is-size-1">
                {{ username }}, хочешь пообедать?
         </p>
-        <nav class="level buttons-level">
+        <nav class="buttons-level">
             <a v-on:click="yesIWannaEat"
                class="button 
-                    level-left
+                    is-pulled-left
                     is-success
                     is-large">Да!</a>
             <a v-on:click="NoIDont"
                class="button 
-                    level-right
+                    is-pulled-right
                     is-danger
                     is-large
                     is-outlined">Не</a>
@@ -44,8 +44,9 @@ export default {
 
 <style lang="sass">
 .buttons-level
-    margin-left: 35%
-    margin-right: 35%
+    margin: auto
+    width: 50%
+    max-width: 300px
 
 .buttons-level a
     padding-left: 2em
