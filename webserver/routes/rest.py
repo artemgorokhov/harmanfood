@@ -1,7 +1,7 @@
 from flask import request, jsonify, Response, session
 from webserver import app
 from webserver.auth import do_the_login, authenticate, requires_auth
-from webserver.entities import User
+from webserver.entities import User, Restaurant
 from webserver.storage import Storage
 
 
@@ -26,6 +26,6 @@ def initial_request():
 		Storage.load_to(user)
 		if user.get_id() is None:
 			return authenticate()
-		return jsonify(firstName=user.firstName,
-						lastName=user.lastName,
-						phone=user.phone)
+        restaurants = Storage.find(Restaurant)
+		return jsonify(user=user,
+					   restaurants=restaurants)

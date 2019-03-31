@@ -2,7 +2,15 @@ from abc import abstractmethod
 from functools import wraps
 
 
-class DBItem:
+class CollectionMeta(type):
+    @property
+    def collection(cls):
+        return cls.collection
+
+
+class DBItem(metaclass=CollectionMeta):
+
+    collection = Null
 
     def __init__(self, contract):
         self.__dict__.update(contract)
@@ -13,11 +21,6 @@ class DBItem:
             super().__setattr__(key, value)
         else:
             raise AttributeError('{} has no attribute {}'.format(self.__class__.__name__, key))
-
-    @property
-    @abstractmethod
-    def collection(self):
-        """Mongo collection that stores these items"""
 
     @property
     @abstractmethod

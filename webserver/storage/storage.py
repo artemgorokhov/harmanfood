@@ -8,7 +8,8 @@ class Storage:
 
     # Collections
     collections = {
-        'eaters': db.eaters
+        'eaters': db.eaters,
+        'restaurants': db.restaurants
     }
 
     def __init__(self):
@@ -48,3 +49,14 @@ class Storage:
         return collection.find_one_and_update(item.unique_condition,
                                               {"$set": item.as_dict()},
                                               upsert=(item.get_id() is None))
+
+    @classmethod
+    def find(cls, dbitemClass, condition=None):
+        collection = cls.collections.get(dbitemClass.collection, None)
+        if not collection:
+            return False
+        cursor = collection.find(condition)
+        result = []
+        for d in cursor:
+            result.append(d)
+        return result

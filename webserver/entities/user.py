@@ -18,16 +18,14 @@ blank_user = {
 
 class User(DBItem):
 
+    collection = "eaters"
+
     def __init__(self, username):
         super().__init__(blank_user)
         self.username = username
 
     def keys(self):
         return tuple(self.__dict__)
-
-    @property
-    def collection(self):
-        return "eaters"
 
     @property
     def unique_condition(self):

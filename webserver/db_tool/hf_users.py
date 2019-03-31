@@ -48,7 +48,7 @@ user_records = {
 }
 
 
-def update_users():
+def update():
     for username, record in user_records.items():
         user = User(username.lower())
         user.initialize(record)

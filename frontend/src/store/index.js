@@ -32,10 +32,13 @@ const actions = {
         axios.post('/api/initial_data')
               .then((response) => {
                 console.log('Response is: ' + response.data)
-                if (!response.data.firstName) {
+                if (!(response.data.user &&response.data.restaurants)) {
                   throw new Error('Wrong payload')
                 }
+                user = response.data.user
+                restaurants = response.data.restaurants
                 commit(MUTATION_NAMES.SET_USERNAME, response.data.firstName)
+                
                 commit(MUTATION_NAMES.FLAG_DATA_LOADED)
                 resolve()
               })
