@@ -11,7 +11,7 @@ export default {
     name: "patron",
     computed: {
         patron() {
-            return this.$store.state.patron
+            return this.$store.state.main.patron
         }
     }
 }

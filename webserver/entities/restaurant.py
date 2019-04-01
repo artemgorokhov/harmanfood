@@ -12,7 +12,7 @@ blank_restaurant = {
 
 class Restaurant(DBItem):
 
-    collection = "restaurants"
+    db_collection = "restaurants"
 
     def __init__(self, title, provider):
         super().__init__(blank_restaurant)

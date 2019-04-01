@@ -5,12 +5,12 @@ from functools import wraps
 class CollectionMeta(type):
     @property
     def collection(cls):
-        return cls.collection
+        return cls.db_collection
 
 
 class DBItem(metaclass=CollectionMeta):
 
-    collection = Null
+    db_collection = None
 
     def __init__(self, contract):
         self.__dict__.update(contract)

@@ -36,14 +36,14 @@ export default {
   name: 'loading',
   beforeRouteEnter (to, from, next) {
     console.log('Before loaded')
-    if (store.state.loaded) {
+    if (store.state.main.loaded) {
       console.log('Data alredy loaded')
       next(false)
     }
     fromRoute = from
     next(vm => {
       console.log('Loading from path: ' + from.path)
-      store.dispatch(ACTION_NAMES.GET_USER_INFO)
+      store.dispatch(ACTION_NAMES.INITIAL_DATA)
           .then(response => {
             console.log("LOADED! Go to " + from.path)
             vm.$router.replace(from.path)

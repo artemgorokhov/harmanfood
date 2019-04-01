@@ -9,8 +9,8 @@ import Food from '@/components/food.vue'
 import Loading from '@/components/loading.vue'
 
 var checkDataLoaded = function (to, from, next) {
-  console.log('Check data loaded: ' + store.state.loaded)
-  if (!store.state.loaded) {
+  console.log('Check data loaded: ' + store.state.main.loaded)
+  if (!store.state.main.loaded) {
     next('/loading')
   } else {
     next()

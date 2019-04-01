@@ -18,7 +18,7 @@ blank_user = {
 
 class User(DBItem):
 
-    collection = "eaters"
+    db_collection = "eaters"
 
     def __init__(self, username):
         super().__init__(blank_user)

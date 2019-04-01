@@ -9,5 +9,6 @@ export const MUTATION_NAMES = {
 export const ACTION_NAMES = {
   GET_USER_INFO: 'get user information',
   UPDATE_MENU: 'update restaurant menu',
-  UPDATE_RESTAURANT_LIST: 'update restaurants list'
+  UPDATE_RESTAURANT_LIST: 'update restaurants list',
+  INITIAL_DATA: 'load initial data'
 }

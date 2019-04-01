@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { MUTATION_NAMES, ACTION_NAMES } from './consts.js'
+import { restaurants } from '@/store/modules/restaurants'
 import axios from 'axios'
 
 Vue.use(Vuex)
@@ -25,34 +26,40 @@ const mutations = {
 }
 
 const actions = {
-  [ACTION_NAMES.GET_USER_INFO] ({commit}) {
-    return new Promise((resolve, reject) => {
-      // const instance = axios.create({baseURL: 'http://localhost:5000'})
-      // instance.post('/api/initial_data')
-      axios.post('/api/initial_data')
-        .then((response) => {
-          console.log('Response is: ' + response.data)
-          if (!(response.data.user && response.data.restaurants)) {
-            throw new Error('Wrong payload')
-          }
-          // user = response.data.user
-          // restaurants = response.data.restaurants
-          commit(MUTATION_NAMES.SET_USERNAME, response.data.firstName)
-          commit(MUTATION_NAMES.FLAG_DATA_LOADED)
-          resolve()
-        })
-        .catch((error) => {
-          console.log('error response: ' + error)
-          reject(error)
-        })
-    })
+  async [ACTION_NAMES.GET_USER_INFO] ({commit}) {
+    try {
+      console.log('Getting initial data')
+      const initialResp = await axios.post('/api/initial_data')
+      console.log('Initial data is: ' + initialResp.data)
+      commit(MUTATION_NAMES.SET_USERNAME, initialResp.data.user.firstName)
+      commit(MUTATION_NAMES.FLAG_DATA_LOADED)
+    } catch (error) {
+      console.log('Error during loading initial data: ' + error)
+    }
+  },
+  async [ACTION_NAMES.INITIAL_DATA] ({commit, dispatch}) {
+    try {
+      await dispatch(ACTION_NAMES.GET_USER_INFO)
+      console.log('User info is loaded successfully')
+      await dispatch(ACTION_NAMES.UPDATE_RESTAURANT_LIST)
+      console.log('Loaded restaurants')
+    } catch (error) {
+      console.log('Initial chain failed! ' + error)
+    }
   }
 }
 
-const store = new Vuex.Store({
+const mainModule = {
   state,
   mutations,
   actions
+}
+
+const store = new Vuex.Store({
+  modules: {
+    main: mainModule,
+    restaurants: restaurants
+  }
 })
 
 export default store

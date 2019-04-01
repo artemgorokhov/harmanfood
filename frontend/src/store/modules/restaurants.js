@@ -1,6 +1,6 @@
 import { ACTION_NAMES, MUTATION_NAMES } from '@/store/consts'
 import axios from 'axios'
-import { createRestaurant } from '@/store/restaurant'
+import { createRestaurant } from '@/models/restaurant'
 
 // TODO: use localStorage to cache food between sessions
 
@@ -19,6 +19,7 @@ const mutations = {
     state.restaurants[payload.provider][payload.title].setUpdated(payload.updated)
   },
   [MUTATION_NAMES.RESTAURANT_LOADED] (state, payload) {
+		console.log('Mutation restaurant ' + payload.title)
     state.restaurants[payload.provider][payload.title] = createRestaurant(payload)
   }
 }
@@ -29,7 +30,7 @@ const actions = {
       if (!(payload.hasOwnProperty('title') && payload.hasOwnProperty('provider'))) {
         console.log('Wrong payload for menu')
       }
-      const foodResp = await axios('/api/menu', payload)
+      const foodResp = await axios.post('/api/menu', payload)
       commit(MUTATION_NAMES.RESTAURANT_UPTODATE, {
         provider: foodResp.provider,
         title: foodResp.title,
@@ -39,9 +40,9 @@ const actions = {
       console.log('Menu request error: ' + error)
     }
   },
-  async [ACTION_NAMES.UPDATE_RESTAURANT_LIST]({commit}) {
+  async [ACTION_NAMES.UPDATE_RESTAURANT_LIST] ({commit}) {
     try {
-      const restList = await axios('/api/restaurant_list')
+      const restList = await axios.post('/api/restaurant_list')
       console.log('Loaded restaurant data: ' + restList.data)
       for (var r in restList.data) {
         commit(MUTATION_NAMES.RESTAURANT_LOADED, r)
@@ -54,7 +55,6 @@ const actions = {
 }
 
 export const restaurants = {
-  namespaced: true,
   actions,
   mutations,
   state

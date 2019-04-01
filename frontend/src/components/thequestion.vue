@@ -36,7 +36,7 @@ export default {
     },
     computed: {
         username() {
-            return this.$store.state.user
+            return this.$store.state.main.user
         }
     }
 }

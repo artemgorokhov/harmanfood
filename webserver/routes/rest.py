@@ -21,11 +21,20 @@ def login_request():
 @app.route("/api/initial_data", methods=["POST"])
 @requires_auth
 def initial_request():
-	if request.method == "POST":
-		user = User(session["username"])
-		Storage.load_to(user)
-		if user.get_id() is None:
-			return authenticate()
-        restaurants = Storage.find(Restaurant)
-		return jsonify(user=user,
-					   restaurants=restaurants)
+    if request.method == "POST":
+        user = User(session["username"])
+        Storage.load_to(user)
+        if user.get_id() is None:
+            return authenticate()
+        # restaurants = Storage.find(Restaurant)
+        # return jsonify(user=user,
+        # 			   restaurants=restaurants)
+        return jsonify(user=user.as_dict())
+
+
+@app.route("/api/restaurant_list", methods=["POST"])
+@requires_auth
+def restaurant_request():
+    if request.method == "POST":
+        rest_list = Storage.find(Restaurant)
+        return jsonify(restaurants=rest_list)
