@@ -43,12 +43,12 @@ const actions = {
   async [ACTION_NAMES.UPDATE_RESTAURANT_LIST] ({commit}) {
     try {
       const restList = await axios.post('/api/restaurant_list')
-      console.log('Loaded restaurant data: ' + restList.data)
-      for (var r in restList.data) {
+      for (var i in restList.data.restaurants) {
+        var r = restList.data.restaurants[i]
         commit(MUTATION_NAMES.RESTAURANT_LOADED, r)
       }
     } catch (error) {
-      console.log('Error during fetch of restaurant data')
+      console.log('Error during fetch of restaurant data: ' + error)
       // TODO: Inform user that restaurant data is possibly outdated
     }
   }

@@ -55,7 +55,7 @@ class Storage:
         collection = cls.collections.get(dbitemClass.collection, None)
         if not collection:
             return False
-        cursor = collection.find(condition)
+        cursor = collection.find(condition, projection={'_id': False})
         result = []
         for d in cursor:
             result.append(d)

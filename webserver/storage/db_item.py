@@ -2,15 +2,9 @@ from abc import abstractmethod
 from functools import wraps
 
 
-class CollectionMeta(type):
-    @property
-    def collection(cls):
-        return cls.db_collection
+class DBItem:
 
-
-class DBItem(metaclass=CollectionMeta):
-
-    db_collection = None
+    collection = None
 
     def __init__(self, contract):
         self.__dict__.update(contract)

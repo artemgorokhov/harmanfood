@@ -13,7 +13,7 @@ blank_order = {
 
 class Order(DBItem):
 
-    db_collection = "order"
+    collection = "order"
     
     def __init__(self, when=date.today()):
         super().__init__(blank_order)

@@ -30,7 +30,7 @@ const actions = {
     try {
       console.log('Getting initial data')
       const initialResp = await axios.post('/api/initial_data')
-      console.log('Initial data is: ' + initialResp.data)
+      console.log('Initial data is: ' + Object.keys(initialResp.data))
       commit(MUTATION_NAMES.SET_USERNAME, initialResp.data.user.firstName)
       commit(MUTATION_NAMES.FLAG_DATA_LOADED)
     } catch (error) {
