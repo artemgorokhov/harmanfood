@@ -1,6 +1,7 @@
 import { MUTATION_NAMES, ACTION_NAMES } from '@/store/consts.js'
 import axios from 'axios'
 import { createUser } from '@/models/User'
+import { mockInitialResp } from '@/store/mock/responses'
 
 const state = function () {
   return {
@@ -30,8 +31,11 @@ const mutations = {
 const actions = {
   async [ACTION_NAMES.LOAD_MAIN_INFO] ({commit}) {
     try {
-      console.log('Getting main data')
-      const initialResp = await axios.post('/api/initial_data')
+      console.log('Getting main data for ' + process.env.NODE_ENV)
+      var initialResp = mockInitialResp
+      if (process.env.NODE_ENV != 'development') {
+        initialResp = await axios.post('/api/initial_data')
+      }
       console.log('Initial data is: ' + Object.keys(initialResp.data))
       commit(MUTATION_NAMES.SET_USER, initialResp.data.user)
     } catch (error) {

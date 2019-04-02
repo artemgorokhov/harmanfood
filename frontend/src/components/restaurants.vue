@@ -22,8 +22,10 @@
 <script>
 import RestaurantCard from './restaurantcard.vue'
 export default {
-    data() {
-
+    data: function () {
+      return {
+        
+      }
     },
     computed: {
         restaurants() {
