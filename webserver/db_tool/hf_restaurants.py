@@ -35,6 +35,10 @@ restaurant_records = [
 		'provider': 'yandex',
 		'asset': 'plovgo-logo.svg'
 	}, {
+		'title': 'Жарбалкон',
+		'provider': 'yandex',
+		'asset': 'zharbalkon.jpg'
+	}, {
 		'title': 'Та самая шаурма',
 		'provider': 'other',
 		'asset': 'shaurma.png'

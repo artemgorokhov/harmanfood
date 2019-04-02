@@ -43,13 +43,12 @@ export default {
     fromRoute = from
     next(vm => {
       console.log('Loading from path: ' + from.path)
-      store.dispatch(ACTION_NAMES.INITIAL_DATA)
+      store.dispatch(ACTION_NAMES.LOAD_DATA)
           .then(response => {
             console.log("LOADED! Go to " + from.path)
             vm.$router.replace(from.path)
           }, error => {
             console.log('Load error :( Go to Error page')
-            //  TODO: Create error page
             vm.$router.replace('/error')
           })
     })

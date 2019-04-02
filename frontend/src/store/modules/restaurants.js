@@ -6,21 +6,19 @@ import { createRestaurant } from '@/models/restaurant'
 
 const state = function () {
   return {
-    restaurants: {
-      'yandex': [],
-      'delivery': [],
-      'other': []
-    }
+    'yandex': {},
+    'delivery': {},
+    'other': {}
   }
 }
 
 const mutations = {
   [MUTATION_NAMES.RESTAURANT_UPTODATE] (state, payload) {
-    state.restaurants[payload.provider][payload.title].setUpdated(payload.updated)
+    state[payload.provider][payload.title].setUpdated(payload.updated)
   },
   [MUTATION_NAMES.RESTAURANT_LOADED] (state, payload) {
-		console.log('Mutation restaurant ' + payload.title)
-    state.restaurants[payload.provider][payload.title] = createRestaurant(payload)
+    console.log('Mutating restaurant ' + payload.title)
+    state[payload.provider][payload.title] = createRestaurant(payload)
   }
 }
 
@@ -28,7 +26,7 @@ const actions = {
   async [ACTION_NAMES.UPDATE_MENU] ({commit}, payload) {
     try {
       if (!(payload.hasOwnProperty('title') && payload.hasOwnProperty('provider'))) {
-        console.log('Wrong payload for menu')
+        console.error('Wrong payload for menu')
       }
       const foodResp = await axios.post('/api/menu', payload)
       commit(MUTATION_NAMES.RESTAURANT_UPTODATE, {
@@ -37,7 +35,7 @@ const actions = {
         updated: true
       })
     } catch (error) {
-      console.log('Menu request error: ' + error)
+      console.error('Menu request error: ' + error)
     }
   },
   async [ACTION_NAMES.UPDATE_RESTAURANT_LIST] ({commit}) {
@@ -48,7 +46,7 @@ const actions = {
         commit(MUTATION_NAMES.RESTAURANT_LOADED, r)
       }
     } catch (error) {
-      console.log('Error during fetch of restaurant data: ' + error)
+      console.error('Error during fetch of restaurant data: ' + error)
       // TODO: Inform user that restaurant data is possibly outdated
     }
   }

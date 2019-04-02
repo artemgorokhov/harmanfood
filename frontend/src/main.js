@@ -14,3 +14,6 @@ new Vue({
 })
 
 router.replace('/')
+
+// TODO: install and configure vuejs-logger https://www.npmjs.com/package/vuejs-logger
+// TODO: use .env for different development phases https://cli.vuejs.org/ru/guide/mode-and-env.htm

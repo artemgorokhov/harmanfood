@@ -1,8 +1,9 @@
 export class Restaurant {
-  constructor ({ title = ``, provider = ``, hash = `` } = {}) {
+  constructor ({ title = ``, provider = ``, hash = ``, asset = `` } = {}) {
     this.title = title
     this.provider = provider
     this.hash = hash
+    this.asset = asset
     this.updated = false
   }
 
