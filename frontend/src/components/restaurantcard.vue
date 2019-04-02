@@ -36,7 +36,7 @@ export default {
   cursor: pointer
   margin: auto
   transition: filter 0.3s ease
-  filter: opacity(90%)
+  filter: opacity(80%)
 
 .card-equal-height img
   filter: grayscale(70%)

@@ -5,5 +5,5 @@ u = User('artem.gorokhov')
 Storage.load_to(u)
 
 print("User: {}".format(u))
-print(u.check_password(''))
+print(u.verify_password(''))
 

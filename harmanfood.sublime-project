@@ -4,18 +4,14 @@
 		{
 			"cmd":
 			[
-				"python3",
-				"-m",
-				"webserver"
+				"flask",
+				"run"
 			],
 			"name": "webserver"
 		}
 	],
 	"folders":
 	[
-		{
-			"path": "client"
-		},
 		{
 			"folder_exclude_patterns":
 			[
@@ -43,7 +39,12 @@
 	],
 	"settings":
 	{
+		"env":
+		{
+			"FLASK_APP": "webserver",
+			"FLASK_ENV": "development"
+		},
 		"tab_size": 4
 	},
-	"virtualenv": "/Users/artemgorokhov/.virtualenvs/webserver"
+	"virtualenv": "M:\\workspace\\harmanfood\\webserver\\venv"
 }

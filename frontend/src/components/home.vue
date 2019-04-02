@@ -1,6 +1,6 @@
 <template>
     <div class="container mainContent is-fluid columns">
-        <div class="column is-7">
+        <div class="column is-8">
             <router-view/>
         </div>
         <information-block class="column"/>

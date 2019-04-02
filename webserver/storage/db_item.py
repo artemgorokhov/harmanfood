@@ -4,6 +4,8 @@ from functools import wraps
 
 class DBItem:
 
+    collection = None
+
     def __init__(self, contract):
         self.__dict__.update(contract)
 
@@ -13,11 +15,6 @@ class DBItem:
             super().__setattr__(key, value)
         else:
             raise AttributeError('{} has no attribute {}'.format(self.__class__.__name__, key))
-
-    @property
-    @abstractmethod
-    def collection(self):
-        """Mongo collection that stores these items"""
 
     @property
     @abstractmethod
@@ -40,3 +37,6 @@ class DBItem:
             return func(*args, **kwds)
 
         return wrapper
+
+    def as_dict(self):
+        return {key: value for (key, value) in self.__dict__.items() if key != '_id'}

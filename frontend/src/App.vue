@@ -8,7 +8,9 @@
         <main-menu/>
     </div>
     <div class="hero-body is-paddingless">
+      <transition name="fade" mode="out-in">
         <router-view/>
+      </transition>
     </div>
     </section>
 </template>
@@ -34,5 +36,13 @@ export default {
 .flexBody
     flex-flow: column
 
-// TODO: add overflow-y: hidden property to html
+.fade-enter-active
+  transition: opacity 2s
+
+.fade-leave-active
+  transition: opacity 0.4s
+  
+.fade-enter, .fade-leave-to
+  opacity: 0
+
 </style>

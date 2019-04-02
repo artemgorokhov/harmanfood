@@ -2,7 +2,7 @@
     <div class="container has-text-centered size-is-4">
     <div class="container is-flex is-horizontal-center">
       <figure class="image is-128x128">
-        <img class="loadingAnimation" src="@/assets/img/pizza.svg"/>
+        <img class="loadingAnimation" src="@/assets/img/pizza_empty.svg"/>
       </figure>
     </div>
     <div>Loading...</div>
@@ -36,20 +36,19 @@ export default {
   name: 'loading',
   beforeRouteEnter (to, from, next) {
     console.log('Before loaded')
-    if (store.state.loaded) {
+    if (store.state.main.loaded) {
       console.log('Data alredy loaded')
       next(false)
     }
     fromRoute = from
     next(vm => {
       console.log('Loading from path: ' + from.path)
-      store.dispatch(ACTION_NAMES.GET_USER_INFO)
+      store.dispatch(ACTION_NAMES.LOAD_DATA)
           .then(response => {
             console.log("LOADED! Go to " + from.path)
             vm.$router.replace(from.path)
           }, error => {
             console.log('Load error :( Go to Error page')
-            //  TODO: Create error page
             vm.$router.replace('/error')
           })
     })

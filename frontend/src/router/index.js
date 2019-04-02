@@ -7,10 +7,12 @@ import TheQuestion from '@/components/thequestion.vue'
 import Restaurants from '@/components/restaurants.vue'
 import Food from '@/components/food.vue'
 import Loading from '@/components/loading.vue'
+import ErrorPage from '@/components/error.vue'
 
 var checkDataLoaded = function (to, from, next) {
-  console.log('Check data loaded: ' + store.state.loaded)
-  if (!store.state.loaded) {
+  console.log('Store keys: ' + Object.keys(store.state.main))
+  console.log('Check data loaded: ' + store.state.main.loaded)
+  if (!store.state.main.loaded) {
     next('/loading')
   } else {
     next()
@@ -24,7 +26,8 @@ const routes = [
       { path: 'restaurants', component: Restaurants },
       { path: 'food', component: Food }
     ] },
-  { path: '/loading', component: Loading }
+  { path: '/loading', component: Loading },
+  { path: '/error', component: ErrorPage }
 ]
 
 Vue.use(Router)

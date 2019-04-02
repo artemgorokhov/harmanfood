@@ -1,46 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { MUTATION_NAMES, ACTION_NAMES } from './consts.js'
+import { restaurants } from '@/store/modules/restaurants'
+import { mainModule } from '@/store/modules/main'
 
 Vue.use(Vuex)
 
-const state = {
-  user: 'Anonymous',
-  loaded: false,
-  patron: {name: 'Артём Горохов',
-           phone: '+7 951 902 00 46'}
-}
-
-const mutations = {
-  [MUTATION_NAMES.SET_USERNAME] (state, username) {
-    state.user = username
-  },
-  [MUTATION_NAMES.FLAG_DATA_LOADED] (state) {
-    state.loaded = true
-  },
-  [MUTATION_NAMES.PATRON] (state, patron) {
-    state.patron = patron
-  }
-}
-
-const actions = {
-  [ACTION_NAMES.GET_USER_INFO] ({commit}) {
-    // Here we will need to make async call to server to get data
-    // For now there is a async-like mock
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        commit(MUTATION_NAMES.SET_USERNAME, 'Артём')
-        commit(MUTATION_NAMES.FLAG_DATA_LOADED)
-        resolve()
-      }, 2000)
-    })
-  }
-}
-
 const store = new Vuex.Store({
-  state,
-  mutations,
-  actions
+  modules: {
+    main: mainModule,
+    restaurants: restaurants
+  }
 })
 
 export default store

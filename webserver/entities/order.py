@@ -13,13 +13,11 @@ blank_order = {
 
 class Order(DBItem):
 
+    collection = "order"
+    
     def __init__(self, when=date.today()):
         super().__init__(blank_order)
         self.date = when
-
-    @property
-    def collection(self):
-        return "orders"
 
     @property
     def unique_condition(self):
