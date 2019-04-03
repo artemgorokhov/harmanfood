@@ -1,6 +1,9 @@
 <template>
     <div class="infoBlock has-text-dark">
-        <patron/>
+        <div class="columns info-head">
+            <div class="column is-3 current-restaurant"></div>
+            <patron class="column"/>
+        </div>
         <div v-for="user in users" :key="user.id" class="participantsList">
             <participant-item v-bind="user"/>
         </div>
@@ -30,6 +33,9 @@ export default{
 .infoBlock
     padding: 20px
     background-color: rgba(250, 250, 250, 0.9)
+
+.info-head
+    border-bottom: 1px solid 
 </style>
 
 
