@@ -42,7 +42,7 @@ const actions = {
   async [ACTION_NAMES.UPDATE_RESTAURANT_LIST] ({commit}) {
     try {
       var restList = mockRestaurants
-      if (process.env.NODE_ENV != 'development') {
+      if (process.env.NODE_ENV !== 'development') {
         restList = await axios.post('/api/restaurant_list')
       }
       console.log('Rests: ' + Object.keys(restList.data))
@@ -57,8 +57,15 @@ const actions = {
   }
 }
 
+const getters = {
+  getByProvider: (state) => (id) => {
+    return state[id]
+  }
+}
+
 export const restaurants = {
   actions,
   mutations,
-  state
+  state,
+  getters
 }

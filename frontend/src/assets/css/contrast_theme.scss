@@ -29,6 +29,16 @@ $light-grey-invert: $grey;
 
 $title-color: $light;
 
+// Tabs style
+$tabs-link-active-color: $light;
+$tabs-link-color: $light-grey;
+$tabs-link-hover-color: $light;
+$tabs-border-bottom-color: $light;
+$transparent-background-color: hsla(0, 0%, 0%, 0.0);
+$tabs-boxed-link-hover-background-color: $transparent-background-color;
+$tabs-boxed-link-active-background-color: $transparent-background-color;
+$tabs-boxed-link-active-border-bottom-color: $light;
+
 // 5. Add new color variables to the color map.
 @import "../../../node_modules/bulma/sass/utilities/derived-variables";
 $addColors: (
