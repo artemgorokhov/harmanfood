@@ -30,7 +30,7 @@ def initial_request():
         # restaurants = Storage.find(Restaurant)
         # return jsonify(user=user,
         # 			   restaurants=restaurants)
-        socketio.emit('TEST', user.firstName, broadcast=True, namespace='/')
+        socketio.emit('TEST', user.firstName, broadcast=True, namespace='/ws')
         return jsonify(user=user.as_dict(),
                        patron=user.as_dict())
 
@@ -41,9 +41,3 @@ def restaurant_request():
     if request.method == "POST":
         rest_list = Storage.find(Restaurant)
         return jsonify(restaurants=rest_list)
-
-
-@socketio.on('message', namespace='/')
-def socketlistenmessage(message):
-    print('RECEIVED MESSAGE {}'.format(message))
-
