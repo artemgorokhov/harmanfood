@@ -41,3 +41,9 @@ def restaurant_request():
     if request.method == "POST":
         rest_list = Storage.find(Restaurant)
         return jsonify(restaurants=rest_list)
+
+
+@socketio.on('message', namespace='/')
+def socketlistenmessage(message):
+    print('RECEIVED MESSAGE {}'.format(message))
+
