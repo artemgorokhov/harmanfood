@@ -28,6 +28,7 @@ export default {
     name: 'the-question',
     methods: {
         yesIWannaEat: function() {
+            this.$socket.emit('connect', {mess: 'connected'});
             this.$router.replace( {path: '/home/restaurants'} );
         },
         NoIDont: function() {

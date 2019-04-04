@@ -1,8 +1,9 @@
 from flask import request, jsonify, Response, session
-from webserver import app
+from webserver import app, socketio
 from webserver.auth import do_the_login, authenticate, requires_auth
 from webserver.entities import User, Restaurant
 from webserver.storage import Storage
+from flask_socketio import emit
 
 
 @app.route("/api/login", methods=["POST"])
@@ -29,6 +30,7 @@ def initial_request():
         # restaurants = Storage.find(Restaurant)
         # return jsonify(user=user,
         # 			   restaurants=restaurants)
+        socketio.emit('TEST', user.firstName, broadcast=True, namespace='/')
         return jsonify(user=user.as_dict(),
                        patron=user.as_dict())
 
