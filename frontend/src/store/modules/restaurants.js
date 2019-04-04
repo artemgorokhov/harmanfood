@@ -1,6 +1,7 @@
 import { ACTION_NAMES, MUTATION_NAMES } from '@/store/consts'
 import axios from 'axios'
 import { createRestaurant } from '@/models/restaurant'
+import { mockRestaurants } from '@/store/mock/responses'
 
 // TODO: use localStorage to cache food between sessions
 
@@ -40,7 +41,11 @@ const actions = {
   },
   async [ACTION_NAMES.UPDATE_RESTAURANT_LIST] ({commit}) {
     try {
-      const restList = await axios.post('/api/restaurant_list')
+      var restList = mockRestaurants
+      if (process.env.NODE_ENV !== 'development') {
+        restList = await axios.post('/api/restaurant_list')
+      }
+      console.log('Rests: ' + Object.keys(restList.data))
       for (var i in restList.data.restaurants) {
         var r = restList.data.restaurants[i]
         commit(MUTATION_NAMES.RESTAURANT_LOADED, r)
@@ -52,8 +57,15 @@ const actions = {
   }
 }
 
+const getters = {
+  getByProvider: (state) => (id) => {
+    return state[id]
+  }
+}
+
 export const restaurants = {
   actions,
   mutations,
-  state
+  state,
+  getters
 }

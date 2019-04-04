@@ -29,7 +29,8 @@ def initial_request():
         # restaurants = Storage.find(Restaurant)
         # return jsonify(user=user,
         # 			   restaurants=restaurants)
-        return jsonify(user=user.as_dict())
+        return jsonify(user=user.as_dict(),
+                       patron=user.as_dict())
 
 
 @app.route("/api/restaurant_list", methods=["POST"])

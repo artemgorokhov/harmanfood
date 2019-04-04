@@ -1,6 +1,7 @@
 import { MUTATION_NAMES, ACTION_NAMES } from '@/store/consts.js'
 import axios from 'axios'
 import { createUser } from '@/models/User'
+import { mockInitialResp } from '@/store/mock/responses'
 
 const state = function () {
   return {
@@ -30,10 +31,14 @@ const mutations = {
 const actions = {
   async [ACTION_NAMES.LOAD_MAIN_INFO] ({commit}) {
     try {
-      console.log('Getting main data')
-      const initialResp = await axios.post('/api/initial_data')
+      console.log('Getting main data for ' + process.env.NODE_ENV)
+      var initialResp = mockInitialResp
+      if (process.env.NODE_ENV !== 'development') {
+        initialResp = await axios.post('/api/initial_data')
+      }
       console.log('Initial data is: ' + Object.keys(initialResp.data))
       commit(MUTATION_NAMES.SET_USER, initialResp.data.user)
+      commit(MUTATION_NAMES.PATRON, initialResp.data.patron)
     } catch (error) {
       console.error('Error during loading initial data: ' + error)
       throw new Error(error)
@@ -48,6 +53,19 @@ const actions = {
       commit(MUTATION_NAMES.FLAG_DATA_LOADED)
     } catch (error) {
       console.error('Initial chain failed! ' + error)
+      throw new Error(error)
+    }
+  },
+  async [ACTION_NAMES.I_AM_PATRON] ({commit, state}) {
+    try {
+      console.log('I want to be a patron')
+      if (process.env.NODE_ENV !== 'development') {
+        await axios.post('/api/iampatron')
+      } else {
+        commit(MUTATION_NAMES.PATRON, state.user)
+      }
+    } catch (error) {
+      console.error('Patron request failed: ' + error)
       throw new Error(error)
     }
   }
