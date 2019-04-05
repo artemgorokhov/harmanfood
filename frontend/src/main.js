@@ -2,8 +2,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from '@/store'
+import socket from '@/socket'
 
 Vue.config.productionTip = false
+
+Vue.use(socket)
 
 /* eslint-disable no-new */
 new Vue({

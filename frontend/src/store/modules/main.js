@@ -25,6 +25,9 @@ const mutations = {
   },
   [MUTATION_NAMES.PATRON] (state, payload) {
     state.order.patron = createUser(payload)
+  },
+  'SOCKET_TEST' (msg) {
+    console.log('Received message from socket: ' + msg)
   }
 }
 

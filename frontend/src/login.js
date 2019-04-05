@@ -7,4 +7,4 @@ Vue.config.productionTip = false
 new Vue({
   el: '#loginApp',
   render: h => h(LoginApp)
-});
+})
