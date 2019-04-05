@@ -1,0 +1,2 @@
+class EntityError(RuntimeError):
+    pass

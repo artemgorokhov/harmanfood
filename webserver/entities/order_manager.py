@@ -19,7 +19,7 @@ class OrderManager:
         if order.is_done():
             return False
         order.add_participant(user)
-        cls.calculate_breadwinner(order)
+        cls.calculate_patron(order)
         return Storage.save(order)
 
     @classmethod
@@ -29,10 +29,10 @@ class OrderManager:
         if order.is_done():
             return False
         order.remove_participant(user)
-        cls.calculate_breadwinner(order)
+        cls.calculate_patron(order)
         return Storage.save(order)
 
     @classmethod
-    def calculate_breadwinner(cls, order):
-        print("Calculating breadwinner for order {}".format(order.date.isoformat()))
+    def calculate_patron(cls, order):
+        print("Calculating patron for order {}".format(order.date.isoformat()))
         return False

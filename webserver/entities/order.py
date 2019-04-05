@@ -1,13 +1,15 @@
 from webserver.storage import DBItem
 from datetime import date
+from .order_state import get_state, ClosedState
+from .error import EntityError
 
 
 blank_order = {
     '_id': None,
     'date': None,
-    'participants': set(),
-    'breadwinner': None,
-    'done': False
+    'participants': {},
+    'patron': None,
+    'state': None
 }
 
 
@@ -27,8 +29,16 @@ class Order(DBItem):
         if not record:
             return False
         for key in record:
-            self.__dict__[key] = record[key]
+            if key == 'state':
+                self.state = get_state(record['state'])
+            else:
+                self.__dict__[key] = record[key]
         return True
+
+    def on_event(self, event):
+        if self.state is None:
+            raise EntityError("Trying to change state of uninitialized order")
+        self.state = self.state.on_event(event)
 
     def add_participant(self, user):
         username = user.username
@@ -41,4 +51,15 @@ class Order(DBItem):
         self.participants.remove(username)
 
     def is_done(self):
-        return self.done or (self.date != date.today())
+        return isinstance(self.state, ClosedState)
+
+    def as_dict(self):
+        d = {}
+        for (key, value) in self.__dict__.items():
+            if key == '_id':
+                continue
+            elif key == 'state':
+                d[key] = None if self.state is None else str(self.state)
+            else:
+                d[key] = value
+        return d
