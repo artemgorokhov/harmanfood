@@ -7,15 +7,10 @@ def socketlistenmessage(message):
     print('RECEIVED MESSAGE {}'.format(message))
 
 
-@socketio.on('message')
-def socketlistenmessagenonamespace(message):
-    print('RECEIVED MESSAGE NO NAMESPACE {}'.format(message))
-
-
 @socketio.on('connect', namespace='/ws')
 def test_connect():
     print('CONNECTED!!!!!!!')
-    emit('my response', {'data': 'Connected'})
+    emit('TEST', 'Artem', namespace='/ws')
 
 
 @socketio.on('disconnect', namespace='/ws')

@@ -19,6 +19,7 @@
                 <tr><td><div class="control has-icons-left">
                     <input type="text" 
                          class="input"
+                         spellcheck="false"
                          v-model="login"
                          v-on:keyup.enter="submit"
                          placeholder="LOGIN"/>
@@ -77,8 +78,8 @@ export default {
 <style lang="sass">
 #loginForm
     border: 1px solid gray
-    min-width: 50%
-    max-width: 60%
+    min-width: 35%
+    max-width: 350px
 
 #loginForm img
     height: 2.5em
