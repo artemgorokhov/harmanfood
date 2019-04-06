@@ -1,7 +1,7 @@
 from flask import request, jsonify, Response, session
 from webserver import app, socketio
 from webserver.auth import do_the_login, authenticate, requires_auth
-from webserver.entities import User, Restaurant
+from webserver.entities import User, Restaurant, OrderManager
 from webserver.storage import Storage
 from flask_socketio import emit
 
@@ -27,12 +27,11 @@ def initial_request():
         Storage.load_to(user)
         if user.get_id() is None:
             return authenticate()
-        # restaurants = Storage.find(Restaurant)
-        # return jsonify(user=user,
-        # 			   restaurants=restaurants)
-        socketio.emit('TEST', user.firstName, broadcast=True, namespace='/ws')
+        current_order = OrderManager.get_order()
+        user_order_info = current_order.getParticipant(user)
+        # socketio.emit('TEST', user.firstName, broadcast=True, namespace='/ws')
         return jsonify(user=user.as_dict(),
-                       patron=user.as_dict())
+                       userStage=user_order_info.get_stage())
 
 
 @app.route("/api/restaurant_list", methods=["POST"])

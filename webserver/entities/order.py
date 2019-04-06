@@ -42,7 +42,15 @@ class Order(DBItem):
 
     def add_participant(self, user):
         username = user.username
-        self.participants.add(username)
+        if username in self.participants:
+            return self.participants[username]
+        p = new Participant(username)
+        self.participants[username] = p
+        return p
+
+    def get_participant(self, user):
+        username = user.username
+
 
     def remove_participant(self, user):
         username = user.username
@@ -53,13 +61,16 @@ class Order(DBItem):
     def is_done(self):
         return isinstance(self.state, ClosedState)
 
+    def get_state(self):
+        return None if self.state is None else str(self.state)
+
     def as_dict(self):
         d = {}
         for (key, value) in self.__dict__.items():
             if key == '_id':
                 continue
             elif key == 'state':
-                d[key] = None if self.state is None else str(self.state)
+                d[key] = self.get_state()
             else:
                 d[key] = value
         return d

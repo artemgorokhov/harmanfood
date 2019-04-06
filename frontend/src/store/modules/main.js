@@ -6,6 +6,7 @@ import { mockInitialResp } from '@/store/mock/responses'
 const state = function () {
   return {
     user: createUser(),
+    currentStage: null,
     order: {
       patron: createUser(),
       phase: null
@@ -18,6 +19,10 @@ const mutations = {
   [MUTATION_NAMES.SET_USER] (state, payload) {
     state.user = createUser(payload)
     console.log('Now user is ' + state.user.firstName)
+  },
+  [MUTATION_NAMES.SET_CURRENT_STAGE] (state, stage) {
+    state.currentStage = stage
+    console.log('Current stage is ' + state.currentStage)
   },
   [MUTATION_NAMES.FLAG_DATA_LOADED] (state) {
     console.log('MUTATION ' + state.user.firstName + ' loaded: ' + state.user.isLoaded)
@@ -41,7 +46,7 @@ const actions = {
       }
       console.log('Initial data is: ' + Object.keys(initialResp.data))
       commit(MUTATION_NAMES.SET_USER, initialResp.data.user)
-      commit(MUTATION_NAMES.PATRON, initialResp.data.patron)
+      commit(MUTATION_NAMES.SET_CURRENT_STAGE, initialResp.data.curre)
     } catch (error) {
       console.error('Error during loading initial data: ' + error)
       throw new Error(error)
