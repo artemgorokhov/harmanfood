@@ -18,7 +18,6 @@ class Restaurant(DBItem):
         super().__init__(blank_restaurant)
         self.title = title
         self.provider = provider
-        
 
     @property
     def unique_condition(self):

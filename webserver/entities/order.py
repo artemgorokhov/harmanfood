@@ -2,6 +2,7 @@ from webserver.storage import DBItem
 from datetime import date
 from .order_state import get_state, ClosedState
 from .error import EntityError
+from .participant import Participant
 
 
 blank_order = {
@@ -44,19 +45,18 @@ class Order(DBItem):
         username = user.username
         if username in self.participants:
             return self.participants[username]
-        p = new Participant(username)
+        p = Participant(username)
         self.participants[username] = p
         return p
 
     def get_participant(self, user):
-        username = user.username
-
+        return self.participants.get(user.username, None)
 
     def remove_participant(self, user):
         username = user.username
         if username not in self.participants:
             return
-        self.participants.remove(username)
+        del self.participants[username]
 
     def is_done(self):
         return isinstance(self.state, ClosedState)
