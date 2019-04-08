@@ -14,8 +14,14 @@
 <script>
 export default {
     name: 'participant-item',
-    props: {
-        name: String
+    props: [
+        'participant'
+    ],
+    computed: {
+        name: function() {
+            console.log('this keys: ' + Object.keys(this.participant))
+            return this.participant.firstName + ' ' + this.participant.lastName
+        }
     }
 }
 </script>
@@ -30,7 +36,7 @@ export default {
     width: 300px
 
 .participantName span:after
-    content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
+    content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
 
 .participantPrice
     overflow: hidden
