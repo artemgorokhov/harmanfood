@@ -1,9 +1,13 @@
-from flask import Response
+from flask import Response, render_template
 from flask_restful import Resource, reqparse
-from webserver.auth import do_the_login, authenticate
+from webserver.auth import do_the_login, do_the_logout, authenticate
 
 
 class ApiLogin(Resource):
+    def get(self):
+        do_the_logout()
+        return render_template('login.html')
+
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str, help="User name")

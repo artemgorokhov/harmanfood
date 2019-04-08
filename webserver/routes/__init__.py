@@ -1,12 +1,14 @@
-from . import routes, ws
+from .routes import main_bp
 from .api_restaurants import ApiRestaurant
 from .api_initial import ApiInitialData
 from .api_login import ApiLogin
-from webserver import app
+from flask import Blueprint
 from flask_restful import Api
 
-api = Api(app)
+
+api_bp = Blueprint('api', __name__)
+api = Api(api_bp)
 
 api.add_resource(ApiInitialData, "/api/initial_data")
 api.add_resource(ApiRestaurant, "/api/restaurant_list")
-api.add_resource(ApiLogin, "/api/login")
+api.add_resource(ApiLogin, "/login")

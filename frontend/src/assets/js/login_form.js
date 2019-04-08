@@ -11,7 +11,7 @@ var formIsInvalid = function (login, passwd) {
 
 var submitForm = function (login, passwd, successCb, errorCb) {
   if (!formIsInvalid(login, passwd)) {
-    axios.post('/api/login', {
+    axios.post('/login', {
       username: login,
       password: passwd
     })
