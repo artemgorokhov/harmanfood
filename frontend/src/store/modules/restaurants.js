@@ -43,11 +43,11 @@ const actions = {
     try {
       var restList = mockRestaurants
       if (process.env.NODE_ENV !== 'development') {
-        restList = await axios.post('/api/restaurant_list')
+        restList = await axios.get('/api/restaurant_list')
       }
       console.log('Rests: ' + Object.keys(restList.data))
-      for (var i in restList.data.restaurants) {
-        var r = restList.data.restaurants[i]
+      for (var i in restList.data) {
+        var r = restList.data[i]
         commit(MUTATION_NAMES.RESTAURANT_LOADED, r)
       }
     } catch (error) {

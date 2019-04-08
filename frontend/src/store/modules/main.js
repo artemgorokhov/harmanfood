@@ -42,7 +42,7 @@ const actions = {
       console.log('Getting main data for ' + process.env.NODE_ENV)
       var initialResp = mockInitialResp
       if (process.env.NODE_ENV !== 'development') {
-        initialResp = await axios.post('/api/initial_data')
+        initialResp = await axios.get('/api/initial_data')
       }
       console.log('Initial data is: ' + Object.keys(initialResp.data))
       commit(MUTATION_NAMES.SET_USER, initialResp.data.user)
