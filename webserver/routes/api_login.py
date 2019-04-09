@@ -4,10 +4,6 @@ from webserver.auth import do_the_login, do_the_logout, authenticate
 
 
 class ApiLogin(Resource):
-    def get(self):
-        do_the_logout()
-        return render_template('login.html')
-
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("username", type=str, help="User name")

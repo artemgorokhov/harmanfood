@@ -1,5 +1,5 @@
+from flask import g
 from flask_restful import Resource
-from flask import session
 from webserver.auth import requires_auth, authenticate
 from webserver.storage import Storage
 from webserver.entities import User, OrderManager
@@ -8,7 +8,7 @@ from webserver.entities import User, OrderManager
 class ApiInitialData(Resource):
     @requires_auth
     def get(self):
-        user = User(session["username"])
+        user = User(g.current_user)
         Storage.load_to(user)
         if user.get_id() is None:
             return authenticate()

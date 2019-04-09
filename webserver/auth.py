@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import Response, redirect, url_for
+from flask import Response, redirect, url_for, g
 from flask import session
 from webserver.storage import Storage
 from webserver.entities import User
@@ -14,6 +14,7 @@ def do_the_login(username, password):
 
 
 def do_the_logout():
+    g.current_user = None
     session.pop("username", None)
 
 
@@ -45,8 +46,11 @@ def authenticate():
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        print("Session get: {}".format(session.get("username")))
-        if not session.get("username"):
+        the_user = session.get("username")
+        print("Session get: {}".format(the_user))
+        if not the_user:
+            g.current_user = None
             return redirect(url_for('login'))
+        g.current_user = the_user
         return f(*args, **kwargs)
     return decorated

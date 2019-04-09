@@ -11,4 +11,4 @@ api = Api(api_bp)
 
 api.add_resource(ApiInitialData, "/api/initial_data")
 api.add_resource(ApiRestaurant, "/api/restaurant_list")
-api.add_resource(ApiLogin, "/login")
+api.add_resource(ApiLogin, "/api/login")
