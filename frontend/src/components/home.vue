@@ -22,8 +22,7 @@ export default{
 <style lang="sass">
 .mainContent
     padding: 1em
-    margin: 0
-    height: 100vh
+    height: 90vh
 
 .flexHome
     flex: 1 1 100%

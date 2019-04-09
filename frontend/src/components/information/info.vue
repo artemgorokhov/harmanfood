@@ -4,8 +4,8 @@
             <div class="column is-3 current-restaurant"></div>
             <patron class="column"/>
         </div>
-        <div v-for="p in participants" :key="p.id" class="participantsList">
-            <participant-item v-bind:participant="p"/>
+        <div class="participantsList">
+            <participant-item v-for="p in participants" :key="p.id" v-bind:participant="p"/>
         </div>
     </div>
 </template>
@@ -69,7 +69,7 @@ export default{
 <style lang="sass">
 .infoBlock
     padding: 20px
-    background-color: rgba(250, 250, 250, 0.9)
+    background-color: rgba(230, 230, 235, 1)
 
 .info-head
     border-bottom: 1px solid 
