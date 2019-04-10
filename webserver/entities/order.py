@@ -26,6 +26,13 @@ class Order(DBItem):
     def unique_condition(self):
         return {"date": self.date}
 
+    @property
+    def total(self):
+        _total = 0
+        for _participant in self.participants:
+            _total = _total + _participant.price
+        return _total
+
     def initialize(self, record):
         if not record:
             return False
@@ -45,12 +52,14 @@ class Order(DBItem):
         username = user.username
         if username in self.participants:
             return self.participants[username]
-        p = Participant(username)
-        self.participants[username] = p
+        p = Participant(user)
+        self.participants[username] = p.as_dict()
         return p
 
     def get_participant(self, user):
-        return self.participants.get(user.username, None)
+        p = Participant(user)
+        p.initialize(self.participants.get(user.username, {}))
+        return p
 
     def remove_participant(self, user):
         username = user.username

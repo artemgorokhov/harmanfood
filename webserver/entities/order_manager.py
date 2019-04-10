@@ -10,12 +10,13 @@ class OrderManager:
         order = Order(when)
         storage = storage_helper.get_storage()
         if not storage.load_to(order):
-            storage.create_new(order)
+            order_id = storage.create_new(order)
+            print("created new order, id = {}".format(order_id))
         return order
 
     @classmethod
     def add_participant(cls, user):
-        # TODO: Need to make this operation atomic!!!
+        # TODO: Need to make this operation atomic?
         storage = storage_helper.get_storage()
         order = cls.get_order()
         if order.is_done():

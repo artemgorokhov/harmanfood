@@ -40,8 +40,8 @@ class Storage:
                                               {"$set": item.as_dict()},
                                               upsert=(item.get_id() is None))
 
-    def find(self, dbitemClass, condition=None):
-        collection = self.collections.get(dbitemClass.collection, None)
+    def find(self, db_item_class, condition=None):
+        collection = self.collections.get(db_item_class.collection, None)
         if not collection:
             return False
         cursor = collection.find(condition, projection={'_id': False})
