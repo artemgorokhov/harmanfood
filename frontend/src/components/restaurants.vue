@@ -18,14 +18,8 @@
             v-for="restaurant in restaurants(activeTab)" :key="restaurant.id">
             <restaurant-card v-bind="restaurant"/>
         </div>
-    </div>
-    <footer class="footer has-background-dark">
-        <div class="content has-text-centered">
-            <p>STATUS</p>
-        </div>
-    </footer>
-    </div>
-
+    </div> 
+</div>
 </template>
 
 <script>
