@@ -4,8 +4,8 @@
             <div class="column is-3 current-restaurant"></div>
             <patron class="column"/>
         </div>
-        <div v-for="user in users" :key="user.id" class="participantsList">
-            <participant-item v-bind="user"/>
+        <div class="participantsList">
+            <participant-item v-for="p in participants" :key="p.id" v-bind:participant="p"/>
         </div>
     </div>
 </template>
@@ -22,8 +22,45 @@ export default{
     },
     data() {
         return {
-            users: [ {name: 'Артем'},
-                    {name: 'Алексей'} ]
+            participants: [
+                {
+                    firstName: 'Артем',
+                    lastName: 'Горохов',
+                    phase: 'Выбирает еду (Woking)',
+                    food: [
+                        {
+                            name: 'Филадельфия 2',
+                            price: '199р'
+                        },
+                        {
+                            name: 'Лапша с курицей',
+                            options: ['терияки'],
+                            price: '229р'
+                        }
+                    ]
+                },
+                {
+                    firstName: 'Алексей',
+                    lastName: 'Канаев',
+                    phase: 'Выбирает ресторан'
+                },
+                {
+                    firstName: 'Дмитрий',
+                    lastName: 'Логанов',
+                    phase: 'Выбирает еду (Burger King)',
+                    food: [
+                        {
+                            name: 'Картошечка фри',
+                            price: '100р'
+                        },
+                        {
+                            name: 'Бургер с говядиной',
+                            options: ['чили', 'без лука'],
+                            price: '249р'
+                        }
+                    ]
+                }
+            ]
         }
     }
 }
@@ -32,7 +69,7 @@ export default{
 <style lang="sass">
 .infoBlock
     padding: 20px
-    background-color: rgba(250, 250, 250, 0.9)
+    background-color: rgba(230, 230, 235, 1)
 
 .info-head
     border-bottom: 1px solid 
