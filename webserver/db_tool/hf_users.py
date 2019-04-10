@@ -1,5 +1,5 @@
 from webserver.entities import User
-from webserver.storage import Storage
+from webserver.storage.storage import Storage
 
 user_records = {
     'Artem.Gorokhov': {
@@ -48,9 +48,10 @@ user_records = {
 }
 
 
-def update():
+def update(db):
+    storage = Storage(db)
     for username, record in user_records.items():
         user = User(username.lower())
         user.initialize(record)
         print(user.as_dict())
-        print('{}: {}'.format(username, Storage.save(user)))
+        print('{}: {}'.format(username, storage.save(user)))

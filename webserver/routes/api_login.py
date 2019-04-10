@@ -1,6 +1,6 @@
-from flask import Response, render_template
+from flask import Response
 from flask_restful import Resource, reqparse
-from webserver.auth import do_the_login, do_the_logout, authenticate
+from webserver.auth import do_the_login, authenticate
 
 
 class ApiLogin(Resource):

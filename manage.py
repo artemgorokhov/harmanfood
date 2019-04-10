@@ -1,5 +1,6 @@
 from flask_script import Manager, Server as _Server, Option
-from webserver import create_app, socketio
+from webserver import create_app, socketio, db
+import webserver.db_tool as db_tool
 
 manager = Manager(create_app)
 
@@ -55,6 +56,12 @@ class Server(_Server):
 
 
 manager.add_command("runserver", Server())
+
+
+@manager.command
+def refreshdb():
+    db_tool.hf_users.update(db)
+    db_tool.hf_restaurants.update(db)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 from .order import Order
-from webserver.storage import Storage
+import webserver.storage as storage_helper
 from datetime import date
 
 
@@ -8,29 +8,32 @@ class OrderManager:
     @classmethod
     def get_order(cls, when=date.today()):
         order = Order(when)
-        if not Storage.load_to(order):
-            Storage.create_new(order)
+        storage = storage_helper.get_storage()
+        if not storage.load_to(order):
+            storage.create_new(order)
         return order
 
     @classmethod
     def add_participant(cls, user):
-        # TODO: Need to make this operation atomic (with redis)!!!
+        # TODO: Need to make this operation atomic!!!
+        storage = storage_helper.get_storage()
         order = cls.get_order()
         if order.is_done():
             return False
         order.add_participant(user)
         cls.calculate_patron(order)
-        return Storage.save(order)
+        return storage.save(order)
 
     @classmethod
     def remove_participant(cls, user):
         # TODO: atomic operation
+        storage = storage_helper.get_storage()
         order = cls.get_order()
         if order.is_done():
             return False
         order.remove_participant(user)
         cls.calculate_patron(order)
-        return Storage.save(order)
+        return storage.save(order)
 
     @classmethod
     def calculate_patron(cls, order):

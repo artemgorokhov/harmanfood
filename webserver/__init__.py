@@ -1,13 +1,13 @@
 import os
+from pymongo import MongoClient
 from flask import Flask
 from flask_cors import CORS
 from flask_socketio import SocketIO
-from webserver.storage import Storage
 from config import config
 
-# TODO: implement storage management
-# db = Storage()
-
+# Extensions
+db_client = MongoClient()
+db = db_client.harmanfood
 socketio = SocketIO()
 
 
