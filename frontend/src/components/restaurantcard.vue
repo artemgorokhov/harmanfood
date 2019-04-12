@@ -1,5 +1,6 @@
 <template>
-  <div class="card card-equal-height has-text-centered">
+  <div class="card card-equal-height has-text-centered"
+       v-on:click="select">
     <div class="card-image">
       <figure class="image is-4by3">
         <img :src="asset_path" alt="Placeholder image"/>
@@ -23,6 +24,12 @@ export default {
   computed: {
     asset_path: function () {
       return require("@/assets/img/places/" + this.$props.asset)
+    }
+  },
+  methods: {
+    select() {
+        console.log("Restaurant is chosen")
+        this.$router.replace( {path: '/home/food'} )
     }
   }
 }
