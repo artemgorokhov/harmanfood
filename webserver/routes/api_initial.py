@@ -21,5 +21,6 @@ class ApiInitialData(Resource):
         # socketio.emit('TEST', user.firstName, broadcast=True, namespace='/ws')
         return {
             'user': user.as_dict(),
-            'userStage': str(user_stage)
+            'userStage': str(user_stage),
+            'orderIsDone': current_order.is_done()
         }

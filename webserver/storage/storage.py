@@ -1,4 +1,5 @@
 from .db_item import DBItem
+from pymongo import ReturnDocument
 
 
 class Storage:
@@ -7,7 +8,8 @@ class Storage:
         self.db = db
         self.collections = {
             'eaters': db.eaters,
-            'restaurants': db.restaurants
+            'restaurants': db.restaurants,
+            'orders': db.orders
         }
 
     def insert(self, item):
@@ -23,22 +25,24 @@ class Storage:
     def load_to(self, item):
         collection = self.collections.get(item.collection, None)
         if not collection:
-            return False
+            raise RuntimeError('No collection {}'.format(item.collection))
         return item.initialize(collection.find_one(item.unique_condition))
 
     def create_new(self, item):
         collection = self.collections.get(item.collection, None)
         if not collection:
-            return False
+            return None
         return collection.insert_one(item.as_dict()).inserted_id
 
     def save(self, item):
         collection = self.collections.get(item.collection, None)
         if not collection:
-            return False
+            return None
+        print('SAVING: {}'.format(item.as_dict()))
         return collection.find_one_and_update(item.unique_condition,
                                               {"$set": item.as_dict()},
-                                              upsert=(item.get_id() is None))
+                                              upsert=(item.get_id() is None),
+                                              return_document=ReturnDocument.AFTER)
 
     def find(self, db_item_class, condition=None):
         collection = self.collections.get(db_item_class.collection, None)

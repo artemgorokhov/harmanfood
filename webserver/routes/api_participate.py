@@ -19,7 +19,11 @@ class ApiParticipate(Resource):
             if user.get_id() is None:
                 return authenticate()
             participant = OrderManager.add_participant(user)
-            print('Participant: {}'.format(participant))
+            if not participant:
+                return {
+                    'participate': False,
+                    'reason': 'Order is done'
+                }
             return {
                 'participate': True,
                 'initial_stage': str(participant['stage']),
@@ -28,5 +32,6 @@ class ApiParticipate(Resource):
             }
         else:
             return {
-                'participate': False
+                'participate': False,
+                'reason': 'Your choice'
             }

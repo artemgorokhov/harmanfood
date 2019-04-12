@@ -1,5 +1,5 @@
 from webserver.storage import DBItem
-from datetime import date
+import datetime
 from .order_state import get_state, ClosedState
 from .error import EntityError
 
@@ -15,9 +15,11 @@ blank_order = {
 
 class Order(DBItem):
 
-    collection = "order"
-    
-    def __init__(self, when=date.today()):
+    collection = "orders"
+
+    def __init__(self, when=datetime.date.today()):
+        # Have to use date with time as pymongo does not accept date without time
+        when = datetime.datetime.combine(when, datetime.time.min)
         super().__init__(blank_order)
         self.date = when
 
@@ -54,12 +56,12 @@ class Order(DBItem):
             return self.participants[username]
         participant = {
             'name': user.full_name,
-            'stage': get_state(''),
+            'stage': str(get_state('choosing restaurant')),
             'food': [],
             'restaurant': None
         }
+        print("NEW PARTICIPANT: {}".format(participant))
         self.participants[username] = participant
-        print("Returning participant {}".format(participant))
         return participant
 
     def get_participant(self, user):
@@ -74,6 +76,9 @@ class Order(DBItem):
     def is_done(self):
         return isinstance(self.state, ClosedState)
 
+    def state_event(self, event):
+        self.state = self.state.on_event(event)
+
     def get_state(self):
         return None if self.state is None else str(self.state)
 
@@ -83,7 +88,7 @@ class Order(DBItem):
             if key == '_id':
                 continue
             elif key == 'state':
-                d[key] = self.get_state()
+                d[key] = str(self.get_state())
             else:
                 d[key] = value
         return d

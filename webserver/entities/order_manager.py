@@ -22,9 +22,11 @@ class OrderManager:
         if order.is_done():
             return False
         participant = order.add_participant(user)
+        # In case it was not started, it will be
+        order.state_event('start')
         cls.calculate_patron(order)
-        # TODO: check if save succeed
-        storage.save(order)
+        if not storage.save(order):
+            return False
         return participant
 
     @classmethod

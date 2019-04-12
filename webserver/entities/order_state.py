@@ -3,6 +3,7 @@ from abc import abstractmethod
 
 def get_state(state_id):
     for state_klass in OrderState.__subclasses__():
+        print('Searching {} == {}'.format(state_id, state_klass.state_id))
         if state_id == state_klass.state_id:
             return state_klass()
     return NotStartedState()
@@ -14,11 +15,6 @@ class OrderState:
         Base class for order states
         """
         print("Current state: {}".format(self))
-
-    @property
-    @abstractmethod
-    def state_id(self):
-        pass
 
     @abstractmethod
     def on_event(self, event):
@@ -32,9 +28,7 @@ class OrderState:
 
 
 class NotStartedState(OrderState):
-    @property
-    def state_id(self):
-        return 'not started'
+    state_id = 'not started'
 
     def on_event(self, event):
         if event == 'start':
@@ -43,9 +37,7 @@ class NotStartedState(OrderState):
 
 
 class RestaurantState(OrderState):
-    @property
-    def state_id(self):
-        return 'choosing restaurant'
+    state_id = 'choosing restaurant'
 
     def on_event(self, event):
         if event == 'restaurant_selected':
@@ -54,9 +46,7 @@ class RestaurantState(OrderState):
 
 
 class MenuState(OrderState):
-    @property
-    def state_id(self):
-        return 'choosing food'
+    state_id = 'choosing food'
 
     def on_event(self, event):
         if event == 'menu_selected':
@@ -65,9 +55,7 @@ class MenuState(OrderState):
 
 
 class DeliveryState(OrderState):
-    @property
-    def state_id(self):
-        return 'delivering'
+    state_id = 'delivering'
 
     def on_event(self, event):
         if event == 'delivered':
@@ -76,9 +64,7 @@ class DeliveryState(OrderState):
 
 
 class PaymentState(OrderState):
-    @property
-    def state_id(self):
-        return 'payment'
+    state_id = 'payment'
 
     def on_event(self, event):
         if event == 'paid':
@@ -87,9 +73,7 @@ class PaymentState(OrderState):
 
 
 class ClosedState(OrderState):
-    @property
-    def state_id(self):
-        return 'closed'
+    state_id = 'closed'
 
     def on_event(self, event):
         return self
