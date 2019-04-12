@@ -27,7 +27,8 @@ const routes = [
       { path: 'food', component: Food }
     ] },
   { path: '/loading', component: Loading },
-  { path: '/error', component: ErrorPage }
+  { path: '/error', component: ErrorPage },
+  { path: '/info', component: ErrorPage }
 ]
 
 Vue.use(Router)

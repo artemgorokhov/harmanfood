@@ -21,9 +21,11 @@ class OrderManager:
         order = cls.get_order()
         if order.is_done():
             return False
-        order.add_participant(user)
+        participant = order.add_participant(user)
         cls.calculate_patron(order)
-        return storage.save(order)
+        # TODO: check if save succeed
+        storage.save(order)
+        return participant
 
     @classmethod
     def remove_participant(cls, user):

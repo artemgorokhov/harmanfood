@@ -5,14 +5,15 @@
                {{ username }}, хочешь пообедать?
         </p>
         <nav class="buttons-level">
-            <a v-on:click="yesIWannaEat"
-                :disabled="!!yesButtonDisabled"
-               class="button 
+            <a @click="sendAnswer(true)"
+                :disabled="!!decisionButtonDisabled"
+                class="button 
                     is-pulled-left
                     is-success
                     is-large">Да!</a>
-            <a v-on:click="NoIDont"
-               class="button 
+            <a @click="sendAnswer(false)"
+                :disabled="!!decisionButtonDisabled"
+                class="button 
                     is-pulled-right
                     is-danger
                     is-large
@@ -30,24 +31,29 @@ export default {
     name: 'the-question',
     data: function() {
         return {
-            yesButtonDisabled: false
+            decisionButtonDisabled: false
         }
     },
     methods: {
-        yesIWannaEat: function() {
-            this.yesButtonDisabled = true;
+        sendAnswer: function(iWannaEat) {
+            this.decisionButtonDisabled = true;
             var _this = this
-            axios.post('/api/participate')
-                .then(function() {
-                    _this.$router.replace( {path: '/home/restaurants'} )
+            axios.post('/api/participate', {the_answer: iWannaEat})
+                .then(function(response) {
+                    console.log('Participate response: ' + Object.keys(response.data))
+                    console.log('RESULT: ' + response.data.participate)
+                    if (!response.data.participate) {
+                        _this.$router.replace( {path: '/info'} )
+                    } else {
+                        _this.$router.replace( {path: '/home/restaurants'} )
+                    }
+                    _this.decisionButtonDisabled = false
                 })
                 .catch(function() {
-                    _this.yesButtonDisabled = false
+                    _this.decisionButtonDisabled = false
                     console.error('Something went wrong with your participation')
+                    _this.$router.replace( {path: '/error'} )
                 })
-        },
-        NoIDont: function() {
-            this.$router.replace( {path: '/info'} );
         }
     },
     computed: {

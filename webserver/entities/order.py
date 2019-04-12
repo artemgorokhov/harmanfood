@@ -2,7 +2,6 @@ from webserver.storage import DBItem
 from datetime import date
 from .order_state import get_state, ClosedState
 from .error import EntityError
-from .participant import Participant
 
 
 blank_order = {
@@ -51,15 +50,20 @@ class Order(DBItem):
     def add_participant(self, user):
         username = user.username
         if username in self.participants:
+            print("Participant already there")
             return self.participants[username]
-        p = Participant(user)
-        self.participants[username] = p.as_dict()
-        return p
+        participant = {
+            'name': user.full_name,
+            'stage': get_state(''),
+            'food': [],
+            'restaurant': None
+        }
+        self.participants[username] = participant
+        print("Returning participant {}".format(participant))
+        return participant
 
     def get_participant(self, user):
-        p = Participant(user)
-        p.initialize(self.participants.get(user.username, {}))
-        return p
+        return self.participants.get(user.username, {})
 
     def remove_participant(self, user):
         username = user.username
