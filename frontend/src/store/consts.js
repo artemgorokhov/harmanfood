@@ -1,5 +1,6 @@
 export const MUTATION_NAMES = {
   SET_USER: 'set user',
+  SET_CURRENT_STAGE: 'current stage',
   FLAG_DATA_LOADED: 'flag data loaded',
   PATRON: 'patron',
   RESTAURANT_UPTODATE: 'restaurant is up-to-date',

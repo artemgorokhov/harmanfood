@@ -1,58 +1,51 @@
-from pymongo import MongoClient
 from .db_item import DBItem
+from pymongo import ReturnDocument
 
 
 class Storage:
-    client = MongoClient()
-    db = client.harmanfood
 
-    # Collections
-    collections = {
-        'eaters': db.eaters,
-        'restaurants': db.restaurants
-    }
+    def __init__(self, db):
+        self.db = db
+        self.collections = {
+            'eaters': db.eaters,
+            'restaurants': db.restaurants,
+            'orders': db.orders
+        }
 
-    def __init__(self):
-        print('Initializing Storage instance')
-
-    @staticmethod
-    def insert(item):
+    def insert(self, item):
         if not isinstance(item, DBItem):
             return None
         return 1
 
-    @staticmethod
-    def update(item):
+    def update(self, item):
         if not isinstance(item, DBItem):
             return None
         return 1
 
-    @classmethod
-    def load_to(cls, item):
-        collection = cls.collections.get(item.collection, None)
+    def load_to(self, item):
+        collection = self.collections.get(item.collection, None)
         if not collection:
-            return False
+            raise RuntimeError('No collection {}'.format(item.collection))
         return item.initialize(collection.find_one(item.unique_condition))
 
-    @classmethod
-    def create_new(cls, item):
-        collection = cls.collections.get(item.collection, None)
+    def create_new(self, item):
+        collection = self.collections.get(item.collection, None)
         if not collection:
-            return False
+            return None
         return collection.insert_one(item.as_dict()).inserted_id
 
-    @classmethod
-    def save(cls, item):
-        collection = cls.collections.get(item.collection, None)
+    def save(self, item):
+        collection = self.collections.get(item.collection, None)
         if not collection:
-            return False
+            return None
+        print('SAVING: {}'.format(item.as_dict()))
         return collection.find_one_and_update(item.unique_condition,
                                               {"$set": item.as_dict()},
-                                              upsert=(item.get_id() is None))
+                                              upsert=(item.get_id() is None),
+                                              return_document=ReturnDocument.AFTER)
 
-    @classmethod
-    def find(cls, dbitemClass, condition=None):
-        collection = cls.collections.get(dbitemClass.collection, None)
+    def find(self, db_item_class, condition=None):
+        collection = self.collections.get(db_item_class.collection, None)
         if not collection:
             return False
         cursor = collection.find(condition, projection={'_id': False})

@@ -1,5 +1,5 @@
 from webserver.entities import Restaurant
-from webserver.storage import Storage
+from webserver.storage.storage import Storage
 
 restaurant_records = [
 	{
@@ -50,9 +50,10 @@ restaurant_records = [
 ]
 
 
-def update():
+def update(db):
+	storage = Storage(db)
 	for r in restaurant_records:
 		rest = Restaurant(r['title'], r['provider'])
 		rest.initialize(r)
-		print("Written {}: {}".format(r['title'], Storage.save(rest)))
+		print("Written {}: {}".format(r['title'], storage.save(rest)))
 

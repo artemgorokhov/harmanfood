@@ -1,9 +1,13 @@
+aniso8601==6.0.0
 astroid==2.2.5
 Click==7.0
 colorama==0.4.1
 Flask==1.0.2
 Flask-BasicAuth==0.2.0
 Flask-Cors==3.0.7
+Flask-RESTful==0.3.7
+Flask-Script==2.0.6
+Flask-SocketIO==3.3.2
 isort==4.3.15
 itsdangerous==1.1.0
 Jinja2==2.10
@@ -13,6 +17,8 @@ mccabe==0.6.1
 passlib==1.7.1
 pylint==2.3.1
 pymongo==3.7.2
+python-engineio==3.5.0
+python-socketio==3.1.2
 pytz==2018.9
 redis==3.2.1
 six==1.12.0

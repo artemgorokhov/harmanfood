@@ -31,6 +31,10 @@ class User(DBItem):
     def unique_condition(self):
         return {"username": self.username}
 
+    @property
+    def full_name(self):
+        return '{} {}'.format(self.firstName, self.lastName)
+
     def initialize(self, record):
         if not record:
             return False

@@ -1,7 +1,7 @@
 from functools import wraps
-from flask import Response, redirect, url_for
+from flask import Response, redirect, url_for, g
 from flask import session
-from webserver.storage import Storage
+import webserver.storage as storage_helper
 from webserver.entities import User
 
 
@@ -14,18 +14,20 @@ def do_the_login(username, password):
 
 
 def do_the_logout():
+    g.current_user = None
     session.pop("username", None)
 
 
 def check_auth(username, password):
     print("Checking auth for user {}".format(username))
     user = User(username)
-    Storage.load_to(user)
+    storage = storage_helper.get_storage()
+    storage.load_to(user)
     if user.get_id() is None:
         print("There is no user {} in database".format(username))
         return False
     if user.password_to_be_reset(password):
-        Storage.save(user)
+        storage.save(user)
         return True
     if not user.verify_password(password):
         print("Wrong password for user {}".format(username))
@@ -45,8 +47,11 @@ def authenticate():
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        print("Session get: {}".format(session.get("username")))
-        if not session.get("username"):
-            return redirect(url_for('login'))
+        the_user = session.get("username")
+        print("Session get: {}".format(the_user))
+        if not the_user:
+            g.current_user = None
+            return redirect(url_for('main.login'))
+        g.current_user = the_user
         return f(*args, **kwargs)
     return decorated
