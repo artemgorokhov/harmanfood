@@ -46,8 +46,8 @@ const actions = {
         restList = await axios.get('/api/restaurant_list')
       }
       console.log('Rests: ' + Object.keys(restList.data))
-      for (var i in restList.data) {
-        var r = restList.data[i]
+      for (var i in restList.data.restaurants) {
+        var r = restList.data.restaurants[i]
         commit(MUTATION_NAMES.RESTAURANT_LOADED, r)
       }
     } catch (error) {

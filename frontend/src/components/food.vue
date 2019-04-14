@@ -7,31 +7,32 @@
                     <food-item v-bind="dish"/>
                 </li>
             </ul>
-        </div>        
+        </div>   
+        <div class="column">
+            <div class="food-details-card">
+                <span class="icon">
+                    <i class="fas fa-utensils"></i>
+                </span>
+            </div>
+        </div>     
     </div>
 </template>
 
 <script>
 import FoodItem from './fooditem.vue'
-console.log('Dish ' + (FoodItem.name))
 export default {
     data: function() {
         return {
             menu: [
                 {
-                    title: 'Филадельфия 2 260г',
+                    title: 'Филадельфия 2 260 г',
                     price: 199,
-                    category: 'Роллы'
+                    category: 'Популярное'
                 },
                 {
-                    title: 'Сливочный лосось 220г',
+                    title: 'Горячая филадельфия 330 г',
                     price: 249,
-                    category: 'Роллы'
-                },
-                {
-                    title: 'Сливочный лосось 220г',
-                    price: 199,
-                    category: 'Роллы'
+                    category: 'Популярное'
                 }
             ]
         }
@@ -41,3 +42,11 @@ export default {
     }
 }
 </script>
+
+<style lang="sass">
+.food-details-card
+    border: #f9f8ec 10px solid
+    margin: 1em
+    min-height: 400px
+    border-radius: 30px
+</style>

@@ -8,6 +8,7 @@ delivery_dish_selector = '#{}+.dish_list>li'
 delivery_title_selector = '.product_title'
 delivery_pic_selector = '.main_img>img'
 delivery_detail_selector = '.dish_detail'
+delivery_price_selector = 'form>p>strong>span:first-child'
 address_selector = '#user-addr__input'
 address_button_selector = 'a.user-addr__submit'
 close_time = '#close_time_window'
@@ -27,9 +28,11 @@ def get_food(html):
             title = food_el.find(delivery_title_selector)[0]
             pic = food_el.find(delivery_pic_selector)[0]
             detail = food_el.find(delivery_detail_selector)[0]
+            price = food_el.find(delivery_price_selector)[0]
             result.append({
                 'category': category_el.text,
                 'title': title.text,
+                'price': price.text,
                 'pic': pic.attrs['src'],
                 'description': detail.text
             }
@@ -43,7 +46,7 @@ async def main():
     # await r.html.arender(keep_page=True)
     # print('Vendor: {}'.format(r.html.find(vendor_selector)[0].attrs['href']))
     # page = r.html.page
-    browser = await launch({"headless": False})
+    browser = await launch({"headless": True})
     page = await browser.newPage()
     await page.goto('https://nn.delivery-club.ru/srv/Wok__Go/')
     print('PAGE URL: {}'.format(page.url))

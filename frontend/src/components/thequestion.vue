@@ -38,6 +38,10 @@ export default {
         sendAnswer: function(iWannaEat) {
             this.decisionButtonDisabled = true;
             var _this = this
+            if (process.env.NODE_ENV === 'development') {
+                _this.$router.replace( {path: '/home/restaurants'})
+                return
+            }
             axios.post('/api/participate', {the_answer: iWannaEat})
                 .then(function(response) {
                     console.log('Participate response: ' + Object.keys(response.data))
