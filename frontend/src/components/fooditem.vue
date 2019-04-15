@@ -1,7 +1,8 @@
 <template>
     <div class="card food-item-card">
-        <div class="card-content is-unselectable food-item-content">
+        <div class="is-unselectable food-item-content">
             <span class="has-text-dark is-size-6">{{ title }}</span>
+            <span class="food-item-price is-pulled-right">{{ price }} &#x20bd;</span>
         </div>
     </div>
 </template>
@@ -11,7 +12,8 @@
         name: 'food-item',
         props: {
             title: String,
-            price: Number
+            price: Number,
+            category: String
         },
         methods: {
             select() {
@@ -22,9 +24,16 @@
 </script>
 
 <style lang="sass">
+@import "@/assets/css/contrast_theme.scss"
 .food-item-card
     cursor: pointer
+    background-color: $light
+    margin-bottom: 0.3em
 
 .food-item-content
     padding: 0.7em
+
+.food-item-price
+    font-weight: bold
+    color: $dark
 </style>

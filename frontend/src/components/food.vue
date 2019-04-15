@@ -1,52 +1,58 @@
 <template>
     <div class="columns is-mobile">
-        <div class="column is-one-third">
+        <div class="column is-half is-paddingless">
             <ul class="with-border">
                 <li v-for="dish in menu"
                     :key="dish.id">
-                    <food-item v-bind="dish"/>
+                    <food-item v-bind="dish"
+                        @click.native="foodItemSelect(dish)"/>
                 </li>
             </ul>
-        </div>   
-        <div class="column">
-            <div class="food-details-card">
-                <span class="icon">
-                    <i class="fas fa-utensils"></i>
-                </span>
-            </div>
-        </div>     
+        </div>
+        <div class="column is-paddingless">
+            <food-details
+                v-bind="current_dish"
+                v-on:add-dish="addToBasket"/>
+        </div>
     </div>
 </template>
 
 <script>
 import FoodItem from './fooditem.vue'
+import FoodDetails from './fooddetails.vue'
 export default {
     data: function() {
         return {
+            current_dish: null,
             menu: [
                 {
                     title: 'Филадельфия 2 260 г',
                     price: 199,
-                    category: 'Популярное'
+                    category: 'Популярное',
+                    description: '8 кусочков. Рис, нори, сыр творожный, лосось, огурец'
                 },
                 {
                     title: 'Горячая филадельфия 330 г',
                     price: 249,
-                    category: 'Популярное'
+                    category: 'Популярное',
+                    description: '10 кусочков! рис, нори, сыр творожный, огурец, лосось, соус терияки, кунжут'
                 }
             ]
         }
     },
+    methods: {
+        foodItemSelect(dish) {
+            console.log('Clicked: ' + dish.title)
+            this.current_dish = dish
+        },
+        addToBasket(payload) {
+            console.log("Adding to basket " + payload.title)
+            this.current_dish = null
+        }
+    },
     components: {
-        FoodItem
+        FoodItem,
+        FoodDetails
     }
 }
 </script>
-
-<style lang="sass">
-.food-details-card
-    border: #f9f8ec 10px solid
-    margin: 1em
-    min-height: 400px
-    border-radius: 30px
-</style>
