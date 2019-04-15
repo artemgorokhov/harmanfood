@@ -5,6 +5,8 @@
                 <li v-for="dish in menu"
                     :key="dish.id">
                     <food-item v-bind="dish"
+                        :class="{ selected: dish == current_dish }"
+                        v-bind:amount="0"
                         @click.native="foodItemSelect(dish)"/>
                 </li>
             </ul>
@@ -13,6 +15,13 @@
             <food-details
                 v-bind="current_dish"
                 v-on:add-dish="addToBasket"/>
+            <ul class="my-dishes-list">
+                <li v-for="mydish in selectedFood"
+                    :key="mydish.id">
+                    <food-item v-bind="mydish"
+                        @click.native="myDishSelect(mydish)"/>
+                </li>    
+            </ul>
         </div>
     </div>
 </template>
@@ -24,6 +33,7 @@ export default {
     data: function() {
         return {
             current_dish: null,
+            selectedFood: [],
             menu: [
                 {
                     title: 'Филадельфия 2 260 г',
@@ -135,6 +145,10 @@ export default {
             console.log('Clicked: ' + dish.title)
             this.current_dish = dish
         },
+        myDishSelect(mydish) {
+            console.log('Selected my dish ' + mydish.title)
+            this.current_dish = mydish
+        },
         addToBasket(payload) {
             console.log("Adding to basket " + payload.title)
             this.current_dish = null
@@ -150,7 +164,7 @@ export default {
 <style lang="sass">
 @import "@/assets/css/contrast_theme.scss"
 .food-view
-    height: calc(100% + 1.5rem)
+    height: calc(100% + 1.5rem - 6rem)
 
 .dishes-list
     overflow-y: auto
@@ -159,5 +173,9 @@ export default {
 
 .dishes-list::-webkit-scrollbar
     display: none
+
+.my-dishes-list
+    height: 12rem
+    border-top: $light 1px solid
 
 </style>

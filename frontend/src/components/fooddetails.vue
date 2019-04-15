@@ -44,18 +44,18 @@
 @import "@/assets/css/contrast_theme.scss"
 .food-details-card
     margin: 1em
-    min-height: 400px
+    height: calc(100% + 1.5rem - 6rem - 12rem)
     border-radius: 30px
 
 .food-details-empty
     border: $light 10px dashed
     border-radius: inherit
-    min-height: inherit
+    height: 100%
 
 .food-details-selected
     border: $light 10px solid
     border-radius: inherit
-    min-height: inherit
+    height: 100%
     text-align: center
 
 .dish-icon
