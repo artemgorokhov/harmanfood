@@ -33,7 +33,6 @@ export default {
     data: function() {
         return {
             current_dish: null,
-            selectedFood: [],
             menu: [
                 {
                     title: 'Филадельфия 2 260 г',
@@ -141,6 +140,7 @@ export default {
         }
     },
     methods: {
+        selectedDishes({title: })
         foodItemSelect(dish) {
             console.log('Clicked: ' + dish.title)
             this.current_dish = dish
@@ -175,7 +175,7 @@ export default {
     display: none
 
 .my-dishes-list
-    height: 12rem
+    height: calc(100% - 27rem)
     border-top: $light 1px solid
 
 </style>

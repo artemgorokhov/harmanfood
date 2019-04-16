@@ -13,9 +13,11 @@
           <i class="fas fa-hamburger"></i>
           <p>{{ title }}</p>
           <p class="dish-description">{{ description }}</p>
+        </span>
+        <div class="food-details-footer">
           <a class="button add-dish-btn is-success"
             @click.prevent="add">Добавить</a>
-        </span>
+        </div>
       </div>
   </div>
 </template>
@@ -44,7 +46,7 @@
 @import "@/assets/css/contrast_theme.scss"
 .food-details-card
     margin: 1em
-    height: calc(100% + 1.5rem - 6rem - 12rem)
+    height: 25rem
     border-radius: 30px
 
 .food-details-empty
@@ -57,6 +59,7 @@
     border-radius: inherit
     height: 100%
     text-align: center
+    position: relative
 
 .dish-icon
     width: 80%
@@ -64,7 +67,7 @@
     margin: auto
     display: block
     text-align: center
-    padding: 40% 0
+    padding-top: 6rem
 
 .dish-icon>i
     font-size: 7rem
@@ -77,6 +80,10 @@
 .dish-icon>p
     font-size: 1.2rem
 
-.add-dish-btn
-    margin-top: 1rem
+.food-details-footer
+    position: absolute
+    bottom: 0
+    width: 100%
+    margin-bottom: 1rem
+
 </style>
