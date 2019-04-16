@@ -32,8 +32,8 @@ export default {
   methods: {
     select() {
         console.log("Restaurant is chosen")
-        let current_restaurant = createRestaurant({title: title, provider: provider})
-        this.$store.commit(MUTATION_NAMES.CURRENT_RESTAURANT, restaurant)
+        let current_restaurant = createRestaurant({title: this.title, provider: this.provider})
+        this.$store.commit(MUTATION_NAMES.CURRENT_RESTAURANT, current_restaurant)
         this.$router.replace( {path: '/home/food'} )
     }
   }

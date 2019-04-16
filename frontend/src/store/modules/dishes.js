@@ -26,7 +26,8 @@ const mutations = {
 const actions = {
   async [ACTION_NAMES.SWITCH_RESTAURANT] ({commit, state}) {
     // Not really async yet
-    if (!state.chosen_restaurant.equal(state.restaurant_on_view)) {
+    if (state.chosen_restaurant === null ||
+      !state.chosen_restaurant.equal(state.restaurant_on_view)) {
       console.log('Change restaurant of my dinner from ' + state.chosen_restaurant.title + ' to ' + state.restaurant_on_view.title)
       commit(MUTATION_NAMES.SWITCH_RESTAURANT)
     } else {
@@ -34,7 +35,8 @@ const actions = {
     }
   },
   async [ACTION_NAMES.ADD_DISH_TO_MY_DINNER] ({commit, state}, dish) {
-    if (state.chosen_restaurant == null || !state.chosen_restaurant.equal(state.restaurant_on_view)) {
+    if (state.chosen_restaurant == null || 
+      !state.chosen_restaurant.equal(state.restaurant_on_view)) {
       commit(MUTATION_NAMES.SWITCH_RESTAURANT)
     }
     let dishes = state.dishes
@@ -61,7 +63,12 @@ const actions = {
 
 const getters = {
   getByRestaurant: (state) => () => {
+    if (state.chosen_restaurant === null) {
+      console.log("No restaurant is chosen yet")
+      return []
+    }
     if (state.chosen_restaurant.equal(state.restaurant_on_view)) {
+      console.log("Get selected dishes for this restaurant")
       let dishList = []
       for (var dishtitle in state.dishes) {
         if (state.dishes.hasOwnProperty(dishtitle)) {
@@ -70,6 +77,7 @@ const getters = {
       }
       return dishList
     }
+    console.log("Getting dishes from another restaurant")
     return []
   }
 }

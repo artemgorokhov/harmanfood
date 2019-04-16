@@ -16,7 +16,7 @@
                 v-bind="current_dish"
                 v-on:add-dish="addToBasket"/>
             <ul class="my-dishes-list">
-                <li v-for="mydish in selectedFood"
+                <li v-for="mydish in selectedDishes()"
                     :key="mydish.id">
                     <food-item v-bind="mydish"
                         @click.native="myDishSelect(mydish)"/>
@@ -29,6 +29,7 @@
 <script>
 import FoodItem from './fooditem.vue'
 import FoodDetails from './fooddetails.vue'
+import { ACTION_NAMES } from '@/store/consts'
 export default {
     data: function() {
         return {
@@ -140,7 +141,10 @@ export default {
         }
     },
     methods: {
-        selectedDishes({title: })
+        selectedDishes() {
+            console.log("Getting selected dishes")
+            return this.$store.getters.getByRestaurant()
+        },
         foodItemSelect(dish) {
             console.log('Clicked: ' + dish.title)
             this.current_dish = dish
@@ -152,6 +156,10 @@ export default {
         addToBasket(payload) {
             console.log("Adding to basket " + payload.title)
             this.current_dish = null
+            this.$store.dispatch(ACTION_NAMES.ADD_DISH_TO_MY_DINNER, payload)
+            .then(response => {
+                console.log("Action 'add dish' was dispatched")
+            })
         }
     },
     components: {
