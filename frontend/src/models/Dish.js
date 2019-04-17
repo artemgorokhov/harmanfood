@@ -1,13 +1,35 @@
 export class Dish {
-  constructor ({ title = ``, price = 0, description = ``,
-    amount = 0, where = {} }) {
+  constructor ({ title = ``, price = 0,
+    description = ``, selectedOptions = `` }) {
     this.title = title
-    this.price = price
+    this._price = price
     this.description = description
-    this.amount = amount
+    this.selectedOptions = selectedOptions
   }
 
-  getPrice () {
-    return this.amount * this.price
+  get price () {
+    return this._price
   }
+
+  get isInBasket () {
+    return true
+  }
+
+  // Unique field to differentiate a dish from other
+  // when options will be ready for use
+  get unique () {
+    return this.title + this.selectedOptions
+  }
+
+  equal (b) {
+    // This check does not take into account dish options yet
+    const thesame = (this.title === b.title &&
+      this.price === b.price &&
+      this.description === b.description)
+    return thesame
+  }
+}
+
+export function createDish (payload) {
+  return new Dish(payload)
 }

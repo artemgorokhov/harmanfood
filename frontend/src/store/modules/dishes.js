@@ -1,19 +1,19 @@
 import { ACTION_NAMES, MUTATION_NAMES } from '@/store/consts'
 import axios from 'axios'
-import Dish from '@/models/Dish'
+import createDish from '@/models/Dish'
 
 const state = function () {
   return {
     restaurant_on_view: null,
     chosen_restaurant: null,
-    dishes: {}
+    dishes: []
   }
 }
 
 const mutations = {
   [MUTATION_NAMES.SWITCH_RESTAURANT] (state) {
     state.chosen_restaurant = state.restaurant_on_view
-    state.dishes = {}
+    state.dishes = []
   },
   [MUTATION_NAMES.SET_DISHES_FOR_DINNER] (state, dishes) {
     state.dishes = dishes
@@ -33,27 +33,18 @@ const actions = {
       console.log('Requested to switch restaurant, but it is the same already')
     }
   },
-  async [ACTION_NAMES.ADD_DISH_TO_MY_DINNER] ({commit, state}, dish) {
+  async [ACTION_NAMES.ADD_DISH_TO_MY_DINNER] ({commit, state}, payload) {
     if (state.chosen_restaurant == null || !state.chosen_restaurant.equal(state.restaurant_on_view)) {
       commit(MUTATION_NAMES.SWITCH_RESTAURANT)
     }
-    let dishes = state.dishes
-    // This check does not take into account dish options yet
-    if (dishes.hasOwnProperty(dish.title)) {
-      dishes[dish.title].amount += 1
-    } else {
-      dishes[dish.title] = dish
-    }
+    state.dishes.push(createDish(payload))
     commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dishes)
   },
   async [ACTION_NAMES.REMOVE_DISH_FROM_MY_DINNER] ({commit, state}, dish) {
-    let dishes = state.dishes
+    let dishIndex = state.dishes.map(x => x.unique).indexOf(dish.unique)
     // This check does not take into account dish options yet
-    if (dishes.hasOwnProperty(dish.title)) {
-      dishes[dish.title].amount -= 1
-      if (dishes[dish.title].amount <= 0) {
-        delete dishes[dish.title]
-      }
+    if (dishIndex >= 0) {
+      dishes.splice(dishIndex, 1)
       commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dishes)
     }
   }
