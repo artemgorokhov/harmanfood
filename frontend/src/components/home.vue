@@ -2,10 +2,12 @@
     <div class="container mainContent is-fluid columns">
         <div class="column is-8">
             <router-view/>
-            <footer class="footer has-background-dark">
+            <footer class="has-background-dark status-footer">
                 <div class="content has-text-centered">
+                    <a class="button"
+                        v-on:click="back">Back</a>
                     <a class="button is-success"
-                       v-on:click="back">Back</a>
+                        v-on:click="ready">Я готов</a>
                 </div>
             </footer>
         </div>
@@ -25,6 +27,9 @@ export default{
     methods: {
         back: function() {
             this.$router.replace( {path: '/home/restaurants'} )
+        },
+        ready: function() {
+            console.log("I am ready")
         }
     }
 }
@@ -37,4 +42,10 @@ export default{
 
 .flexHome
     flex: 1 1 100%
+
+.status-footer
+    padding: 1rem
+    height: 2rem
+    position: absolute
+    bottom: 3rem
 </style>

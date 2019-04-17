@@ -14,6 +14,9 @@
 </template>
 
 <script>
+import { createRestaurant } from '@/models/Restaurant'
+import { MUTATION_NAMES } from '@/store/consts'
+
 export default {
   name: 'restaurant-card',
   props: {
@@ -29,6 +32,8 @@ export default {
   methods: {
     select() {
         console.log("Restaurant is chosen")
+        let current_restaurant = createRestaurant({title: this.title, provider: this.provider})
+        this.$store.commit(MUTATION_NAMES.CURRENT_RESTAURANT, current_restaurant)
         this.$router.replace( {path: '/home/food'} )
     }
   }
