@@ -37,6 +37,7 @@
     background-color: rgba(250, 250, 250, 0.7)
     margin: 0.2rem
     padding: 0.5rem
+    cursor: pointer
 
 .dish-item .strong-title
     font-weight: bold
