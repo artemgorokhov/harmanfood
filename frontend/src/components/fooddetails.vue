@@ -7,6 +7,23 @@
             <p>Выберите блюдо</p>
         </span>
       </div>
+      <div class="food-details-basket"
+        v-else-if="basket">
+        <span class="icon dish-icon">
+          <i class="fas fa-hamburger"></i>
+          <p>{{ title }}</p>
+          <p class="dish-description">{{ description }}</p>
+        </span>
+        <div class="food-details-footer">
+          <a class="button remove-dish-btn"
+            @click.prevent="remove">
+            <span class="icon is-small">
+              <i class="fas fa-trash-alt"></i>
+            </span>
+            <span>Удалить</span>
+          </a>
+        </div>
+      </div>
       <div class="food-details-selected"
         v-else>
         <span class="icon dish-icon">
@@ -16,7 +33,12 @@
         </span>
         <div class="food-details-footer">
           <a class="button add-dish-btn is-success"
-            @click.prevent="add">Добавить</a>
+            @click.prevent="add">
+            <span class="icon is-small">
+              <i class="fas fa-shopping-basket"></i>
+            </span>
+            <span>Добавить</span>
+            </a>
         </div>
       </div>
   </div>
@@ -29,7 +51,7 @@
       title: String,
       price: Number,
       description: String,
-      amount: Number
+      basket: Boolean
     },
     methods: {
       add() {
@@ -37,6 +59,11 @@
           title: this.title,
           description: this.description,
           price: this.price
+        })
+      },
+      remove() {
+        this.$emit('remove-dish', {
+          title: this.title
         })
       }
     }
@@ -76,7 +103,7 @@
 .dish-icon>p.dish-description
     font-size: 0.7rem
     padding-top: 0.3rem
-    font-family: "Gill Sans MT", "Gill Sans", "My Gill Sans", sans-serif;
+    font-family: "Gill Sans MT", "Gill Sans", "My Gill Sans", sans-serif
 
 .dish-icon>p
     font-size: 1.2rem
@@ -86,5 +113,13 @@
     bottom: 0
     width: 100%
     margin-bottom: 1rem
+
+.food-details-basket
+    background-color: rgba(130, 250, 128, 0.15)
+    border: $light 10px solid
+    border-radius: inherit
+    height: 100%
+    position: relative
+    text-align: center
 
 </style>

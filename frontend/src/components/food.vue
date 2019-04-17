@@ -13,13 +13,15 @@
         <div class="column is-paddingless">
             <food-details
                 v-bind="current_dish"
-                v-on:add-dish="addToBasket"/>
+                v-on:add-dish="addToBasket"
+                v-on:remove-dish="removeFromBasket"/>
             <div class="my-dishes-list">
                 <dinner-item
                     v-for="mydish in selectedDishes()"
                     :key="mydish.id"
+                    :class="{ selected: mydish == current_dish }"
                     v-bind:dish="mydish"
-                        @click.native="myDishSelect(mydish)"/>
+                    @click.native="myDishSelect(mydish)"/>
             </div>
         </div>
     </div>
@@ -152,10 +154,12 @@ export default {
         foodItemSelect(dish) {
             console.log('Clicked: ' + dish.title)
             this.current_dish = dish
+            this.current_dish.basket = false
         },
         myDishSelect(mydish) {
             console.log('Selected my dish ' + mydish.title)
             this.current_dish = mydish
+            this.current_dish.basket = true
         },
         addToBasket(payload) {
             console.log("Adding to basket " + payload.title)
@@ -163,6 +167,16 @@ export default {
             this.$store.dispatch(ACTION_NAMES.ADD_DISH_TO_MY_DINNER, payload)
             .then(response => {
                 console.log("Action 'add dish' was dispatched")
+            })
+        },
+        removeFromBasket(payload) {
+            console.log('Removing ' + payload.title + ' from basket')
+            this.current_dish = null
+            this.$store.dispatch(ACTION_NAMES.REMOVE_DISH_FROM_MY_DINNER, {
+                unique: payload.title
+            })
+            .then(response => {
+                console.log("Actions 'remove dish' was dispatched")
             })
         }
     },
