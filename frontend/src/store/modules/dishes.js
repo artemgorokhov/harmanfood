@@ -1,6 +1,6 @@
 import { ACTION_NAMES, MUTATION_NAMES } from '@/store/consts'
 import axios from 'axios'
-import createDish from '@/models/Dish'
+import { createDish } from '@/models/Dish'
 
 const state = function () {
   return {
@@ -26,7 +26,8 @@ const mutations = {
 const actions = {
   async [ACTION_NAMES.SWITCH_RESTAURANT] ({commit, state}) {
     // Not really async yet
-    if (!state.chosen_restaurant.equal(state.restaurant_on_view)) {
+    if (state.chosen_restaurant === null ||
+      !state.chosen_restaurant.equal(state.restaurant_on_view)) {
       console.log('Change restaurant of my dinner from ' + state.chosen_restaurant.title + ' to ' + state.restaurant_on_view.title)
       commit(MUTATION_NAMES.SWITCH_RESTAURANT)
     } else {
@@ -34,14 +35,17 @@ const actions = {
     }
   },
   async [ACTION_NAMES.ADD_DISH_TO_MY_DINNER] ({commit, state}, payload) {
-    if (state.chosen_restaurant == null || !state.chosen_restaurant.equal(state.restaurant_on_view)) {
+    if (state.chosen_restaurant == null ||
+      !state.chosen_restaurant.equal(state.restaurant_on_view)) {
       commit(MUTATION_NAMES.SWITCH_RESTAURANT)
     }
-    state.dishes.push(createDish(payload))
+    let dishes = state.dishes
+    dishes.push(createDish(payload))
     commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dishes)
   },
   async [ACTION_NAMES.REMOVE_DISH_FROM_MY_DINNER] ({commit, state}, dish) {
-    let dishIndex = state.dishes.map(x => x.unique).indexOf(dish.unique)
+    let dishes = state.dishes
+    let dishIndex = dishes.map(x => x.unique).indexOf(dish.unique)
     // This check does not take into account dish options yet
     if (dishIndex >= 0) {
       dishes.splice(dishIndex, 1)
@@ -52,15 +56,15 @@ const actions = {
 
 const getters = {
   getByRestaurant: (state) => () => {
-    if (state.chosen_restaurant.equal(state.restaurant_on_view)) {
-      let dishList = []
-      for (var dishtitle in state.dishes) {
-        if (state.dishes.hasOwnProperty(dishtitle)) {
-          dishList.push(state.dishes[dishtitle])
-        }
-      }
-      return dishList
+    if (state.chosen_restaurant === null) {
+      console.log('No restaurant is chosen yet')
+      return []
     }
+    if (state.chosen_restaurant.equal(state.restaurant_on_view)) {
+      console.log('Get selected dishes for this restaurant')
+      return state.dishes
+    }
+    console.log('Getting dishes from another restaurant')
     return []
   }
 }

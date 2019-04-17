@@ -6,7 +6,6 @@
                     :key="dish.id">
                     <food-item v-bind="dish"
                         :class="{ selected: dish == current_dish }"
-                        v-bind:amount="0"
                         @click.native="foodItemSelect(dish)"/>
                 </li>
             </ul>
@@ -16,9 +15,9 @@
                 v-bind="current_dish"
                 v-on:add-dish="addToBasket"/>
             <ul class="my-dishes-list">
-                <li v-for="mydish in selectedFood"
+                <li v-for="mydish in selectedDishes()"
                     :key="mydish.id">
-                    <food-item v-bind="mydish"
+                    <dinner-item v-bind:dishtitle="mydish.title"
                         @click.native="myDishSelect(mydish)"/>
                 </li>    
             </ul>
@@ -28,7 +27,9 @@
 
 <script>
 import FoodItem from './fooditem.vue'
+import DinnerItem from './dinneritem.vue'
 import FoodDetails from './fooddetails.vue'
+import { ACTION_NAMES } from '@/store/consts'
 export default {
     data: function() {
         return {
@@ -140,7 +141,14 @@ export default {
         }
     },
     methods: {
-        selectedDishes({title: })
+        selectedDishes() {
+            console.log("Getting selected dishes")
+            let sd = this.$store.getters.getByRestaurant()
+            sd.forEach((s)=>{
+                console.log(s)
+            })
+            return sd
+        },
         foodItemSelect(dish) {
             console.log('Clicked: ' + dish.title)
             this.current_dish = dish
@@ -152,10 +160,15 @@ export default {
         addToBasket(payload) {
             console.log("Adding to basket " + payload.title)
             this.current_dish = null
+            this.$store.dispatch(ACTION_NAMES.ADD_DISH_TO_MY_DINNER, payload)
+            .then(response => {
+                console.log("Action 'add dish' was dispatched")
+            })
         }
     },
     components: {
         FoodItem,
+        DinnerItem,
         FoodDetails
     }
 }

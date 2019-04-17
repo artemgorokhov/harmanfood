@@ -14,7 +14,6 @@
             title: String,
             price: Number,
             category: String,
-            amount: Number,
             description: String
         },
         methods: {

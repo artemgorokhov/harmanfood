@@ -1,6 +1,6 @@
 import { ACTION_NAMES, MUTATION_NAMES } from '@/store/consts'
 import axios from 'axios'
-import { createRestaurant } from '@/models/restaurant'
+import { createRestaurant } from '@/models/Restaurant'
 import { mockRestaurants } from '@/store/mock/responses'
 
 // TODO: use localStorage to cache food between sessions

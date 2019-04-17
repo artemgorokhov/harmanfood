@@ -34,8 +34,9 @@
     methods: {
       add() {
         this.$emit('add-dish', {
-          amount: this.amount,
-          title: this.title
+          title: this.title,
+          description: this.description,
+          price: this.price
         })
       }
     }

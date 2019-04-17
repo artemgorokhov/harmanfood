@@ -1,8 +1,9 @@
 export class Dish {
-  constructor ({ title = ``, price = 0,
+  constructor ({ title = ``, price = 0, category = ``,
     description = ``, selectedOptions = `` }) {
     this.title = title
     this._price = price
+    this.category = category
     this.description = description
     this.selectedOptions = selectedOptions
   }
@@ -27,6 +28,10 @@ export class Dish {
       this.price === b.price &&
       this.description === b.description)
     return thesame
+  }
+
+  toString () {
+    return this.title + ' (' + this.price + ')'
   }
 }
 
