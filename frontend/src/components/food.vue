@@ -14,13 +14,13 @@
             <food-details
                 v-bind="current_dish"
                 v-on:add-dish="addToBasket"/>
-            <ul class="my-dishes-list">
-                <li v-for="mydish in selectedDishes()"
-                    :key="mydish.id">
-                    <dinner-item v-bind:dishtitle="mydish.title"
+            <div class="my-dishes-list">
+                <dinner-item
+                    v-for="mydish in selectedDishes()"
+                    :key="mydish.id"
+                    v-bind:dish="mydish"
                         @click.native="myDishSelect(mydish)"/>
-                </li>    
-            </ul>
+            </div>
         </div>
     </div>
 </template>
