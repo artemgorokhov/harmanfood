@@ -1,7 +1,20 @@
 <template>
     <div class="columns is-mobile food-view">
-        <div class="column is-half is-paddingless dishes-list">
-            <ul v-for="category in categories">
+        <div class="column is-1 categories-list">
+            <ul>
+                <li v-for="menu_cat in categories"
+                    :key="menu_cat.id"
+                    class="is-unselectable">
+                    <figure class="image is-64x64">
+                        <i class="fas"
+                            :class="categoryClass(menu_cat)"></i>
+                    </figure>
+                </li>
+            </ul>
+        </div>
+        <div class="column is-5 is-paddingless dishes-list">
+            <ul v-for="category in categories"
+                :key="category.id">
                 <li v-for="dish in menu[category]"
                     :key="dish.id">
                     <food-item 
@@ -183,6 +196,14 @@ export default {
             .then(response => {
                 console.log("Actions 'remove dish' was dispatched")
             })
+        },
+        categoryClass(category) {
+            console.log('Category class for ' + category)
+            return {
+                'fa-fire-alt': category === 'Популярное',
+                'fa-hamburger': category === 'Бургеры',
+                'fa-sushi': category === 'Открытые роллы'
+            }
         }
     },
     components: {
@@ -195,6 +216,7 @@ export default {
 
 <style lang="sass">
 @import "@/assets/css/contrast_theme.scss"
+@import "./../assets/css/custom_icons.css"
 .food-view
     height: calc(100% + 1.5rem - 6rem)
 

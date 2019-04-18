@@ -22,8 +22,8 @@
             classObject(category) {
                 return {
                     'cat-popular': category === 'Популярное',
-                    'cat-sushi': category ==='Открытые роллы',
-                    'cat-burger': category ==='Бургеры'
+                    'cat-sushi': category === 'Открытые роллы',
+                    'cat-burger': category === 'Бургеры'
                 }
             }
         }
@@ -41,11 +41,11 @@
     font-weight: bold
 
 .cat-popular
-    --rgb: 255, 226, 131
+    --rgb: 255, 246, 198
 .cat-sushi
-    --rgb: 157, 255, 234
+    --rgb: 224, 254, 255
 .cat-burger
-    --rgb: 197, 85, 204
+    --rgb: 204, 139, 183
 
 .food-item-card.card
     background-color: rgba(var(--rgb), 0.1)

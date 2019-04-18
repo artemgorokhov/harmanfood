@@ -1,0 +1,9 @@
+.fa-sushi {
+  width: 1rem;
+  height: 1rem;
+}
+
+.fa-sushi:before {
+  fill: #f9f8ec;
+  content: url('./../img/sushi.svg');
+}
