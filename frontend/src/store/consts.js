@@ -7,7 +7,8 @@ export const MUTATION_NAMES = {
   RESTAURANT_LOADED: 'restaurant loaded',
   SWITCH_RESTAURANT: 'switch dinner restaurant',
   SET_DISHES_FOR_DINNER: 'set dishes for my dinner',
-  CURRENT_RESTAURANT: 'the restaurant on view'
+  CURRENT_RESTAURANT: 'the restaurant on view',
+  SET_MENU_FOR_RESTAURANT: 'menu for restaurant'
 }
 
 export const ACTION_NAMES = {

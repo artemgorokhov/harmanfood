@@ -1,25 +1,30 @@
 import { ACTION_NAMES, MUTATION_NAMES } from '@/store/consts'
 import axios from 'axios'
 import { createDish } from '@/models/Dish'
+import { mockFood } from '@/store/mock/responses'
 
 const state = function () {
   return {
     restaurant_on_view: null,
     chosen_restaurant: null,
-    dishes: []
+    dinner: [],
+    menu: []
   }
 }
 
 const mutations = {
   [MUTATION_NAMES.SWITCH_RESTAURANT] (state) {
     state.chosen_restaurant = state.restaurant_on_view
-    state.dishes = []
+    state.dinner = []
   },
   [MUTATION_NAMES.SET_DISHES_FOR_DINNER] (state, dishes) {
-    state.dishes = dishes
+    state.dinner = dishes
   },
   [MUTATION_NAMES.CURRENT_RESTAURANT] (state, restaurant) {
     state.restaurant_on_view = restaurant
+  },
+  [MUTATION_NAMES.SET_MENU_FOR_RESTAURANT] (state, food) {
+    state.menu = food
   }
 }
 
@@ -39,17 +44,38 @@ const actions = {
       !state.chosen_restaurant.equal(state.restaurant_on_view)) {
       commit(MUTATION_NAMES.SWITCH_RESTAURANT)
     }
-    let dishes = state.dishes
-    dishes.push(createDish(payload))
-    commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dishes)
+    let dinner = state.dinner
+    dinner.push(createDish(payload))
+    commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dinner)
   },
   async [ACTION_NAMES.REMOVE_DISH_FROM_MY_DINNER] ({commit, state}, dish) {
-    let dishes = state.dishes
-    let dishIndex = dishes.map(x => x.unique).indexOf(dish.unique)
+    let dinner = state.dinner
+    let dishIndex = dinner.map(x => x.unique).indexOf(dish.unique)
     // This check does not take into account dish options yet
     if (dishIndex >= 0) {
-      dishes.splice(dishIndex, 1)
-      commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dishes)
+      dinner.splice(dishIndex, 1)
+      commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dinner)
+    }
+  },
+  async [ACTION_NAMES.UPDATE_MENU] ({commit}, payload) {
+    try {
+      if (!(payload.hasOwnProperty('restaurant') && payload.hasOwnProperty('provider'))) {
+        console.error('Wrong payload for menu')
+      }
+      var foodResp = mockFood
+      if (process.env.NODE_ENV !== 'development') {
+        foodResp = await axios.post('/api/menu', payload)
+        console.log('Food response: ' + Object.keys(foodResp.data))
+      }
+      console.log('Menu for ' + payload.restaurant + ' has ' + foodResp.data.food.length + ' items')
+      commit(MUTATION_NAMES.SET_MENU_FOR_RESTAURANT, foodResp.data.food)
+      // commit(MUTATION_NAMES.RESTAURANT_UPTODATE, {
+      //   provider: foodResp.data.provider,
+      //   title: foodResp.data.restaurant,
+      //   updated: true
+      // })
+    } catch (error) {
+      console.error('Menu request error: ' + error)
     }
   }
 }

@@ -24,21 +24,6 @@ const mutations = {
 }
 
 const actions = {
-  async [ACTION_NAMES.UPDATE_MENU] ({commit}, payload) {
-    try {
-      if (!(payload.hasOwnProperty('title') && payload.hasOwnProperty('provider'))) {
-        console.error('Wrong payload for menu')
-      }
-      const foodResp = await axios.post('/api/menu', payload)
-      commit(MUTATION_NAMES.RESTAURANT_UPTODATE, {
-        provider: foodResp.provider,
-        title: foodResp.title,
-        updated: true
-      })
-    } catch (error) {
-      console.error('Menu request error: ' + error)
-    }
-  },
   async [ACTION_NAMES.UPDATE_RESTAURANT_LIST] ({commit}) {
     try {
       var restList = mockRestaurants

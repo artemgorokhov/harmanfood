@@ -1,5 +1,6 @@
 from .routes import main_bp
 from .api_restaurants import ApiRestaurant
+from .api_food import ApiFood
 from .api_initial import ApiInitialData
 from .api_login import ApiLogin
 from .api_participate import ApiParticipate
@@ -14,3 +15,4 @@ api.add_resource(ApiInitialData, "/api/initial_data")
 api.add_resource(ApiRestaurant, "/api/restaurant_list")
 api.add_resource(ApiLogin, "/api/login")
 api.add_resource(ApiParticipate, "/api/participate")
+api.add_resource(ApiFood, "/api/menu")
