@@ -1,12 +1,14 @@
+from webserver.db_tool import hf_food
 from webserver.entities import Restaurant
 from webserver.storage.storage import Storage
+from webserver.db_tool.hf_food import get_categories
 
 restaurant_records = [
 	{
 		'title': 'Burger King',
 		'provider': 'delivery',
 		'asset': 'burger_king.jpg',
-		'url': ''
+		'url': 'https://nn.delivery-club.ru/srv/Burger_King_nnov/'
 	}, {
 		'title': 'Woking',
 		'provider': 'delivery',
@@ -27,7 +29,7 @@ restaurant_records = [
 		'provider': 'delivery',
 		'asset': 'osetinskie_pirogi_nn.jpg',
 		'url': 'https://nn.delivery-club.ru/srv/Osetinskie_pirogi_nn'
-	},{
+	}, {
 		'title': 'Тануки',
 		'provider': 'delivery',
 		'asset': 'tanuki_nn.jpg',
@@ -75,5 +77,6 @@ def update(db):
 	storage = Storage(db)
 	for r in restaurant_records:
 		rest = Restaurant(r['title'], r['provider'])
+		rest.categories = get_categories(r['title'])
 		rest.initialize(r)
 		print("Written {}: {}".format(r['title'], storage.save(rest)))

@@ -119,14 +119,15 @@ async def main(rest_url):
 
 rests = {
     'Woking': 'https://nn.delivery-club.ru/srv/Wok__Go/',
-    'Tanuki': 'https://nn.delivery-club.ru/srv/Tanuki_nn',
-    'OsePirogi': 'https://nn.delivery-club.ru/srv/Osetinskie_pirogi_nn',
-    'Sova': 'https://nn.delivery-club.ru/srv/Jeda_s_Sovoj',
-    'Irina': 'https://nn.delivery-club.ru/srv/Kilinaria_Iriny_Knayzevoj/'
+    'Tanuki': 'https://nn.delivery-club.ru/srv/Tanuki_nn/',
+    'OsePirogi': 'https://nn.delivery-club.ru/srv/Osetinskie_pirogi_nn/',
+    'Sova': 'https://nn.delivery-club.ru/srv/Jeda_s_Sovoj/',
+    'Irina': 'https://nn.delivery-club.ru/srv/Kilinaria_Iriny_Knayzevoj/',
+    'BurgerKing': 'https://nn.delivery-club.ru/srv/Burger_King_nnov/'
 }
 
 loop = asyncio.new_event_loop()
-the_content = loop.run_until_complete(main(rests['Irina']))
+the_content = loop.run_until_complete(main(rests['BurgerKing']))
 
 print('done')
 

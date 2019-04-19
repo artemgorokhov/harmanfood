@@ -9,7 +9,8 @@ class Storage:
         self.collections = {
             'eaters': db.eaters,
             'restaurants': db.restaurants,
-            'orders': db.orders
+            'orders': db.orders,
+            'food': db.food
         }
 
     def insert(self, item):
@@ -53,3 +54,24 @@ class Storage:
         for d in cursor:
             result.append(d)
         return result
+
+    def delete(self, db_item_class, condition=None):
+        collection = self.collections.get(db_item_class.collection, None)
+        if not collection:
+            return False
+        if not condition:
+            print("WARNING! Removing all documents from {}".format(db_item_class.collection))
+            condition = {}
+        x = collection.delete_many(condition)
+        print("Deleted {} documents from {} collection".format(x.deleted_count, db_item_class.collection))
+
+    def insert_many(self, db_item_class, items):
+        collection = self.collections.get(db_item_class.collection, None)
+        if not collection:
+            return False
+        if not items:
+            print("No items to insert to {}".format(db_item_class.collection))
+            return False
+        result = collection.insert_many(items)
+        print("Inserted {} items".format(len(result.inserted_ids)))
+        return len(result.inserted_ids) > 0
