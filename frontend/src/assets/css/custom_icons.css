@@ -4,6 +4,11 @@
 }
 
 .fa-sushi:before {
-  fill: #f9f8ec;
-  content: url('./../img/sushi.svg');
+  display: block;
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  background-size: 1rem 1rem;
+  background-image: url('./../img/sushi.svg');
+  background-repeat: no-repeat;
 }

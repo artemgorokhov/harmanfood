@@ -1,20 +1,25 @@
 <template>
     <div class="columns is-mobile food-view">
         <div class="column is-1 categories-list">
-            <ul>
+            <ul class="menu-category"
+                v-scroll-spy-active="{selector: 'figure.cat-item'}"
+                v-scroll-spy-link="{selector: 'figure.cat-item'}">
                 <li v-for="menu_cat in categories"
-                    :key="menu_cat.id"
+                    :key="menu_cat"
                     class="is-unselectable">
-                    <figure class="image is-64x64">
+                    <figure class="image is-64x64 cat-item">
                         <i class="fas"
-                            :class="categoryClass(menu_cat)"></i>
+                            :class="categoryClass(menu_cat)"
+                            @click="gotoCat(menu_cat)"></i>
                     </figure>
                 </li>
             </ul>
         </div>
-        <div class="column is-5 is-paddingless dishes-list">
+        <div class="column is-5 is-paddingless dishes-list"
+            v-scroll-spy="{sectionSelector: 'ul.cat-group'}">
             <ul v-for="category in categories"
-                :key="category.id">
+                :key="category"
+                class="cat-group">
                 <li v-for="dish in menu[category]"
                     :key="dish.id">
                     <food-item 
@@ -204,6 +209,9 @@ export default {
                 'fa-hamburger': category === 'Бургеры',
                 'fa-sushi': category === 'Открытые роллы'
             }
+        },
+        gotoCat(id) {
+            console.log('GOTO ' + id)
         }
     },
     components: {
@@ -215,7 +223,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "@/assets/css/contrast_theme.scss"
 @import "./../assets/css/custom_icons.css"
 .food-view
     height: calc(100% + 1.5rem - 6rem)
@@ -224,11 +231,15 @@ export default {
     overflow-y: auto
     -ms-overflow-style: none
     scrollbar-width: none
+    position: relative
 
 .dishes-list::-webkit-scrollbar
     display: none
 
 .my-dishes-list
     height: calc(100% - 27rem)
-    border-top: $light 1px solid
+    border-top: white 1px solid
+
+.categories-list li
+    border: 1px white solid
 </style>
