@@ -37,6 +37,9 @@ def update_menu(db, rest):
     storage = Storage(db)
     storage.delete(Food, {"provider": delivery_provider, "restaurant": rest})
     # And now insert all food again
+    for dish in delivery_food[rest]:
+        dish['restaurant'] = rest
+        dish['provider'] = delivery_provider
     storage.insert_many(Food, delivery_food[rest])
 
 
