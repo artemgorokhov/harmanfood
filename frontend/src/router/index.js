@@ -21,11 +21,14 @@ var checkDataLoaded = function (to, from, next) {
 
 const routes = [
   { path: '/', component: TheQuestion, beforeEnter: checkDataLoaded },
-  { path: '/home', component: Home, beforeEnter: checkDataLoaded,
+  { path: '/home',
+    component: Home,
+    beforeEnter: checkDataLoaded,
     children: [
       { path: 'restaurants', component: Restaurants },
       { path: 'food', component: Food }
-    ] },
+    ]
+  },
   { path: '/loading', component: Loading },
   { path: '/error', component: ErrorPage },
   { path: '/info', component: ErrorPage }

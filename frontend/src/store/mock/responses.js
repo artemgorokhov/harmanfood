@@ -19,47 +19,102 @@ export const mockRestaurants = {
       {
         title: 'Лепи тесто',
         provider: 'yandex',
-        asset: 'pelmennaya_lepi_testo.jpg'
+        asset: 'pelmennaya_lepi_testo.jpg',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }, {
         title: 'Woking',
         provider: 'delivery',
-        asset: 'wok__go.jpg'
+        asset: 'wok__go.jpg',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }, {
         title: 'Burger king',
         provider: 'delivery',
-        asset: 'burger_king.jpg'
+        asset: 'burger_king.jpg',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }, {
         title: 'Еда с совой',
         provider: 'delivery',
-        asset: 'jeda_s_sovoj.jpg'
+        asset: 'jeda_s_sovoj.jpg',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }, {
         title: 'Кулинария Ирины Князевой',
         provider: 'delivery',
-        asset: 'kilinaria_iriny_knayzevoj.jpg'
+        asset: 'kilinaria_iriny_knayzevoj.jpg',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }, {
         title: 'Папас Китчен',
         provider: 'yandex',
-        asset: 'papa_kitchen.jpg'
+        asset: 'papa_kitchen.jpg',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }, {
         title: 'Вай Гоги',
         provider: 'yandex',
-        asset: 'vai_gogi.jpg'
+        asset: 'vai_gogi.jpg',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }, {
         title: 'Plov&Go',
         provider: 'yandex',
-        asset: 'plovgo-logo.svg'
+        asset: 'plovgo-logo.svg',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }, {
         title: 'Жарбалкон',
         provider: 'yandex',
-        asset: 'zharbalkon.jpg'
+        asset: 'zharbalkon.jpg',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }, {
         title: 'Та самая шаурма',
         provider: 'other',
-        asset: 'shaurma.png'
+        asset: 'shaurma.png',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }, {
         title: 'Barabeq',
         provider: 'other',
-        asset: 'barabeq.svg'
+        asset: 'barabeq.svg',
+        categories: [
+            'Популярное',
+            'Открытые роллы',
+            'Бургеры'
+        ]
       }
     ]
   }

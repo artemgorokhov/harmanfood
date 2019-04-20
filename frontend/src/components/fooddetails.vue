@@ -10,7 +10,8 @@
       <div class="food-details-basket"
         v-else-if="basket">
         <span class="icon dish-icon">
-          <i class="fas fa-hamburger"></i>
+          <i class="fas"
+             :class="categoryClass()"></i>
           <p>{{ title }}</p>
           <p class="dish-description">{{ description }}</p>
         </span>
@@ -27,7 +28,8 @@
       <div class="food-details-selected"
         v-else>
         <span class="icon dish-icon">
-          <i class="fas fa-hamburger"></i>
+          <i class="fas"
+            :class="categoryClass()"></i>
           <p>{{ title }}</p>
           <p class="dish-description">{{ description }}</p>
         </span>
@@ -45,12 +47,14 @@
 </template>
 
 <script>
+  import { getCategoryClass } from '@/assets/js/categories'
   export default {
     name: 'food-details',
     props: {
       title: String,
       price: Number,
       description: String,
+      category: String,
       basket: Boolean
     },
     methods: {
@@ -58,13 +62,18 @@
         this.$emit('add-dish', {
           title: this.title,
           description: this.description,
-          price: this.price
+          price: this.price,
+          category: this.category
         })
       },
       remove() {
         this.$emit('remove-dish', {
           title: this.title
         })
+      },
+      categoryClass() {
+        console.log('Details category: ' + this.category + ' title: '+this.title)
+        return getCategoryClass(this.category, true)
       }
     }
   }
@@ -97,7 +106,7 @@
     text-align: center
     padding-top: 6rem
 
-.dish-icon>i
+.dish-icon>i.fas
     font-size: 7rem
 
 .dish-icon>p.dish-description
