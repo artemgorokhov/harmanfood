@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 Vue.use(socket)
 
 Vue.use(Scrollspy, {
-    easing: Easing.Cubic.In
+    easing: Easing.Quartic.InOut
 })
 
 /* eslint-disable no-new */

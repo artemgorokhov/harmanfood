@@ -97,7 +97,7 @@
     text-align: center
     padding-top: 6rem
 
-.dish-icon>i
+.dish-icon>i.fas
     font-size: 7rem
 
 .dish-icon>p.dish-description

@@ -7,10 +7,9 @@
                 <li v-for="menu_cat in categories"
                     :key="menu_cat"
                     class="is-unselectable">
-                    <figure class="image is-64x64 cat-item">
+                    <figure class="image is-32x32 cat-item">
                         <i class="fas"
-                            :class="categoryClass(menu_cat)"
-                            @click="gotoCat(menu_cat)"></i>
+                            :class="categoryClass(menu_cat, true)"></i>
                     </figure>
                 </li>
             </ul>
@@ -24,9 +23,9 @@
                     :key="dish.id">
                     <food-item 
                         v-bind:dish="dish"
-                        v-bind:category="category"
+                        v-bind:categoryClass="categoryClass(category, false)"
                         :class="{ selected: dish == current_dish }"
-                        @click.native="foodItemSelect(dish)"/>
+                        @click.native="foodItemSelect(dish, category)"/>
                 </li>
             </ul>
         </div>
@@ -165,13 +164,14 @@ export default {
             })
             return sd
         },
-        foodItemSelect(dish) {
+        foodItemSelect(dish, category) {
             console.log('Clicked: ' + dish.title)
             if (this.current_dish === dish) {
                 this.current_dish = null
             } else {
                 this.current_dish = dish
                 this.current_dish.basket = false
+                this.current_dish.categoryClass = this.categoryClass(category, true)
             }
         },
         myDishSelect(mydish) {
@@ -202,16 +202,15 @@ export default {
                 console.log("Actions 'remove dish' was dispatched")
             })
         },
-        categoryClass(category) {
-            console.log('Category class for ' + category)
-            return {
-                'fa-fire-alt': category === 'Популярное',
-                'fa-hamburger': category === 'Бургеры',
-                'fa-sushi': category === 'Открытые роллы'
-            }
-        },
-        gotoCat(id) {
-            console.log('GOTO ' + id)
+        categoryClass(category, withIcon) {
+            let popular = withIcon ? 'cat-popular fa-fire-alt' : 'cat-popular'
+            let sushi = withIcon ? 'cat-sushi fa-sushi' : 'cat-sushi'
+            let burger = withIcon ? 'cat-burger fa-hamburger' : 'cat-burger'
+            const cObj = {}
+            cObj[popular] = category === 'Популярное'
+            cObj[sushi] = category === 'Открытые роллы'
+            cObj[burger] = category === 'Бургеры'
+            return cObj
         }
     },
     components: {
@@ -227,6 +226,15 @@ export default {
 .food-view
     height: calc(100% + 1.5rem - 6rem)
 
+// Category colors
+.cat-popular
+    --rgb: 255, 246, 198
+.cat-sushi
+    --rgb: 224, 254, 255
+.cat-burger
+    --rgb: 204, 139, 183
+
+
 .dishes-list
     overflow-y: auto
     -ms-overflow-style: none
@@ -241,5 +249,22 @@ export default {
     border-top: white 1px solid
 
 .categories-list li
-    border: 1px white solid
+    margin-bottom: 1.5rem
+    // border: 1px white solid
+
+.categories-list i.fas
+    font-size: 2rem
+
+.categories-list figure.cat-item
+    cursor: pointer
+
+.categories-list figure.cat-item>i
+    color: rgba(var(--rgb), 0.2)
+
+.categories-list figure.cat-item>i:hover
+    color: rgba(var(--rgb), 0.3)
+
+.categories-list figure.cat-item.active>i
+    color: rgba(var(--rgb), 0.7)
+
 </style>

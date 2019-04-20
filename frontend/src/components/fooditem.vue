@@ -1,6 +1,6 @@
 <template>
     <div class="card food-item-card is-unselectable"
-        :class="classObject(category)">
+        :class="categoryClass">
         <div class="food-item-content">
             <span class="is-size-6">{{ dish.title }}</span>
             <span class="food-item-price is-pulled-right">{{ dish.price }} &#x20bd;</span>
@@ -13,18 +13,11 @@
         name: 'food-item',
         props: {
             dish: Object,
-            category: String
+            categoryClass: Object
         },
         methods: {
             select() {
                 console.log('Food: ' + this.$props.title)
-            },
-            classObject(category) {
-                return {
-                    'cat-popular': category === 'Популярное',
-                    'cat-sushi': category === 'Открытые роллы',
-                    'cat-burger': category === 'Бургеры'
-                }
             }
         }
     }
@@ -39,13 +32,6 @@
 
 .food-item-price
     font-weight: bold
-
-.cat-popular
-    --rgb: 255, 246, 198
-.cat-sushi
-    --rgb: 224, 254, 255
-.cat-burger
-    --rgb: 204, 139, 183
 
 .food-item-card.card
     background-color: rgba(var(--rgb), 0.1)
