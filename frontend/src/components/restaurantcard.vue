@@ -14,15 +14,15 @@
 </template>
 
 <script>
-import { createRestaurant } from '@/models/Restaurant'
-import { MUTATION_NAMES } from '@/store/consts'
+import { ACTION_NAMES } from '@/store/consts'
 
 export default {
   name: 'restaurant-card',
   props: {
     title: String,
     provider: String,
-    asset: String
+    asset: String,
+    categories: Array
   },
   computed: {
     asset_path: function () {
@@ -31,10 +31,12 @@ export default {
   },
   methods: {
     select() {
-        console.log("Restaurant is chosen")
-        let current_restaurant = createRestaurant({title: this.title, provider: this.provider})
-        this.$store.commit(MUTATION_NAMES.CURRENT_RESTAURANT, current_restaurant)
-        this.$router.replace( {path: '/home/food'} )
+        console.log("Restaurant is chosen " + this.title + " - " + this.provider)
+        let _this = this
+        this.$store.dispatch(ACTION_NAMES.SET_VIEW_RESTAURANT, {title: this.title, provider: this.provider})
+        .then(() => {
+            _this.$router.replace( {path: '/home/food'} )
+        })
     }
   }
 }

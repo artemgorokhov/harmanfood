@@ -19,6 +19,7 @@ const mutations = {
   },
   [MUTATION_NAMES.RESTAURANT_LOADED] (state, payload) {
     console.log('Mutating restaurant ' + payload.title)
+    console.log('Categories: ' + payload.categories[0])
     state[payload.provider][payload.title] = createRestaurant(payload)
   }
 }

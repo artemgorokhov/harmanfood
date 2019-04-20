@@ -30,6 +30,7 @@
             </ul>
         </div>
         <div class="column is-paddingless">
+            <p id="current-restaurant">{{ current_restaurant.title }}</p>
             <food-details
                 v-bind="current_dish"
                 v-on:add-dish="addToBasket"
@@ -56,6 +57,9 @@ export default {
     data: function() {
         return {
             current_dish: null,
+            current_restaurant: this.$store.state.dishes.restaurant_on_view,
+            categories: [],
+            menu: {}
         }
     },
     methods: {
@@ -105,12 +109,24 @@ export default {
                 console.log("Actions 'remove dish' was dispatched")
             })
         },
+        loadMenu() {
+            this.$store.dispatch(ACTION_NAMES.UPDATE_MENU, this.current_restaurant)
+            .then(() => {
+                this.menu = this.$store.state.dishes.menu
+                console.log("LOADMENU: "+Object.keys(this.menu))
+                this.categories = this.$store.state.dishes.restaurant_on_view.categories
+            })
+        },
         categoryClass: getCategoryClass
     },
     components: {
         FoodItem,
         DinnerItem,
         FoodDetails
+    },
+    created: function() {
+        console.log("Instance created for " + this.current_restaurant)
+        this.loadMenu()
     }
 }
 </script>

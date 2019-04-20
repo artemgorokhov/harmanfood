@@ -2,29 +2,32 @@ import { ACTION_NAMES, MUTATION_NAMES } from '@/store/consts'
 import axios from 'axios'
 import { createDish } from '@/models/Dish'
 import { mockFood } from '@/store/mock/responses'
+import { createRestaurant } from '@/models/Restaurant'
 
 const state = function () {
   return {
     restaurant_on_view: null,
     chosen_restaurant: null,
     dinner: [],
-    menu: []
+    menu: {}
   }
 }
 
 const mutations = {
   [MUTATION_NAMES.SWITCH_RESTAURANT] (state) {
-    state.chosen_restaurant = state.restaurant_on_view
+    state.chosen_restaurant = createRestaurant(state.restaurant_on_view)
     state.dinner = []
+    state.menu = {}
   },
   [MUTATION_NAMES.SET_DISHES_FOR_DINNER] (state, dishes) {
-    state.dinner = dishes
+    state.dinner = [...dishes]
   },
-  [MUTATION_NAMES.CURRENT_RESTAURANT] (state, restaurant) {
-    state.restaurant_on_view = restaurant
+  [MUTATION_NAMES.RESTAURANT_ON_VIEW] (state, restaurant) {
+    state.restaurant_on_view = Object.assign({}, restaurant)
+    console.log("RESTONVIEW: "+Object.keys(state.restaurant_on_view.categories))
   },
   [MUTATION_NAMES.SET_MENU_FOR_RESTAURANT] (state, food) {
-    state.menu = food
+    state.menu = Object.assign({}, food)
   }
 }
 
@@ -59,7 +62,7 @@ const actions = {
   },
   async [ACTION_NAMES.UPDATE_MENU] ({commit}, payload) {
     try {
-      if (!(payload.hasOwnProperty('restaurant') && payload.hasOwnProperty('provider'))) {
+      if (!(payload.hasOwnProperty('title') && payload.hasOwnProperty('provider'))) {
         console.error('Wrong payload for menu')
       }
       var foodResp = mockFood
@@ -67,8 +70,15 @@ const actions = {
         foodResp = await axios.post('/api/menu', payload)
         console.log('Food response: ' + Object.keys(foodResp.data))
       }
-      console.log('Menu for ' + payload.restaurant + ' has ' + foodResp.data.food.length + ' items')
-      commit(MUTATION_NAMES.SET_MENU_FOR_RESTAURANT, foodResp.data.food)
+      console.log('Menu for ' + payload.title + ' has ' + foodResp.data.food.length + ' items')
+      let food_by_categories = {}
+      foodResp.data.food.forEach(food_item => {
+        if (!food_by_categories.hasOwnProperty(food_item.category)) {
+          food_by_categories[food_item.category] = []
+        }
+        food_by_categories[food_item.category].push(food_item)
+      })
+      commit(MUTATION_NAMES.SET_MENU_FOR_RESTAURANT, food_by_categories)
       // commit(MUTATION_NAMES.RESTAURANT_UPTODATE, {
       //   provider: foodResp.data.provider,
       //   title: foodResp.data.restaurant,
@@ -77,6 +87,11 @@ const actions = {
     } catch (error) {
       console.error('Menu request error: ' + error)
     }
+  },
+  async [ACTION_NAMES.SET_VIEW_RESTAURANT] ({commit, state, rootState}, payload) {
+    let rest = rootState.restaurants[payload.provider][payload.title]
+    console.log("ROOTSTATE: " + Object.keys(rest.categories))
+    commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, rest)
   }
 }
 
@@ -88,7 +103,7 @@ const getters = {
     }
     if (state.chosen_restaurant.equal(state.restaurant_on_view)) {
       console.log('Get selected dishes for this restaurant')
-      return state.dishes
+      return state.dinner
     }
     console.log('Getting dishes from another restaurant')
     return []

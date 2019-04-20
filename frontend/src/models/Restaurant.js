@@ -1,9 +1,10 @@
 export class Restaurant {
-  constructor ({ title = ``, provider = ``, hash = ``, asset = `` } = {}) {
+  constructor ({ title = ``, provider = ``, hash = ``, asset = ``, categories = [] } = {}) {
     this.title = title
     this.provider = provider
     this.hash = hash
     this.asset = asset
+    this.categories = [...categories]
     this.updated = false
   }
 
@@ -34,5 +35,6 @@ export class Restaurant {
 }
 
 export function createRestaurant (data) {
+  console.log("Construct rest: "+Object.keys(data))
   return new Restaurant(data)
 }
