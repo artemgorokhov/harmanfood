@@ -25,7 +25,7 @@
                         v-bind:dish="dish"
                         v-bind:categoryClass="categoryClass(category, false)"
                         :class="{ selected: dish == current_dish }"
-                        @click.native="foodItemSelect(dish, category)"/>
+                        @click.native="foodItemSelect(dish)"/>
                 </li>
             </ul>
         </div>
@@ -51,6 +51,7 @@ import FoodItem from './fooditem.vue'
 import DinnerItem from './dinneritem.vue'
 import FoodDetails from './fooddetails.vue'
 import { ACTION_NAMES } from '@/store/consts'
+import { getCategoryClass } from '@/assets/js/categories'
 export default {
     data: function() {
         return {
@@ -65,31 +66,37 @@ export default {
                     {
                         title: 'Филадельфия 2 260 г',
                         price: 199,
+                        category: 'Популярное',
                         description: '8 кусочков. Рис, нори, сыр творожный, лосось, огурец'
                     },
                     {
                         title: 'Горячая филадельфия 330 г',
                         price: 249,
+                        category: 'Популярное',
                         description: '10 кусочков! рис, нори, сыр творожный, огурец, лосось, соус терияки, кунжут'
                     },
                     {
                         title: 'Ролл с лососем 130 г', 
-                        price: 129, 
+                        price: 129,
+                        category: 'Популярное', 
                         description: '8 кусочков. Рис, нори, лосось'
                     },
                     {
                         title: 'Сет 1 400 г', 
-                        price: 299, 
+                        price: 299,
+                        category: 'Популярное',
                         description: '16 кусочков.Филадельфия 2, ролл лосось'
                     },
                     {
                         title: 'Сет 3 800 г',
                         price: 579,
+                        category: 'Популярное',
                         description: '28 кусочков. Филадельфия 2, цезарь ролл, горячая филадельфия'
                     },
                     {
                         title: 'Лапша с курицей 360 г',
-                        price: 229, 
+                        price: 229,
+                        category: 'Популярное',
                         description: 'Курица, лапша, перец болгарский, морковь, лук репчатый, лук зеленый, кунжут, соус соево-чесночный'
                     }
                 ],
@@ -97,58 +104,69 @@ export default {
                     {
                         title: 'Филафорния 280 г',
                         price: 359,
+                        category: 'Открытые роллы',
                         description: '8 кусочков.Рис, нори, лосось, сыр творожный, огурец, тигровая креветка в панировке, икра тобико(красная)'
                     },
                     {
                         title: 'Ночная москва 240 г', 
                         price: 269,
+                        category: 'Открытые роллы',
                         description: '8 кусочков. Рис, нори, икра тобико(черная), сыр творожный, жареный лосось, огурец'
                     }, 
                     {
                         title: 'Сливочный лосось 220 г',
-                        price: 199, 
+                        price: 199,
+                        category: 'Открытые роллы',
                         description: '8 кусочков. Рис, нори, сыр творожный, лосось, кунжут'
                     },
                     {
                         title: 'Сливочный угорь 235 г', 
-                        price: 199, 
+                        price: 199,
+                        category: 'Открытые роллы',
                         description: '8 кусочков. Рис, нори, сыр творожный, угорь, соус терияки, кунжут'
                     },
                     {
                         title: 'Сливочная креветка 230 г',
                         price: 199,
+                        category: 'Открытые роллы',
                         description: '8 кусочков. Рис, нори, сыр творожный, тигровая креветка в панировке, кунжут'
                     }, 
                     {
                         title: 'Брутал 250 г',
                         price: 199,
+                        category: 'Открытые роллы',
                         description: '8 кусочков. Рис, нори, бекон опаленный, перец болгарский, сыр творожный, китайстакая капуста'
                     }, 
                     {
                         title: 'Динамит 300 г',
                         price: 349,
+                        category: 'Открытые роллы',
                         description: '8 кусочков. Рис, нори, сыр творожный, огурец, тигровая креветка, соус спайс, кунжут'
                     }
                 ],
                 'Бургеры': [
                     {
                         title: 'Кани сарадо 240 г',
-                        price: 229, 
+                        price: 229,
+                        category: 'Бургеры',
                         description: '8 кусочков. Рис, нори, краб (имит.), огурец, сыр творожный, кунжут'
                     }, 
                     {
                         title: 'Дракон 360 г', 
-                        price: 559, 
+                        price: 559,
+                        category: 'Бургеры',
                         description: '10 кусочков. Рис, нори, угорь, сыр творожный, такуан, соус терияки, кунжут, украшение(морковь, перец болгарский, огурец)'
                     }, 
                     {
                         title: 'Канада 300 г',
                         price: 379,
+                        category: 'Бургеры',
                         description: '8 кусочков. Рис, нори, сыр творожный, угорь, огурец, краб(имит.), соус терияки, кунжут'
                     },
                     {
                         title: 'Нью йорк 280 г', 
-                        price: 439, 
+                        price: 439,
+                        category: 'Бургеры',
                         description: '8 кусочков. Рис, нори, угорь, жаренный лосось, икра тобико(черная), огурец, сыр творожный, соус терияки, кунжут'
                     }
                 ]
@@ -164,14 +182,14 @@ export default {
             })
             return sd
         },
-        foodItemSelect(dish, category) {
+        foodItemSelect(dish) {
             console.log('Clicked: ' + dish.title)
             if (this.current_dish === dish) {
                 this.current_dish = null
             } else {
+                console.log('Selected dish from '+dish.category)
                 this.current_dish = dish
                 this.current_dish.basket = false
-                this.current_dish.categoryClass = this.categoryClass(category, true)
             }
         },
         myDishSelect(mydish) {
@@ -202,16 +220,7 @@ export default {
                 console.log("Actions 'remove dish' was dispatched")
             })
         },
-        categoryClass(category, withIcon) {
-            let popular = withIcon ? 'cat-popular fa-fire-alt' : 'cat-popular'
-            let sushi = withIcon ? 'cat-sushi fa-sushi' : 'cat-sushi'
-            let burger = withIcon ? 'cat-burger fa-hamburger' : 'cat-burger'
-            const cObj = {}
-            cObj[popular] = category === 'Популярное'
-            cObj[sushi] = category === 'Открытые роллы'
-            cObj[burger] = category === 'Бургеры'
-            return cObj
-        }
+        categoryClass: getCategoryClass
     },
     components: {
         FoodItem,

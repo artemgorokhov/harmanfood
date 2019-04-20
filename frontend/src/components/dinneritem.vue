@@ -3,7 +3,8 @@
         <article class="media">
             <div class="media-left dish-picture">
                 <figure class="image is-32x32">
-                    <i class="fas fa-pizza-slice"></i>
+                    <i class="fas"
+                        :class="categoryClass(dish.category)"></i>
                 </figure>
             </div>
             <div class="media-content">
@@ -24,10 +25,17 @@
 </template>
 
 <script>
+    import { getCategoryClass } from '@/assets/js/categories'
     export default {
         name: 'dinner-item',
         props: {
             dish: Object
+        },
+        methods: {
+            categoryClass() {
+                console.log("DINNER item category: "+this.dish.category)
+                return getCategoryClass(this.dish.category, true)
+            }
         }
     }
 </script>
