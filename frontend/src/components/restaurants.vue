@@ -1,8 +1,5 @@
 <template>
 <div>
-    <!-- <p class="title has-text-centered">
-        Шаг 1. Выбираем ресторан
-    </p> -->
     <div class="tabs is-centered is-boxed">
         <ul class="with-border">
             <li v-for="tab in tabs" 

@@ -1,0 +1,21 @@
+@font-face {
+	font-family: "FoodIconsFont";
+	src: url("./../fonts/FoodIconsFont.eot");
+	src: 
+		url("./../fonts/FoodIconsFont.woff") format("woff"),
+		/*url("./../fonts/FoodIconsFont.otf") format("opentype"),*/
+		url("./../fonts/FoodIconsFont.svg#filename") format("svg");
+}
+
+.fa-sushi:before {
+  display: block;
+  content: "\e916";
+  font-family: FoodIconsFont, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  /*height: 1rem;
+  width: 1rem;
+  background-size: 1rem 1rem;
+  background-image: url('./../img/sushi.svg');
+  background-repeat: no-repeat;*/
+}

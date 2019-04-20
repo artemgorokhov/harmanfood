@@ -1,8 +1,9 @@
 <template>
-    <div class="card food-item-card is-unselectable">
+    <div class="card food-item-card is-unselectable"
+        :class="categoryClass">
         <div class="food-item-content">
-            <span class="is-size-6">{{ title }}</span>
-            <span class="food-item-price is-pulled-right">{{ price }} &#x20bd;</span>
+            <span class="is-size-6">{{ dish.title }}</span>
+            <span class="food-item-price is-pulled-right">{{ dish.price }} &#x20bd;</span>
         </div>
     </div>
 </template>
@@ -11,10 +12,8 @@
     export default {
         name: 'food-item',
         props: {
-            title: String,
-            price: Number,
-            category: String,
-            description: String
+            dish: Object,
+            categoryClass: Object
         },
         methods: {
             select() {
@@ -35,16 +34,19 @@
     font-weight: bold
 
 .food-item-card.card
-    background-color: rgba(250, 250, 250, 0.1)
+    background-color: rgba(var(--rgb), 0.1)
     color: $light
 
 .food-item-card.card:hover
-    background-color: rgba(250, 250, 250, 0.2)
+    background-color: rgba(var(--rgb), 0.2)
 
 .food-item-card.card:active
-    background-color: rgba(250, 250, 250, 0.4)
+    background-color: rgba(var(--rgb), 0.4)
 
 .card.food-item-card.selected
-    background-color: rgba(250, 250, 250, 0.3)
+    background-color: rgba(var(--rgb), 0.3)
+
+.card.food-item-card.selected:active
+    background-color: rgba(var(--rgb), 0.4)
 
 </style>
