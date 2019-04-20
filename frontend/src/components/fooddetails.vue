@@ -4,17 +4,17 @@
         v-if="!title">
         <span class="icon dish-icon">
             <i class="fas fa-utensils"></i>
-            <p>Выберите блюдо</p>
         </span>
+        <div class="food-detail-title">Выберите блюдо</div>
       </div>
       <div class="food-details-basket"
         v-else-if="basket">
         <span class="icon dish-icon">
           <i class="fas"
              :class="categoryClass()"></i>
-          <p>{{ title }}</p>
-          <p class="dish-description">{{ description }}</p>
         </span>
+        <div class="food-detail-title">{{ title }}</div>
+        <div class="dish-description">{{ description }}</div>
         <div class="food-details-footer">
           <a class="button remove-dish-btn"
             @click.prevent="remove">
@@ -30,9 +30,9 @@
         <span class="icon dish-icon">
           <i class="fas"
             :class="categoryClass()"></i>
-          <p>{{ title }}</p>
-          <p class="dish-description">{{ description }}</p>
         </span>
+        <div class="food-detail-title">{{ title }}</div>
+        <div class="dish-description">{{ description }}</div>
         <div class="food-details-footer">
           <a class="button add-dish-btn is-success"
             @click.prevent="add">
@@ -90,6 +90,8 @@
     border: $light 10px dashed
     border-radius: inherit
     height: 100%
+    text-align: center
+    position: relative
 
 .food-details-selected
     border: $light 10px solid
@@ -102,14 +104,18 @@
     width: 80%
     height: 8rem
     margin: auto
+    margin-top: 3rem
     display: block
     text-align: center
     padding-top: 6rem
 
+.food-detail-title
+    margin-top: 1rem
+
 .dish-icon>i.fas
     font-size: 7rem
 
-.dish-icon>p.dish-description
+div.dish-description
     font-size: 0.7rem
     padding-top: 0.3rem
     font-family: "Gill Sans MT", "Gill Sans", "My Gill Sans", sans-serif

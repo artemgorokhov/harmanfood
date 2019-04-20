@@ -15,7 +15,7 @@
             </ul>
         </div>
         <div class="column is-5 is-paddingless dishes-list"
-            v-scroll-spy="{sectionSelector: 'ul.cat-group'}">
+            v-scroll-spy="{sectionSelector: 'ul.cat-group', offset: 100}">
             <ul v-for="category in categories"
                 :key="category"
                 class="cat-group">
@@ -177,4 +177,7 @@ export default {
 .categories-list figure.cat-item.active>i
     color: rgba(var(--rgb), 0.7)
 
+#current-restaurant
+    text-align: center
+    font-size: 1rem
 </style>
