@@ -15,7 +15,7 @@
             </ul>
         </div>
         <div class="column is-5 is-paddingless dishes-list"
-            v-scroll-spy="{sectionSelector: 'ul.cat-group'}">
+            v-scroll-spy="{sectionSelector: 'ul.cat-group', offset: 100}">
             <ul v-for="category in categories"
                 :key="category"
                 class="cat-group">
@@ -30,6 +30,7 @@
             </ul>
         </div>
         <div class="column is-paddingless">
+            <p id="current-restaurant">{{ current_restaurant.title }}</p>
             <food-details
                 v-bind="current_dish"
                 v-on:add-dish="addToBasket"
@@ -56,121 +57,9 @@ export default {
     data: function() {
         return {
             current_dish: null,
-            categories: [
-                'Популярное',
-                'Открытые роллы',
-                'Бургеры'
-            ],
-            menu: {
-                'Популярное': [
-                    {
-                        title: 'Филадельфия 2 260 г',
-                        price: 199,
-                        category: 'Популярное',
-                        description: '8 кусочков. Рис, нори, сыр творожный, лосось, огурец'
-                    },
-                    {
-                        title: 'Горячая филадельфия 330 г',
-                        price: 249,
-                        category: 'Популярное',
-                        description: '10 кусочков! рис, нори, сыр творожный, огурец, лосось, соус терияки, кунжут'
-                    },
-                    {
-                        title: 'Ролл с лососем 130 г', 
-                        price: 129,
-                        category: 'Популярное', 
-                        description: '8 кусочков. Рис, нори, лосось'
-                    },
-                    {
-                        title: 'Сет 1 400 г', 
-                        price: 299,
-                        category: 'Популярное',
-                        description: '16 кусочков.Филадельфия 2, ролл лосось'
-                    },
-                    {
-                        title: 'Сет 3 800 г',
-                        price: 579,
-                        category: 'Популярное',
-                        description: '28 кусочков. Филадельфия 2, цезарь ролл, горячая филадельфия'
-                    },
-                    {
-                        title: 'Лапша с курицей 360 г',
-                        price: 229,
-                        category: 'Популярное',
-                        description: 'Курица, лапша, перец болгарский, морковь, лук репчатый, лук зеленый, кунжут, соус соево-чесночный'
-                    }
-                ],
-                'Открытые роллы': [
-                    {
-                        title: 'Филафорния 280 г',
-                        price: 359,
-                        category: 'Открытые роллы',
-                        description: '8 кусочков.Рис, нори, лосось, сыр творожный, огурец, тигровая креветка в панировке, икра тобико(красная)'
-                    },
-                    {
-                        title: 'Ночная москва 240 г', 
-                        price: 269,
-                        category: 'Открытые роллы',
-                        description: '8 кусочков. Рис, нори, икра тобико(черная), сыр творожный, жареный лосось, огурец'
-                    }, 
-                    {
-                        title: 'Сливочный лосось 220 г',
-                        price: 199,
-                        category: 'Открытые роллы',
-                        description: '8 кусочков. Рис, нори, сыр творожный, лосось, кунжут'
-                    },
-                    {
-                        title: 'Сливочный угорь 235 г', 
-                        price: 199,
-                        category: 'Открытые роллы',
-                        description: '8 кусочков. Рис, нори, сыр творожный, угорь, соус терияки, кунжут'
-                    },
-                    {
-                        title: 'Сливочная креветка 230 г',
-                        price: 199,
-                        category: 'Открытые роллы',
-                        description: '8 кусочков. Рис, нори, сыр творожный, тигровая креветка в панировке, кунжут'
-                    }, 
-                    {
-                        title: 'Брутал 250 г',
-                        price: 199,
-                        category: 'Открытые роллы',
-                        description: '8 кусочков. Рис, нори, бекон опаленный, перец болгарский, сыр творожный, китайстакая капуста'
-                    }, 
-                    {
-                        title: 'Динамит 300 г',
-                        price: 349,
-                        category: 'Открытые роллы',
-                        description: '8 кусочков. Рис, нори, сыр творожный, огурец, тигровая креветка, соус спайс, кунжут'
-                    }
-                ],
-                'Бургеры': [
-                    {
-                        title: 'Кани сарадо 240 г',
-                        price: 229,
-                        category: 'Бургеры',
-                        description: '8 кусочков. Рис, нори, краб (имит.), огурец, сыр творожный, кунжут'
-                    }, 
-                    {
-                        title: 'Дракон 360 г', 
-                        price: 559,
-                        category: 'Бургеры',
-                        description: '10 кусочков. Рис, нори, угорь, сыр творожный, такуан, соус терияки, кунжут, украшение(морковь, перец болгарский, огурец)'
-                    }, 
-                    {
-                        title: 'Канада 300 г',
-                        price: 379,
-                        category: 'Бургеры',
-                        description: '8 кусочков. Рис, нори, сыр творожный, угорь, огурец, краб(имит.), соус терияки, кунжут'
-                    },
-                    {
-                        title: 'Нью йорк 280 г', 
-                        price: 439,
-                        category: 'Бургеры',
-                        description: '8 кусочков. Рис, нори, угорь, жаренный лосось, икра тобико(черная), огурец, сыр творожный, соус терияки, кунжут'
-                    }
-                ]
-            }
+            current_restaurant: this.$store.state.dishes.restaurant_on_view,
+            categories: [],
+            menu: {}
         }
     },
     methods: {
@@ -220,12 +109,24 @@ export default {
                 console.log("Actions 'remove dish' was dispatched")
             })
         },
+        loadMenu() {
+            this.$store.dispatch(ACTION_NAMES.UPDATE_MENU, this.current_restaurant)
+            .then(() => {
+                this.menu = this.$store.state.dishes.menu
+                console.log("LOADMENU: "+Object.keys(this.menu))
+                this.categories = this.$store.state.dishes.restaurant_on_view.categories
+            })
+        },
         categoryClass: getCategoryClass
     },
     components: {
         FoodItem,
         DinnerItem,
         FoodDetails
+    },
+    created: function() {
+        console.log("Instance created for " + this.current_restaurant)
+        this.loadMenu()
     }
 }
 </script>
@@ -276,4 +177,7 @@ export default {
 .categories-list figure.cat-item.active>i
     color: rgba(var(--rgb), 0.7)
 
+#current-restaurant
+    text-align: center
+    font-size: 1rem
 </style>

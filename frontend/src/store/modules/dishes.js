@@ -1,25 +1,33 @@
 import { ACTION_NAMES, MUTATION_NAMES } from '@/store/consts'
 import axios from 'axios'
 import { createDish } from '@/models/Dish'
+import { mockFood } from '@/store/mock/responses'
+import { createRestaurant } from '@/models/Restaurant'
 
 const state = function () {
   return {
     restaurant_on_view: null,
     chosen_restaurant: null,
-    dishes: []
+    dinner: [],
+    menu: {}
   }
 }
 
 const mutations = {
   [MUTATION_NAMES.SWITCH_RESTAURANT] (state) {
-    state.chosen_restaurant = state.restaurant_on_view
-    state.dishes = []
+    state.chosen_restaurant = createRestaurant(state.restaurant_on_view)
+    state.dinner = []
+    state.menu = {}
   },
   [MUTATION_NAMES.SET_DISHES_FOR_DINNER] (state, dishes) {
-    state.dishes = dishes
+    state.dinner = [...dishes]
   },
-  [MUTATION_NAMES.CURRENT_RESTAURANT] (state, restaurant) {
-    state.restaurant_on_view = restaurant
+  [MUTATION_NAMES.RESTAURANT_ON_VIEW] (state, restaurant) {
+    state.restaurant_on_view = Object.assign({}, restaurant)
+    console.log("RESTONVIEW: "+Object.keys(state.restaurant_on_view.categories))
+  },
+  [MUTATION_NAMES.SET_MENU_FOR_RESTAURANT] (state, food) {
+    state.menu = Object.assign({}, food)
   }
 }
 
@@ -39,18 +47,71 @@ const actions = {
       !state.chosen_restaurant.equal(state.restaurant_on_view)) {
       commit(MUTATION_NAMES.SWITCH_RESTAURANT)
     }
-    let dishes = state.dishes
-    dishes.push(createDish(payload))
-    commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dishes)
+    let newdinner = [...state.dinner]
+    let olddinner = [...state.dinner]
+    newdinner.push(createDish(payload))
+    commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
+    if (process.env.NODE_ENV !== 'development') {
+      try{
+        await axios.post('/api/menu', dinner)
+      } catch (e) {
+        console.error("Can't update dinner. Rolling back.")
+        commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, olddinner)
+      }
+    }
   },
   async [ACTION_NAMES.REMOVE_DISH_FROM_MY_DINNER] ({commit, state}, dish) {
-    let dishes = state.dishes
-    let dishIndex = dishes.map(x => x.unique).indexOf(dish.unique)
+    let newdinner = [...state.dinner]
+    let olddinner = [...state.dinner]
+    let dishIndex = newdinner.map(x => x.unique).indexOf(dish.unique)
     // This check does not take into account dish options yet
-    if (dishIndex >= 0) {
-      dishes.splice(dishIndex, 1)
-      commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dishes)
+    if (dishIndex == -1) {
+      console.warning('The dish ' + dish.unique + ' was not found in dinner')
+      return
     }
+    newdinner.splice(dishIndex, 1)
+    commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
+    if (process.env.NODE_ENV !== 'development') {
+      try{
+        await axios.post('/api/menu', dinner)
+      } catch (e) {
+        console.error("Can't update dinner. Rolling back.")
+        commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, olddinner)
+      }
+    }
+  },
+  async [ACTION_NAMES.UPDATE_MENU] ({commit}, payload) {
+    try {
+      if (!(payload.hasOwnProperty('title') && payload.hasOwnProperty('provider'))) {
+        console.error('Wrong payload for menu')
+      }
+      var foodResp = mockFood
+      if (process.env.NODE_ENV !== 'development') {
+        foodResp = await axios.get('/api/menu', payload)
+        console.log('Food response: ' + Object.keys(foodResp.data))
+      }
+      console.log('Menu for ' + payload.title + ' has ' + foodResp.data.food.length + ' items')
+      let food_by_categories = {}
+      foodResp.data.food.forEach(food_item => {
+        if (!food_by_categories.hasOwnProperty(food_item.category)) {
+          food_by_categories[food_item.category] = []
+        }
+        food_by_categories[food_item.category].push(food_item)
+      })
+      commit(MUTATION_NAMES.SET_MENU_FOR_RESTAURANT, food_by_categories)
+      // commit(MUTATION_NAMES.RESTAURANT_UPTODATE, {
+      //   provider: foodResp.data.provider,
+      //   title: foodResp.data.restaurant,
+      //   updated: true
+      // })
+    } catch (error) {
+      console.error('Menu request error: ' + error)
+    }
+  },
+  async [ACTION_NAMES.SET_VIEW_RESTAURANT] ({commit, state, rootState}, payload) {
+    let rest = rootState.restaurants[payload.provider][payload.title]
+    console.log("ROOTSTATE: " + Object.keys(rest.categories))
+    commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, rest)
   }
 }
 
@@ -62,7 +123,7 @@ const getters = {
     }
     if (state.chosen_restaurant.equal(state.restaurant_on_view)) {
       console.log('Get selected dishes for this restaurant')
-      return state.dishes
+      return state.dinner
     }
     console.log('Getting dishes from another restaurant')
     return []

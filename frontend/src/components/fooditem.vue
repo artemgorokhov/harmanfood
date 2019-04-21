@@ -4,6 +4,7 @@
         <div class="food-item-content">
             <span class="is-size-6">{{ dish.title }}</span>
             <span class="food-item-price is-pulled-right">{{ dish.price }} &#x20bd;</span>
+            <p class="cat-of-item">{{ dish.category }}</p>
         </div>
     </div>
 </template>
@@ -48,5 +49,9 @@
 
 .card.food-item-card.selected:active
     background-color: rgba(var(--rgb), 0.4)
+
+.cat-of-item
+    font-size: 0.5rem
+    font-family: "Gill Sans MT", "Gill Sans", "My Gill Sans", sans-serif
 
 </style>

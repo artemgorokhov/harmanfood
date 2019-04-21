@@ -62,6 +62,7 @@ manager.add_command("runserver", Server())
 def refreshdb():
     db_tool.hf_users.update(db)
     db_tool.hf_restaurants.update(db)
+    db_tool.hf_food.update_all(db)
 
 
 if __name__ == '__main__':

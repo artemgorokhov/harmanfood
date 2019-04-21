@@ -6,6 +6,8 @@ blank_restaurant = {
     'provider': '',
     'asset': '',
     'food_hash': '',
+    'categories': [],
+    'url': '',
     'orders': 0
 }
 
@@ -27,7 +29,8 @@ class Restaurant(DBItem):
         if not record:
             return False
         for key in record:
-            self.__dict__[key] = record[key]
+            if key not in self.__dict__:
+                self.__dict__[key] = record[key]
 
     @classmethod
     def provider_condition(cls, provider):
