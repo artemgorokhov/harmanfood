@@ -9,6 +9,7 @@ const state = function () {
     currentStage: null,
     order: {
       patron: createUser(),
+      participants: [],
       phase: null
     },
     loaded: false
@@ -31,6 +32,9 @@ const mutations = {
   [MUTATION_NAMES.PATRON] (state, payload) {
     state.order.patron = createUser(payload)
   },
+  [MUTATION_NAMES.PARTICIPANTS] (state, payload) {
+    state.order.participants = createParticipants(payload)
+  }
   'SOCKET_TEST' (msg) {
     console.log('Received message from socket: ' + msg)
   }
@@ -52,11 +56,24 @@ const actions = {
       throw new Error(error)
     }
   },
+  async [ACTION_NAMES.LOAD_INFO_BLOCK_DATA] ({commit}) {
+    try {
+      console.log('Loading data for info block')
+      var infoResp = mockInfoResp
+      if (process.env.NODE_ENV !== 'development') {
+        infoResp = await axios.get('/api/info_data')
+      }
+      console.log('Info data is: ' + Object.keys(infoResp.data))
+      commit(MUTATION_NAMES.PATRON, infoResp.data.patron)
+      commit(MUTATION_NAMES.PARTICIPANTS, infoResp.participants)
+    }
+  },
   async [ACTION_NAMES.LOAD_DATA] ({commit, dispatch}) {
     try {
       await dispatch(ACTION_NAMES.LOAD_MAIN_INFO)
       console.log('User info is loaded successfully. Loading restaurants.')
       await dispatch(ACTION_NAMES.UPDATE_RESTAURANT_LIST)
+      await dispatch(ACTION_NAMES.LOAD_INFO_BLOCK_DATA)
       console.log('Restaurants are loaded. Flagging app is loaded')
       commit(MUTATION_NAMES.FLAG_DATA_LOADED)
     } catch (error) {

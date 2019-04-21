@@ -5,11 +5,8 @@ export const mockInitialResp = {
       lastName: 'Горохов',
       phone: '+79519020046'
     },
-    patron: {
-      firstName: 'Дмитрий',
-      lastName: 'Логанов',
-      phone: '+79875573518'
-    }
+    current_stage: 'thequestion',
+    patron: false
   }
 }
 
@@ -227,4 +224,51 @@ export const mockFood = {
       }
     ]
   }
+}
+
+export const mockInfoResp = {
+  patron: {
+      firstName: 'Дмитрий',
+      lastName: 'Логанов',
+      phone: '+79875573518'
+  },
+  participants: [
+    {
+      firstName: 'Артем',
+      lastName: 'Горохов',
+      phase: 'Выбирает еду (Woking)',
+      food: [
+        {
+            name: 'Филадельфия 2',
+            price: '199р'
+        },
+        {
+            name: 'Лапша с курицей',
+            options: ['терияки'],
+            price: '229р'
+        }
+      ]
+    },
+    {
+      firstName: 'Алексей',
+      lastName: 'Канаев',
+      phase: 'Выбирает ресторан'
+    },
+    {
+      firstName: 'Дмитрий',
+      lastName: 'Логанов',
+      phase: 'Выбирает еду (Burger King)',
+      food: [
+        {
+            name: 'Картошечка фри',
+            price: '100р'
+        },
+        {
+            name: 'Бургер с говядиной',
+            options: ['чили', 'без лука'],
+            price: '249р'
+        }
+      ]
+    }
+  ]
 }
