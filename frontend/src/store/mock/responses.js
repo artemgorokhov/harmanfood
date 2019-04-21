@@ -6,9 +6,9 @@ export const mockInitialResp = {
       phone: '+79519020046'
     },
     patron: {
-      firstName: 'Артём',
-      lastName: 'Горохов',
-      phone: '+79519020046'
+      firstName: 'Дмитрий',
+      lastName: 'Логанов',
+      phone: '+79875573518'
     }
   }
 }
