@@ -47,17 +47,37 @@ const actions = {
       !state.chosen_restaurant.equal(state.restaurant_on_view)) {
       commit(MUTATION_NAMES.SWITCH_RESTAURANT)
     }
-    let dinner = state.dinner
-    dinner.push(createDish(payload))
-    commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dinner)
+    let newdinner = [...state.dinner]
+    let olddinner = [...state.dinner]
+    newdinner.push(createDish(payload))
+    commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
+    if (process.env.NODE_ENV !== 'development') {
+      try{
+        await axios.post('/api/menu', dinner)
+      } catch (e) {
+        console.error("Can't update dinner. Rolling back.")
+        commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, olddinner)
+      }
+    }
   },
   async [ACTION_NAMES.REMOVE_DISH_FROM_MY_DINNER] ({commit, state}, dish) {
-    let dinner = state.dinner
-    let dishIndex = dinner.map(x => x.unique).indexOf(dish.unique)
+    let newdinner = [...state.dinner]
+    let olddinner = [...state.dinner]
+    let dishIndex = newdinner.map(x => x.unique).indexOf(dish.unique)
     // This check does not take into account dish options yet
-    if (dishIndex >= 0) {
-      dinner.splice(dishIndex, 1)
-      commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dinner)
+    if (dishIndex == -1) {
+      console.warning('The dish ' + dish.unique + ' was not found in dinner')
+      return
+    }
+    newdinner.splice(dishIndex, 1)
+    commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
+    if (process.env.NODE_ENV !== 'development') {
+      try{
+        await axios.post('/api/menu', dinner)
+      } catch (e) {
+        console.error("Can't update dinner. Rolling back.")
+        commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, olddinner)
+      }
     }
   },
   async [ACTION_NAMES.UPDATE_MENU] ({commit}, payload) {
@@ -67,7 +87,7 @@ const actions = {
       }
       var foodResp = mockFood
       if (process.env.NODE_ENV !== 'development') {
-        foodResp = await axios.post('/api/menu', payload)
+        foodResp = await axios.get('/api/menu', payload)
         console.log('Food response: ' + Object.keys(foodResp.data))
       }
       console.log('Menu for ' + payload.title + ' has ' + foodResp.data.food.length + ' items')
