@@ -36,7 +36,7 @@ export default {
 
 <style lang="sass">
 .participant
-    border-bottom: 1px solid gray
+    border-bottom: 1px solid LightSlateGrey
     padding-bottom: 1em
     overflow-x: hidden
     margin-left: 0

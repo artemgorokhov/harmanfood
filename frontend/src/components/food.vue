@@ -137,12 +137,14 @@ export default {
     height: calc(100% + 1.5rem - 6rem)
 
 // Category colors
-.cat-popular
+.cat-fire-alt
     --rgb: 255, 246, 198
 .cat-sushi
     --rgb: 224, 254, 255
 .cat-hamburger
     --rgb: 204, 139, 183
+.cat-utensils
+    --rgb: 250, 250, 250
 
 
 .dishes-list
