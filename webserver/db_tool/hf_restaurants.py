@@ -79,4 +79,6 @@ def update(db):
 		rest = Restaurant(r['title'], r['provider'])
 		rest.categories = get_categories(r['title'])
 		rest.initialize(r)
+		rest.asset = r['asset']
+		rest.url = r['url']
 		print("Written {}: {}".format(r['title'], storage.save(rest)))

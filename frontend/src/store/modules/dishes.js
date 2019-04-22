@@ -86,7 +86,7 @@ const actions = {
       }
       var foodResp = mockFood
       if (process.env.NODE_ENV !== 'development') {
-        foodResp = await axios.get('/api/menu', payload)
+        foodResp = await axios.get('/api/menu', {params: payload})
         console.log('Food response: ' + Object.keys(foodResp.data))
       }
       console.log('Menu for ' + payload.title + ' has ' + foodResp.data.food.length + ' items')

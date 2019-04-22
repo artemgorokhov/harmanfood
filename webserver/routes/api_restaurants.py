@@ -9,4 +9,7 @@ class ApiRestaurant(Resource):
     def get(self):
         storage = storage_helper.get_storage()
         rest_list = storage.find(Restaurant)
-        return rest_list
+        print("/api/restaurant_list: {}".format(rest_list))
+        return {
+            'restaurants': rest_list
+        }

@@ -141,7 +141,7 @@ export default {
     --rgb: 255, 246, 198
 .cat-sushi
     --rgb: 224, 254, 255
-.cat-burger
+.cat-hamburger
     --rgb: 204, 139, 183
 
 
