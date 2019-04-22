@@ -18,99 +18,99 @@ export const mockRestaurants = {
         provider: 'yandex',
         asset: 'pelmennaya_lepi_testo.jpg',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }, {
         title: 'Woking',
         provider: 'delivery',
         asset: 'wok__go.jpg',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }, {
         title: 'Burger king',
         provider: 'delivery',
         asset: 'burger_king.jpg',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }, {
         title: 'Еда с совой',
         provider: 'delivery',
         asset: 'jeda_s_sovoj.jpg',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }, {
         title: 'Кулинария Ирины Князевой',
         provider: 'delivery',
         asset: 'kilinaria_iriny_knayzevoj.jpg',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }, {
         title: 'Папас Китчен',
         provider: 'yandex',
         asset: 'papa_kitchen.jpg',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }, {
         title: 'Вай Гоги',
         provider: 'yandex',
         asset: 'vai_gogi.jpg',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }, {
         title: 'Plov&Go',
         provider: 'yandex',
         asset: 'plovgo-logo.svg',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }, {
         title: 'Жарбалкон',
         provider: 'yandex',
         asset: 'zharbalkon.jpg',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }, {
         title: 'Та самая шаурма',
         provider: 'other',
         asset: 'shaurma.png',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }, {
         title: 'Barabeq',
         provider: 'other',
         asset: 'barabeq.svg',
         categories: [
-            'Популярное',
-            'Открытые роллы',
-            'Бургеры'
+          'Популярное',
+          'Открытые роллы',
+          'Бургеры'
         ]
       }
     ]
@@ -226,49 +226,51 @@ export const mockFood = {
   }
 }
 
-export const mockInfoResp = {
-  patron: {
+export const mockOrderResp = {
+  data: {
+    patron: {
       firstName: 'Дмитрий',
       lastName: 'Логанов',
       phone: '+79875573518'
-  },
-  participants: [
-    {
-      firstName: 'Артем',
-      lastName: 'Горохов',
-      phase: 'Выбирает еду (Woking)',
-      food: [
-        {
-            name: 'Филадельфия 2',
-            price: '199р'
-        },
-        {
-            name: 'Лапша с курицей',
+    },
+    participants: [
+      {
+        fullName: 'Артем Горохов',
+        phase: 'Выбирает еду (Woking)',
+        food: [
+          {
+            title: 'Филадельфия 2',
+            price: 199
+          },
+          {
+            title: 'Лапша с курицей',
             options: ['терияки'],
-            price: '229р'
-        }
-      ]
-    },
-    {
-      firstName: 'Алексей',
-      lastName: 'Канаев',
-      phase: 'Выбирает ресторан'
-    },
-    {
-      firstName: 'Дмитрий',
-      lastName: 'Логанов',
-      phase: 'Выбирает еду (Burger King)',
-      food: [
-        {
-            name: 'Картошечка фри',
-            price: '100р'
-        },
-        {
-            name: 'Бургер с говядиной',
+            price: 229
+          }
+        ],
+        total: 498
+      },
+      {
+        fullName: 'Алексей Канаев',
+        phase: 'Выбирает ресторан',
+        total: 0
+      },
+      {
+        fullName: 'Дмитрий Логанов',
+        phase: 'Выбирает еду (Burger King)',
+        food: [
+          {
+            title: 'Картошечка фри',
+            price: 100
+          },
+          {
+            title: 'Бургер с говядиной',
             options: ['чили', 'без лука'],
-            price: '249р'
-        }
-      ]
-    }
-  ]
+            price: 249
+          }
+        ],
+        total: 349
+      }
+    ]
+  }
 }

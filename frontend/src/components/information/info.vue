@@ -5,7 +5,7 @@
             <patron class="column"/>
         </div>
         <div class="participantsList">
-            <participant-item v-for="p in participants" :key="p.id" v-bind:participant="p"/>
+            <participant-item v-for="p in participants" :key="p.id" v-bind="p"/>
         </div>
     </div>
 </template>
@@ -23,6 +23,11 @@ export default{
     data() {
         return {
             
+        }
+    },
+    computed: {
+        participants() {
+            return this.$store.state.main.order.participants
         }
     }
 }

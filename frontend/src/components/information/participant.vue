@@ -1,14 +1,14 @@
 <template>
     <div class="participant">
         <div class="participant-total">
-            <span class="participant-name">{{ name }}</span>
+            <span class="participant-name">{{ fullName }}</span>
             <span class="participant-price ">
-                250 р
+                {{ total }} &#x20bd;
             </span>
         </div> 
             <ul class="food-list">
-            <li v-for="foodItem in foodList" :key="foodItem.id">
-                {{ foodItem.name }}
+            <li v-for="foodItem in foodList" :key="foodItem.title">
+                {{ foodItem.title }}
             </li>
             </ul>
     </div>
@@ -17,17 +17,18 @@
 <script>
 export default {
     name: 'participant-item',
-    props: [
-        'participant'
-    ],
+    props: {
+        fullName: String,
+        food: Array,
+        total: Number
+    },
     computed: {
         name: function() {
             console.log('this keys: ' + Object.keys(this.participant))
             return this.participant.firstName + ' ' + this.participant.lastName
         },
         foodList: function() {
-
-            return this.participant.food
+            return this.food
         }
     }
 }

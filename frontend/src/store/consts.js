@@ -2,8 +2,8 @@ export const MUTATION_NAMES = {
   SET_USER: 'set user',
   SET_CURRENT_STAGE: 'current stage',
   FLAG_DATA_LOADED: 'flag data loaded',
+  ORDER: 'order',
   PATRON: 'patron',
-  PARTICIPANTS: 'participants',
   RESTAURANT_UPTODATE: 'restaurant is up-to-date',
   RESTAURANT_LOADED: 'restaurant loaded',
   SWITCH_RESTAURANT: 'switch dinner restaurant',
@@ -14,7 +14,7 @@ export const MUTATION_NAMES = {
 
 export const ACTION_NAMES = {
   LOAD_MAIN_INFO: 'get user information',
-  LOAD_INFO_BLOCK_DATA: 'get data for info block',
+  LOAD_ORDER_DATA: 'get data for info block',
   LOAD_DATA: 'load main data',
   I_AM_PATRON: 'i am patron',
   UPDATE_MENU: 'update restaurant menu',
