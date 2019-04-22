@@ -4,9 +4,10 @@
             <ul class="menu-category"
                 v-scroll-spy-active="{selector: 'figure.cat-item'}"
                 v-scroll-spy-link="{selector: 'figure.cat-item'}">
-                <li v-for="menu_cat in categories"
+                <li v-for="(menu_cat, idx) in categories"
                     :key="menu_cat"
-                    class="is-unselectable">
+                    class="is-unselectable"
+                    :style="getHue(idx)">
                     <figure class="image is-32x32 cat-item">
                         <i class="fas"
                             :class="categoryClass(menu_cat, true)"></i>
@@ -16,14 +17,14 @@
         </div>
         <div class="column is-5 is-paddingless dishes-list"
             v-scroll-spy="{sectionSelector: 'ul.cat-group', offset: 100}">
-            <ul v-for="category in categories"
+            <ul v-for="(category, idx) in categories"
                 :key="category"
+                :style="getHue(idx)"
                 class="cat-group">
                 <li v-for="dish in menu[category]"
                     :key="dish.id">
                     <food-item 
                         v-bind:dish="dish"
-                        v-bind:categoryClass="categoryClass(category, false)"
                         :class="{ selected: dish == current_dish }"
                         @click.native="foodItemSelect(dish)"/>
                 </li>
@@ -117,6 +118,11 @@ export default {
                 this.categories = this.$store.state.dishes.restaurant_on_view.categories
             })
         },
+        getHue(idx) {
+            let hue = 360 * idx / this.categories.length
+            console.log("Calculated hue "+hue)
+            return `--hue: ${hue};`
+        },
         categoryClass: getCategoryClass
     },
     components: {
@@ -135,17 +141,6 @@ export default {
 @import "./../assets/css/custom_icons.css"
 .food-view
     height: calc(100% + 1.5rem - 6rem)
-
-// Category colors
-.cat-fire-alt
-    --rgb: 255, 246, 198
-.cat-sushi
-    --rgb: 224, 254, 255
-.cat-hamburger
-    --rgb: 204, 139, 183
-.cat-utensils
-    --rgb: 250, 250, 250
-
 
 .dishes-list
     overflow-y: auto
@@ -171,13 +166,13 @@ export default {
     cursor: pointer
 
 .categories-list figure.cat-item>i
-    color: rgba(var(--rgb), 0.2)
+    color: hsla(var(--hue), 90%, 90%, 0.2)
 
 .categories-list figure.cat-item>i:hover
-    color: rgba(var(--rgb), 0.3)
+    color: hsla(var(--hue), 90%, 90%, 0.3)
 
 .categories-list figure.cat-item.active>i
-    color: rgba(var(--rgb), 0.7)
+    color: hsla(var(--hue), 90%, 90%, 0.7)
 
 #current-restaurant
     text-align: center

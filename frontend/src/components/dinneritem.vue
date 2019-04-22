@@ -34,7 +34,7 @@
         methods: {
             categoryClass() {
                 console.log("DINNER item category: "+this.dish.category)
-                return getCategoryClass(this.dish.category, true)
+                return getCategoryClass(this.dish.category)
             }
         }
     }
