@@ -7,15 +7,44 @@
 		url("./../fonts/FoodIconsFont.svg#filename") format("svg");
 }
 
-.fa-sushi:before {
+i[class^='ic-']:before {
   display: block;
-  content: "\e916";
   font-family: FoodIconsFont, sans-serif;
   font-weight: normal;
   font-style: normal;
-  /*height: 1rem;
-  width: 1rem;
-  background-size: 1rem 1rem;
-  background-image: url('./../img/sushi.svg');
-  background-repeat: no-repeat;*/
+}
+
+.ic-sushi:before {
+  font-family: FoodIconsFont, sans-serif;
+  content: "\e916";
+}
+
+.ic-french-fries:before {
+  font-family: FoodIconsFont, sans-serif;
+  content: "\e90b"
+}
+
+.ic-cupcake:before {
+  font-family: FoodIconsFont, sans-serif;
+  content: "\e909"
+}
+
+.ic-sauces:before {
+  font-family: FoodIconsFont, sans-serif;
+  content: "\e914"
+}
+
+.ic-bucket:before {
+  font-family: FoodIconsFont, sans-serif;
+  content: "\e901"
+}
+
+.ic-juice:before {
+  font-family: FoodIconsFont, sans-serif;
+  content: "\e910"
+}
+
+.ic-wok:before {
+  font-family: FoodIconsFont, sans-serif;
+  content: "\e906"
 }

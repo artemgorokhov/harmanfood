@@ -33,20 +33,20 @@
     font-weight: bold
 
 .food-item-card.card
-    background-color: hsla(var(--hue), 90%, 90%, 0.1)
+    background-color: hsla(var(--hue), 100%, 80%, 0.1)
     color: $light
 
 .food-item-card.card:hover
-    background-color: rhsla(var(--hue), 90%, 90%, 0.2)
+    background-color: rhsla(var(--hue), 100%, 80%, 0.2)
 
 .food-item-card.card:active
-    background-color: hsla(var(--hue), 90%, 90%, 0.4)
+    background-color: hsla(var(--hue), 100%, 80%, 0.4)
 
 .card.food-item-card.selected
-    background-color: hsla(var(--hue), 90%, 90%, 0.3)
+    background-color: hsla(var(--hue), 100%, 80%, 0.3)
 
 .card.food-item-card.selected:active
-    background-color: hsla(var(--hue), 90%, 90%, 0.4)
+    background-color: hsla(var(--hue), 100%, 80%, 0.4)
 
 .cat-of-item
     font-size: 0.5rem

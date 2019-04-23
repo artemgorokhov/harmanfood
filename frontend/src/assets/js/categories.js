@@ -1,33 +1,32 @@
-function getCategoryClass(category) {
+function getCategoryClass (category) {
   let conformity = {
-    'fa-fire-alt': ['Популярное'], //Font awesome
-    'fa-sushi': ['Открытые роллы'],
-    'fa-hamburger': ['Бургеры'], //Font awesome
-    'fa-snacks': ['Закуски'],
-    'fa-cupcake': ['Десерты'],
-    'fa-baby': ['Детское меню'], //Font awesome
-    'fa-sauces': ['Соусы'],
-    'fa-wine-glass-alt': ['Напитки'], //Font awesome
-    'fa-drumstick-bite': ['Куриные  бургеры'], //Font awesome
-    'fa-fish': ['Рыбные бургеры'], //Font awesome
-    'fa-bucket': ['Букеты']
+    'fa-fire-alt': ['Популярное'], // Font awesome
+    'ic-sushi': ['Открытые роллы', 'Суши и гунканы', 'Сладкие роллы',
+      'Филадельфии', 'Вегетарианские роллы', 'Жареные роллы', 'Закрытые роллы',
+      'Классические роллы', 'Сеты(ассорти)'],
+    'fa-hamburger': ['Бургеры', 'Бургеры с говядиной'], // Font awesome
+    'ic-french-fries': ['Закуски'],
+    'ic-cupcake': ['Десерты'],
+    'fa-baby': ['Джуниор меню'], // Font awesome
+    'ic-sauces': ['Соусы', 'Дополнительно к заказу'],
+    'ic-wok': ['Лапша'],
+    'fa-wine-glass-alt': [], // Font awesome
+    'ic-juice': ['Напитки'],
+    'fa-drumstick-bite': ['Бургеры с курицей'], // Font awesome
+    'fa-fish': ['Бургеры с рыбой'], // Font awesome
+    'ic-bucket': ['Букеты']
   }
-  
-  let iconClass = 'fa-utensils' //Font awesome
+
+  let iconClass = 'fa-utensils' // Font awesome
   for (let cl in conformity) {
     if (conformity[cl].indexOf(category) >= 0) {
       iconClass = cl
-      break;
+      break
     }
   }
   let result = {}
   result[iconClass] = true
   return result
-}
-
-function getColorVariable(index, amount) {
-  hue = index * 360 / amount
-  return hue
 }
 
 export { getCategoryClass }

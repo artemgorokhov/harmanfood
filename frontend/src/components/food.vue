@@ -8,7 +8,7 @@
                     :key="menu_cat"
                     class="is-unselectable"
                     :style="getHue(idx)">
-                    <figure class="image is-32x32 cat-item">
+                    <figure class="image is-28x28 cat-item">
                         <i class="fas"
                             :class="categoryClass(menu_cat, true)"></i>
                     </figure>
@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div class="column is-5 is-paddingless dishes-list"
-            v-scroll-spy="{sectionSelector: 'ul.cat-group', offset: 100}">
+            v-scroll-spy="{sectionSelector: 'ul.cat-group', offset: 110}">
             <ul v-for="(category, idx) in categories"
                 :key="category"
                 :style="getHue(idx)"
@@ -120,7 +120,6 @@ export default {
         },
         getHue(idx) {
             let hue = 360 * idx / this.categories.length
-            console.log("Calculated hue "+hue)
             return `--hue: ${hue};`
         },
         categoryClass: getCategoryClass
@@ -151,28 +150,31 @@ export default {
 .dishes-list::-webkit-scrollbar
     display: none
 
+ul.menu-category>li
+    text-align: center
+
 .my-dishes-list
     height: calc(100% - 27rem)
     border-top: white 1px solid
 
 .categories-list li
-    margin-bottom: 1.5rem
+    margin-bottom: 0.7rem
     // border: 1px white solid
 
 .categories-list i.fas
-    font-size: 2rem
+    font-size: 1.3rem
 
 .categories-list figure.cat-item
     cursor: pointer
 
 .categories-list figure.cat-item>i
-    color: hsla(var(--hue), 90%, 90%, 0.2)
+    color: hsla(var(--hue), 100%, 80%, 0.2)
 
 .categories-list figure.cat-item>i:hover
-    color: hsla(var(--hue), 90%, 90%, 0.3)
+    color: hsla(var(--hue), 100%, 80%, 0.3)
 
 .categories-list figure.cat-item.active>i
-    color: hsla(var(--hue), 90%, 90%, 0.7)
+    color: hsla(var(--hue), 100%, 80%, 0.7)
 
 #current-restaurant
     text-align: center
