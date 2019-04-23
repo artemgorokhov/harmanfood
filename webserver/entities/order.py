@@ -64,6 +64,11 @@ class Order(DBItem):
         self.participants[username] = participant
         return participant
 
+    def update_participant_dinner(self, user, dinner):
+        p = self.get_participant(user)
+        p['food'] = list(dinner)
+        # TODO: Check if p.restaurant is same as all dishes from dinner
+
     def get_participant(self, user):
         return self.participants.get(user.username, {})
 

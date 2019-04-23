@@ -52,7 +52,9 @@ const actions = {
     commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
     if (process.env.NODE_ENV !== 'development') {
       try {
-        await axios.post('/api/menu', newdinner)
+        await axios.post('/api/menu', {
+          dinner: newdinner
+        })
       } catch (e) {
         console.error("Can't update dinner. Rolling back.")
         commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, olddinner)
@@ -72,7 +74,9 @@ const actions = {
     commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
     if (process.env.NODE_ENV !== 'development') {
       try {
-        await axios.post('/api/menu', newdinner)
+        await axios.post('/api/menu', {
+          dinner: newdinner
+        })
       } catch (e) {
         console.error("Can't update dinner. Rolling back.")
         commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, olddinner)

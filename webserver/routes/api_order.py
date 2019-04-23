@@ -1,6 +1,5 @@
 from flask_restful import Resource
-from webserver.entities.order_manager import OrderManager
-from webserver.entities import Restaurant
+from webserver.entities import OrderManager
 from webserver.auth import requires_auth
 
 

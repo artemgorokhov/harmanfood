@@ -1,6 +1,7 @@
+from flask import g
 from flask_restful import Resource, reqparse, abort
 import webserver.storage as storage_helper
-from webserver.entities import Food
+from webserver.entities import Food, OrderManager, User
 from webserver.auth import requires_auth
 
 
@@ -20,3 +21,18 @@ class ApiFood(Resource):
         return {
             'food': food_list
         }
+
+    @requires_auth
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument("dinner", type=list, help="List of dishes for dinner")
+        payload = parser.parse_args()
+        dinner = payload.get("dinner", None)
+        if dinner is None:
+            abort(403, error_message="Dishes list is required")
+        print("DINNER: {}".format(dinner))
+        order = OrderManager.get_order()
+        user = User(g.current_user)
+        order.update_participant_dinner(user, dinner)
+        storage = storage_helper.get_storage()
+        storage.save(order)
