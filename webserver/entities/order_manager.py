@@ -42,5 +42,9 @@ class OrderManager:
 
     @classmethod
     def calculate_patron(cls, order):
-        print("Calculating patron for order {}".format(order.date.isoformat()))
-        return False
+        if not order.participants:
+            print("No patron for order {}".format(order.date.isoformat()))
+            return None
+        order.patron = next(iter(order.participants))
+        print("Patron for order {} is {}".format(order.date.isoformat(), order.patron))
+        return order.patron

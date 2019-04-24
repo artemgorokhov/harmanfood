@@ -8,4 +8,4 @@ class ApiOrder(Resource):
     def get(self):
         order = OrderManager.get_order()
         print('/api/order: {}'.format(order.as_dict()))
-        return order.as_dict()
+        return order.serialize()

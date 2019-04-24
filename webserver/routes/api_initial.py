@@ -17,10 +17,10 @@ class ApiInitialData(Resource):
         current_order = OrderManager.get_order()
         user_order_info = current_order.get_participant(user)
         print('USER ORDER: {}'.format(user_order_info))
-        user_stage = NotStartedState() if not user_order_info else user_order_info['stage']
+        user_phase = NotStartedState() if not user_order_info else user_order_info['phase']
         # socketio.emit('TEST', user.firstName, broadcast=True, namespace='/ws')
         return {
             'user': user.as_dict(),
-            'userStage': str(user_stage),
+            'phase': str(user_phase),
             'orderIsDone': current_order.is_done()
         }

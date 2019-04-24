@@ -25,12 +25,11 @@ class ApiFood(Resource):
     @requires_auth
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("dinner", type=list, help="List of dishes for dinner")
+        parser.add_argument("dinner", action="append", help="List of dishes for dinner")
         payload = parser.parse_args()
         dinner = payload.get("dinner", None)
         if dinner is None:
             abort(403, error_message="Dishes list is required")
-        print("DINNER: {}".format(dinner))
         order = OrderManager.get_order()
         user = User(g.current_user)
         order.update_participant_dinner(user, dinner)

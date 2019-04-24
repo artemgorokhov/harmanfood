@@ -50,6 +50,9 @@ const actions = {
     let olddinner = [...state.dinner]
     newdinner.push(createDish(payload))
     commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
+    newdinner.forEach(function (element) {
+      console.log('NEWDINNER: ' + Object.keys(element))
+    })
     if (process.env.NODE_ENV !== 'development') {
       try {
         await axios.post('/api/menu', {

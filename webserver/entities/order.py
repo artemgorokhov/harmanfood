@@ -55,10 +55,11 @@ class Order(DBItem):
             print("Participant already there")
             return self.participants[username]
         participant = {
-            'name': user.full_name,
-            'stage': str(get_state('choosing restaurant')),
+            'fullName': user.full_name,
+            'phase': str(get_state('choosing restaurant')),
             'food': [],
-            'restaurant': None
+            'restaurant': None,
+            'total': 0
         }
         print("NEW PARTICIPANT: {}".format(participant))
         self.participants[username] = participant
@@ -96,4 +97,16 @@ class Order(DBItem):
                 d[key] = str(self.get_state())
             else:
                 d[key] = value
+        return d
+
+    def serialize(self, myusername=None):
+        d = self.as_dict()
+        d['date'] = d['date'].strftime('%d-%m-%Y')
+        participant_list = []
+        for username in self.participants:
+            idx = len(participant_list)
+            if myusername == username:
+                idx = 0
+            participant_list.insert(idx, self.participants[username])
+        d['participants'] = participant_list
         return d

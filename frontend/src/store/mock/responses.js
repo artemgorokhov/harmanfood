@@ -5,7 +5,7 @@ export const mockInitialResp = {
       lastName: 'Горохов',
       phone: '+79519020046'
     },
-    current_stage: 'thequestion',
+    phase: 'thequestion',
     patron: false
   }
 }
@@ -228,11 +228,12 @@ export const mockFood = {
 
 export const mockOrderResp = {
   data: {
-    patron: {
-      firstName: 'Дмитрий',
-      lastName: 'Логанов',
-      phone: '+79875573518'
-    },
+    patron: null,
+    // {
+    //   firstName: 'Дмитрий',
+    //   lastName: 'Логанов',
+    //   phone: '+79875573518'
+    // },
     participants: [
       {
         fullName: 'Артем Горохов',
