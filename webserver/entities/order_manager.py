@@ -45,6 +45,7 @@ class OrderManager:
         if not order.participants:
             print("No patron for order {}".format(order.date.isoformat()))
             return None
-        order.patron = next(iter(order.participants))
-        print("Patron for order {} is {}".format(order.date.isoformat(), order.patron))
+        order.patron = order.participants[next(iter(order.participants))]
+        print("Patron for order {} is {}"
+            .format(order.date.isoformat(), order.patron['username']))
         return order.patron
