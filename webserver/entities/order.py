@@ -55,7 +55,7 @@ class Order(DBItem):
             print("Participant already there")
             return self.participants[username]
         participant = {
-            'username': user.name,
+            'username': user.username,
             'fullName': user.full_name,
             'phone': user.phone,
             'phase': str(get_state('choosing restaurant')),
@@ -111,9 +111,13 @@ class Order(DBItem):
                 idx = 0
             participant_list.insert(idx, self.participants[username])
         d['participants'] = participant_list
-        d['patron'] = {
-            'fullName': self.patron['fullName'],
-            'phone': self.patron['phone']
-        }
-        d['iampatron'] = True if myusername == self.patron['username'] else False
+        if self.patron:
+            d['patron'] = {
+                'fullName': self.patron['fullName'],
+                'phone': self.patron['phone']
+            }
+            d['iampatron'] = True if myusername == self.patron['username'] else False
+        else:
+            d['patron'] = None
+            d['iampatron'] = False
         return d

@@ -33,5 +33,5 @@ class ApiParticipate(Resource):
         else:
             return {
                 'participate': False,
-                'reason': 'Your choice'
+                'reason': 'Its your choice...'
             }
