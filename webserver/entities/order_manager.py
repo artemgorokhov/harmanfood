@@ -1,4 +1,5 @@
 from .order import Order
+from webserver import emit_order
 import webserver.storage as storage_helper
 from datetime import date
 
@@ -27,6 +28,7 @@ class OrderManager:
         cls.calculate_patron(order)
         if not storage.save(order):
             return False
+        emit_order(order.serialize())
         return participant
 
     @classmethod
@@ -38,7 +40,10 @@ class OrderManager:
             return False
         order.remove_participant(user)
         cls.calculate_patron(order)
-        return storage.save(order)
+        if not storage.save(order):
+            return False
+        emit_order(order.serialize())
+        return True
 
     @classmethod
     def calculate_patron(cls, order):

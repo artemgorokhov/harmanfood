@@ -57,6 +57,8 @@ class Order(DBItem):
         participant = {
             'username': user.username,
             'fullName': user.full_name,
+            'firstName': user.firstName,
+            'lastName': user.lastName,
             'phone': user.phone,
             'phase': str(get_state('choosing restaurant')),
             'food': [],
@@ -113,7 +115,8 @@ class Order(DBItem):
         d['participants'] = participant_list
         if self.patron:
             d['patron'] = {
-                'fullName': self.patron['fullName'],
+                'firstName': self.patron['firstName'],
+                'lastName': self.patron['lastName'],
                 'phone': self.patron['phone']
             }
             d['iampatron'] = True if myusername == self.patron['username'] else False

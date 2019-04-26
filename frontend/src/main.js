@@ -5,13 +5,12 @@ import store from '@/store'
 import socket from '@/socket'
 import Scrollspy, { Easing } from 'vue2-scrollspy'
 
-
 Vue.config.productionTip = false
 
 Vue.use(socket)
 
 Vue.use(Scrollspy, {
-    easing: Easing.Quartic.InOut
+  easing: Easing.Quartic.InOut
 })
 
 /* eslint-disable no-new */

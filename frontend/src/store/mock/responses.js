@@ -228,12 +228,11 @@ export const mockFood = {
 
 export const mockOrderResp = {
   data: {
-    patron: null,
-    // {
-    //   firstName: 'Дмитрий',
-    //   lastName: 'Логанов',
-    //   phone: '+79875573518'
-    // },
+    patron: {
+      firstName: 'Дмитрий',
+      lastName: 'Логанов',
+      phone: '+79875573518'
+    },
     participants: [
       {
         fullName: 'Артем Горохов',

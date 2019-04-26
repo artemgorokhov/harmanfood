@@ -2,10 +2,11 @@ import store from '@/store'
 import SocketIO from 'socket.io-client'
 import VueSocketIO from 'vue-socket.io'
 
+export const SocketInstance = SocketIO('/ws')
+
 export default new VueSocketIO({
   debug: true,
-  connection: SocketIO('/ws'),
-  // connection: SocketIO('http://127.0.0.1:5000/ws'),
+  connection: SocketInstance,
   vuex: {
     store,
     actionPrefix: 'SOCKET_',

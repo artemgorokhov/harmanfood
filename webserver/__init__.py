@@ -11,6 +11,11 @@ db = db_client.harmanfood
 socketio = SocketIO()
 
 
+def emit_order(serialized_order):
+    print("SOCKETIO: Emitting changed order {}".format(serialized_order))
+    socketio.emit('ORDER', serialized_order, broadcast=True, namespace='/ws')
+
+
 def create_app(config_name=None):
     if config_name is None:
         config_name = os.environ.get('FLASK_CONFIG', 'development')
@@ -26,8 +31,8 @@ def create_app(config_name=None):
     app.register_blueprint(routes.main_bp)
     app.register_blueprint(routes.api_bp)
 
-    if config_name == 'development':
-        # CORS enabled only for development at the moment
-        CORS(app)
+    # if config_name == 'development':
+    #     # CORS enabled only for development at the moment
+    #     CORS(app)
 
     return app
