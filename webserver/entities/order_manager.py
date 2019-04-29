@@ -46,6 +46,19 @@ class OrderManager:
         return True
 
     @classmethod
+    def update_participant_dinner(cls, username, dinner):
+        storage = storage_helper.get_storage()
+        order = cls.get_order()
+        if order.is_done():
+            return False
+        if not order.update_participant_dinner(username, dinner):
+            return False
+        if not storage.save(order):
+            return False
+        emit_order(order.serialize())
+        return True
+
+    @classmethod
     def calculate_patron(cls, order):
         if not order.participants:
             print("No patron for order {}".format(order.date.isoformat()))

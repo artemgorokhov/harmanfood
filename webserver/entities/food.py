@@ -32,3 +32,11 @@ class Food(DBItem):
             return False
         for key in record:
             self.__dict__[key] = record[key]
+
+    @classmethod
+    def dinner_condition(cls, dinner, restaurant, provider):
+        return {
+            "title": {"$in": dinner},
+            "restaurant": restaurant,
+            "provider": provider
+        }

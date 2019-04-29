@@ -37,7 +37,7 @@
     color: $light
 
 .food-item-card.card:hover
-    background-color: rhsla(var(--hue), 100%, 80%, 0.2)
+    background-color: hsla(var(--hue), 100%, 80%, 0.2)
 
 .food-item-card.card:active
     background-color: hsla(var(--hue), 100%, 80%, 0.4)
