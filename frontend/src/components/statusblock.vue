@@ -1,7 +1,7 @@
 <template>
 	<div class="status-footer">
         <div class="content has-text-centered">
-            <a v-if="page === '/home/food'"
+            <a v-if="showBackButton"
                 class="button"
                 v-on:click="backToRestaurants">Другой ресторан</a>
             <a class="button is-success"
@@ -13,9 +13,6 @@
 <script>
     export default {
         name: 'status-block',
-        props: {
-            page: String
-        },
         data: function () {
             return {
 
@@ -28,6 +25,11 @@
             },
             ready: function() {
                 console.log("I am ready")
+            }
+        },
+        computed: {
+            showBackButton: function() {
+                return this.$store.getters.isChoosingFood()
             }
         }
     }

@@ -6,7 +6,6 @@ import { mockInitialResp, mockOrderResp } from '@/store/mock/responses'
 const state = function () {
   return {
     user: createUser(),
-    currentStage: null,
     order: {
       patron: createUser(),
       participants: [],
@@ -21,10 +20,6 @@ const mutations = {
   [MUTATION_NAMES.SET_USER] (state, payload) {
     state.user = createUser(payload)
     console.log('Now user is ' + state.user.firstName)
-  },
-  [MUTATION_NAMES.SET_CURRENT_STAGE] (state, stage) {
-    state.currentStage = stage
-    console.log('Current stage is ' + state.currentStage)
   },
   [MUTATION_NAMES.FLAG_DATA_LOADED] (state) {
     console.log('MUTATION ' + state.user.firstName + ' loaded: ' + state.user.isLoaded)

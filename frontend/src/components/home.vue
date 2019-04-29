@@ -3,8 +3,7 @@
         <div class="column is-8">
             <router-view/>
             <footer class="has-background-dark">
-                <status-block
-                    :page=""/>
+                <status-block/>
             </footer>
         </div>
         <information-block class="column"/>
