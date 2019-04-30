@@ -36,7 +36,7 @@ class Food(DBItem):
     @classmethod
     def dinner_condition(cls, dinner, restaurant, provider):
         return {
-            "title": {"$in": dinner},
+            "$or": dinner,
             "restaurant": restaurant,
             "provider": provider
         }

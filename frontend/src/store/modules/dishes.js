@@ -53,7 +53,10 @@ const actions = {
     let dinnerTitles = []
     newdinner.forEach(function (element) {
       console.log('NEWDINNERTITLE: ' + Object.keys(element.title))
-      dinnerTitles.push(element.title)
+      dinnerTitles.push({
+        title: element.title,
+        category: element.category
+      })
     })
     if (process.env.NODE_ENV !== 'development') {
       try {
@@ -82,12 +85,15 @@ const actions = {
     let dinnerTitles = []
     newdinner.forEach(function (element) {
       console.log('SPLICEDDINNER: ' + Object.keys(element.title))
-      dinnerTitles.push(element.title)
+      dinnerTitles.push({
+        title: element.title,
+        category: element.category
+      })
     })
     if (process.env.NODE_ENV !== 'development') {
       try {
         await axios.post('/api/menu', {
-          food_list: newdinner,
+          food_list: dinnerTitles,
           provider: state.chosen_restaurant.provider,
           restaurant: state.chosen_restaurant.title
         })

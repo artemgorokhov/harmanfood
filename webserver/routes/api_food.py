@@ -1,16 +1,21 @@
 from flask import g
+import json
 from flask_restful import Resource, reqparse, abort
 import webserver.storage as storage_helper
-from webserver.entities import Food, OrderManager, User
+from webserver.entities import Food, OrderManager
 from webserver.auth import requires_auth
 
 
 def create_dinner(payload):
-    food_list = payload.get("food_list", None)
+    food_list_strings = payload.get("food_list", None)
     restaurant = payload.get("restaurant", None)
-    provider = payload("provider", None)
-    if food_list is None or restaurant is None or provider is None:
+    provider = payload.get("provider", None)
+    if food_list_strings is None or restaurant is None or provider is None:
         abort(403, error_message="Dishes list is required")
+    food_list = []
+    for dish in food_list_strings:
+        dish_acceptable_string = dish.replace("'", "\"")
+        food_list.append(json.loads(dish_acceptable_string))
     return {
         "food_list": food_list,
         "restaurant": restaurant,
@@ -42,9 +47,9 @@ class ApiFood(Resource):
         parser.add_argument("restaurant", type=str, help="Restaurant for dinner")
         parser.add_argument("provider", type=str, help="Rest provider")
         payload = parser.parse_args()
-        status = OrderManager.update_participant_dinner(g.current_user, create_dinner(payload))
-        if not status:
+        dishes = OrderManager.update_participant_dinner(g.current_user, create_dinner(payload))
+        if not dishes:
             abort(403, error_message="Order was not updated")
         return {
-            'status': 'success'
+            "dishes": dishes
         }

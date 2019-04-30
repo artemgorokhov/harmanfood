@@ -18,10 +18,21 @@ class Storage:
             return None
         return 1
 
-    def update(self, item):
-        if not isinstance(item, DBItem):
+    def update(self, item, fields):
+        """ Updates certain fields of item """
+        collection = self.collections.get(item.collection, None)
+        if not collection:
             return None
-        return 1
+        itemset = {}
+        for field in fields:
+            if hasattr(item, field):
+                itemset[field] = getattr(item, field)
+        if not itemset:
+            return None
+        print('UPDATING: {}'.format(itemset))
+        return collection.find_one_and_update(item.unique_condition,
+                                              {"$set": itemset},
+                                              return_document=ReturnDocument.AFTER)
 
     def load_to(self, item):
         collection = self.collections.get(item.collection, None)

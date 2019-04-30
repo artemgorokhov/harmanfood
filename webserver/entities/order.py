@@ -70,13 +70,13 @@ class Order(DBItem):
         self.participants[username] = participant
         return participant
 
-    def update_participant_dinner(self, username, dinner):
+    def update_participant_dinner(self, username, dishes, restaurant, provider):
         p = self.get_participant(username)
         if not p:
             return False
-        p['food'] = list(dinner["food_list"])
-        p["restaurant"] = dinner["restaurant"]
-        p["provider"] = dinner["provider"]
+        p["food"] = list(dishes)
+        p["restaurant"] = restaurant
+        p["provider"] = provider
         return True
 
     def get_participant(self, username):
