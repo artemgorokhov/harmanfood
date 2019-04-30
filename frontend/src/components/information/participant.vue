@@ -6,11 +6,13 @@
                 {{ total }} &#x20bd;
             </span>
         </div> 
-            <ul class="food-list">
-            <li v-for="foodItem in foodList" :key="foodItem.title">
-                {{ foodItem.title }}
-            </li>
-            </ul>
+        <ul class="food-list">
+        <li v-for="foodItem in foodList" :key="foodItem.title">
+            <span class="food-item-name">{{ foodItem.title }}</span>
+            <span class="food-item-price">{{ foodItem.price }}  &#x20bd;</span>
+        </li>
+        </ul>
+        <div class="participant-stage">Choosing restaurant</div>
     </div>
 </template>
 
@@ -37,7 +39,6 @@ export default {
 <style lang="sass">
 .participant
     border-bottom: 1px solid LightSlateGrey
-    padding-bottom: 1em
     overflow-x: hidden
     margin-left: 0
     margin-right: 0
@@ -59,7 +60,16 @@ export default {
     float: right
 
 .food-list
-    font: 0.8em Gill Sans MT, Gill Sans, My Gill Sans, sans-serif;
-    padding-left: 0.33em
+    font: 0.8em Gill Sans MT, Gill Sans, My Gill Sans, sans-serif
+    padding-left: 0.5em
+
+.food-item-price
+    float: right
+
+.participant-stage
+    float: right
+    font: 0.7em Gill Sans MT, Gill Sans, My Gill Sans, sans-serif
+    color: LightSlateGrey
+    font-style: italic
 
 </style>

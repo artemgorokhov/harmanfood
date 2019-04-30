@@ -77,6 +77,10 @@ class Order(DBItem):
         p["food"] = list(dishes)
         p["restaurant"] = restaurant
         p["provider"] = provider
+        total = 0
+        for dish in dishes:
+            total += int(dish["price"])
+        p["total"] = total
         return True
 
     def get_participant(self, username):
