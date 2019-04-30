@@ -35,6 +35,5 @@ export class Restaurant {
 }
 
 export function createRestaurant (data) {
-  console.log("Construct rest: "+Object.keys(data))
   return new Restaurant(data)
 }

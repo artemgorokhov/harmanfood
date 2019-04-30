@@ -1,6 +1,6 @@
 export class Dish {
   constructor ({ title = ``, price = 0, category = ``,
-    description = ``, selectedOptions = `` }) {
+    description = ``, selectedOptions = `` } = {}) {
     this.title = title
     this._price = price
     this.category = category

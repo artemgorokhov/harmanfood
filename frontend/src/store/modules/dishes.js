@@ -24,7 +24,6 @@ const mutations = {
   },
   [MUTATION_NAMES.RESTAURANT_ON_VIEW] (state, restaurant) {
     state.restaurant_on_view = Object.assign({}, restaurant)
-    console.log("RESTONVIEW: "+Object.keys(state.restaurant_on_view.categories))
   },
   [MUTATION_NAMES.SET_MENU_FOR_RESTAURANT] (state, food) {
     state.menu = Object.assign({}, food)
@@ -51,9 +50,21 @@ const actions = {
     let olddinner = [...state.dinner]
     newdinner.push(createDish(payload))
     commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
+    let dinnerTitles = []
+    newdinner.forEach(function (element) {
+      console.log('NEWDINNERTITLE: ' + Object.keys(element.title))
+      dinnerTitles.push({
+        title: element.title,
+        category: element.category
+      })
+    })
     if (process.env.NODE_ENV !== 'development') {
-      try{
-        await axios.post('/api/menu', dinner)
+      try {
+        await axios.post('/api/menu', {
+          food_list: dinnerTitles,
+          restaurant: state.chosen_restaurant.title,
+          provider: state.chosen_restaurant.provider
+        })
       } catch (e) {
         console.error("Can't update dinner. Rolling back.")
         commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, olddinner)
@@ -65,15 +76,27 @@ const actions = {
     let olddinner = [...state.dinner]
     let dishIndex = newdinner.map(x => x.unique).indexOf(dish.unique)
     // This check does not take into account dish options yet
-    if (dishIndex == -1) {
+    if (dishIndex === -1) {
       console.warning('The dish ' + dish.unique + ' was not found in dinner')
       return
     }
     newdinner.splice(dishIndex, 1)
     commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
+    let dinnerTitles = []
+    newdinner.forEach(function (element) {
+      console.log('SPLICEDDINNER: ' + Object.keys(element.title))
+      dinnerTitles.push({
+        title: element.title,
+        category: element.category
+      })
+    })
     if (process.env.NODE_ENV !== 'development') {
-      try{
-        await axios.post('/api/menu', dinner)
+      try {
+        await axios.post('/api/menu', {
+          food_list: dinnerTitles,
+          provider: state.chosen_restaurant.provider,
+          restaurant: state.chosen_restaurant.title
+        })
       } catch (e) {
         console.error("Can't update dinner. Rolling back.")
         commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, olddinner)
@@ -87,18 +110,18 @@ const actions = {
       }
       var foodResp = mockFood
       if (process.env.NODE_ENV !== 'development') {
-        foodResp = await axios.get('/api/menu', payload)
+        foodResp = await axios.get('/api/menu', {params: payload})
         console.log('Food response: ' + Object.keys(foodResp.data))
       }
       console.log('Menu for ' + payload.title + ' has ' + foodResp.data.food.length + ' items')
-      let food_by_categories = {}
-      foodResp.data.food.forEach(food_item => {
-        if (!food_by_categories.hasOwnProperty(food_item.category)) {
-          food_by_categories[food_item.category] = []
+      let foodByCategories = {}
+      foodResp.data.food.forEach(foodItem => {
+        if (!foodByCategories.hasOwnProperty(foodItem.category)) {
+          foodByCategories[foodItem.category] = []
         }
-        food_by_categories[food_item.category].push(food_item)
+        foodByCategories[foodItem.category].push(foodItem)
       })
-      commit(MUTATION_NAMES.SET_MENU_FOR_RESTAURANT, food_by_categories)
+      commit(MUTATION_NAMES.SET_MENU_FOR_RESTAURANT, foodByCategories)
       // commit(MUTATION_NAMES.RESTAURANT_UPTODATE, {
       //   provider: foodResp.data.provider,
       //   title: foodResp.data.restaurant,
@@ -110,7 +133,6 @@ const actions = {
   },
   async [ACTION_NAMES.SET_VIEW_RESTAURANT] ({commit, state, rootState}, payload) {
     let rest = rootState.restaurants[payload.provider][payload.title]
-    console.log("ROOTSTATE: " + Object.keys(rest.categories))
     commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, rest)
   }
 }

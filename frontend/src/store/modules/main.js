@@ -1,7 +1,7 @@
 import { MUTATION_NAMES, ACTION_NAMES } from '@/store/consts.js'
 import axios from 'axios'
 import { createUser } from '@/models/User'
-import { mockInitialResp } from '@/store/mock/responses'
+import { mockInitialResp, mockOrderResp } from '@/store/mock/responses'
 
 const state = function () {
   return {
@@ -9,7 +9,9 @@ const state = function () {
     currentStage: null,
     order: {
       patron: createUser(),
-      phase: null
+      participants: [],
+      phase: null,
+      total: 0
     },
     loaded: false
   }
@@ -28,11 +30,23 @@ const mutations = {
     console.log('MUTATION ' + state.user.firstName + ' loaded: ' + state.user.isLoaded)
     state.loaded = state.user.isLoaded
   },
+  [MUTATION_NAMES.ORDER] (state, payload) {
+    state.order.patron = createUser(payload.patron)
+    state.order.participants = [...payload.participants]
+    state.order.total = payload.total
+    state.order.phase = payload.phase
+  },
   [MUTATION_NAMES.PATRON] (state, payload) {
     state.order.patron = createUser(payload)
   },
   'SOCKET_TEST' (msg) {
     console.log('Received message from socket: ' + msg)
+  },
+  'SOCKET_ORDER' (state, msg) {
+    state.order.patron = createUser(msg.patron)
+    state.order.participants = [...msg.participants]
+    state.order.total = msg.total
+    state.order.phase = msg.phase
   }
 }
 
@@ -52,12 +66,25 @@ const actions = {
       throw new Error(error)
     }
   },
+  async [ACTION_NAMES.LOAD_ORDER_DATA] ({commit}) {
+    try {
+      console.log('Loading data for info block')
+      var infoResp = mockOrderResp
+      if (process.env.NODE_ENV !== 'development') {
+        infoResp = await axios.get('/api/order')
+      }
+      console.log('Order data is: ' + Object.keys(infoResp.data))
+      commit(MUTATION_NAMES.ORDER, infoResp.data)
+    } catch (e) {
+      console.error(e)
+      console.error("Can't load data for info block")
+    }
+  },
   async [ACTION_NAMES.LOAD_DATA] ({commit, dispatch}) {
     try {
       await dispatch(ACTION_NAMES.LOAD_MAIN_INFO)
-      console.log('User info is loaded successfully. Loading restaurants.')
       await dispatch(ACTION_NAMES.UPDATE_RESTAURANT_LIST)
-      console.log('Restaurants are loaded. Flagging app is loaded')
+      await dispatch(ACTION_NAMES.LOAD_ORDER_DATA)
       commit(MUTATION_NAMES.FLAG_DATA_LOADED)
     } catch (error) {
       console.error('Initial chain failed! ' + error)
@@ -67,11 +94,11 @@ const actions = {
   async [ACTION_NAMES.I_AM_PATRON] ({commit, state}) {
     try {
       console.log('I want to be a patron')
+      let newpatron = createUser(state.user)
       if (process.env.NODE_ENV !== 'development') {
-        await axios.post('/api/iampatron')
-      } else {
-        commit(MUTATION_NAMES.PATRON, state.user)
+        newpatron = await axios.post('/api/iampatron')
       }
+      commit(MUTATION_NAMES.PATRON, newpatron)
     } catch (error) {
       console.error('Patron request failed: ' + error)
       throw new Error(error)

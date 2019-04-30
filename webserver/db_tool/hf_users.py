@@ -54,4 +54,4 @@ def update(db):
         user = User(username.lower())
         user.initialize(record)
         print(user.as_dict())
-        print('{}: {}'.format(username, storage.save(user)))
+        print('{}: {}'.format(username, storage.update(user, record.keys())))

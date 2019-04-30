@@ -26,12 +26,12 @@ class ApiParticipate(Resource):
                 }
             return {
                 'participate': True,
-                'initial_stage': str(participant['stage']),
+                'initial_stage': str(participant['phase']),
                 'initial_food': participant['food'],
                 'initial_restaurant': participant['restaurant']
             }
         else:
             return {
                 'participate': False,
-                'reason': 'Your choice'
+                'reason': 'Its your choice...'
             }

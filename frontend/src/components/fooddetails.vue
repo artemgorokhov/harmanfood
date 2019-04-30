@@ -73,7 +73,7 @@
       },
       categoryClass() {
         console.log('Details category: ' + this.category + ' title: '+this.title)
-        return getCategoryClass(this.category, true)
+        return getCategoryClass(this.category)
       }
     }
   }

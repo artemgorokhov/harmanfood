@@ -5,7 +5,7 @@
             <patron class="column"/>
         </div>
         <div class="participantsList">
-            <participant-item v-for="p in participants" :key="p.id" v-bind:participant="p"/>
+            <participant-item v-for="p in participants" :key="p.id" v-bind="p"/>
         </div>
     </div>
 </template>
@@ -22,45 +22,12 @@ export default{
     },
     data() {
         return {
-            participants: [
-                {
-                    firstName: 'Артем',
-                    lastName: 'Горохов',
-                    phase: 'Выбирает еду (Woking)',
-                    food: [
-                        {
-                            name: 'Филадельфия 2',
-                            price: '199р'
-                        },
-                        {
-                            name: 'Лапша с курицей',
-                            options: ['терияки'],
-                            price: '229р'
-                        }
-                    ]
-                },
-                {
-                    firstName: 'Алексей',
-                    lastName: 'Канаев',
-                    phase: 'Выбирает ресторан'
-                },
-                {
-                    firstName: 'Дмитрий',
-                    lastName: 'Логанов',
-                    phase: 'Выбирает еду (Burger King)',
-                    food: [
-                        {
-                            name: 'Картошечка фри',
-                            price: '100р'
-                        },
-                        {
-                            name: 'Бургер с говядиной',
-                            options: ['чили', 'без лука'],
-                            price: '249р'
-                        }
-                    ]
-                }
-            ]
+            
+        }
+    },
+    computed: {
+        participants() {
+            return this.$store.state.main.order.participants
         }
     }
 }

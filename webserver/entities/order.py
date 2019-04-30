@@ -55,17 +55,36 @@ class Order(DBItem):
             print("Participant already there")
             return self.participants[username]
         participant = {
-            'name': user.full_name,
-            'stage': str(get_state('choosing restaurant')),
+            'username': user.username,
+            'fullName': user.full_name,
+            'firstName': user.firstName,
+            'lastName': user.lastName,
+            'phone': user.phone,
+            'phase': str(get_state('choosing restaurant')),
             'food': [],
-            'restaurant': None
+            'restaurant': None,
+            'provider': None,
+            'total': 0
         }
         print("NEW PARTICIPANT: {}".format(participant))
         self.participants[username] = participant
         return participant
 
-    def get_participant(self, user):
-        return self.participants.get(user.username, {})
+    def update_participant_dinner(self, username, dishes, restaurant, provider):
+        p = self.get_participant(username)
+        if not p:
+            return False
+        p["food"] = list(dishes)
+        p["restaurant"] = restaurant
+        p["provider"] = provider
+        total = 0
+        for dish in dishes:
+            total += int(dish["price"])
+        p["total"] = total
+        return True
+
+    def get_participant(self, username):
+        return self.participants.get(username, {})
 
     def remove_participant(self, user):
         username = user.username
@@ -91,4 +110,26 @@ class Order(DBItem):
                 d[key] = str(self.get_state())
             else:
                 d[key] = value
+        return d
+
+    def serialize(self, myusername=None):
+        d = self.as_dict()
+        d['date'] = d['date'].strftime('%d-%m-%Y')
+        participant_list = []
+        for username in self.participants:
+            idx = len(participant_list)
+            if myusername == username:
+                idx = 0
+            participant_list.insert(idx, self.participants[username])
+        d['participants'] = participant_list
+        if self.patron:
+            d['patron'] = {
+                'firstName': self.patron['firstName'],
+                'lastName': self.patron['lastName'],
+                'phone': self.patron['phone']
+            }
+            d['iampatron'] = True if myusername == self.patron['username'] else False
+        else:
+            d['patron'] = None
+            d['iampatron'] = False
         return d
