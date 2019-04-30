@@ -63,19 +63,28 @@ class Order(DBItem):
             'phase': str(get_state('choosing restaurant')),
             'food': [],
             'restaurant': None,
+            'provider': None,
             'total': 0
         }
         print("NEW PARTICIPANT: {}".format(participant))
         self.participants[username] = participant
         return participant
 
-    def update_participant_dinner(self, user, dinner):
-        p = self.get_participant(user)
-        p['food'] = list(dinner)
-        # TODO: Check if p.restaurant is same as all dishes from dinner
+    def update_participant_dinner(self, username, dishes, restaurant, provider):
+        p = self.get_participant(username)
+        if not p:
+            return False
+        p["food"] = list(dishes)
+        p["restaurant"] = restaurant
+        p["provider"] = provider
+        total = 0
+        for dish in dishes:
+            total += int(dish["price"])
+        p["total"] = total
+        return True
 
-    def get_participant(self, user):
-        return self.participants.get(user.username, {})
+    def get_participant(self, username):
+        return self.participants.get(username, {})
 
     def remove_participant(self, user):
         username = user.username

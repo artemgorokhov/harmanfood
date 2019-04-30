@@ -38,7 +38,6 @@ const mutations = {
     console.log('Received message from socket: ' + msg)
   },
   'SOCKET_ORDER' (state, msg) {
-    console.log('Order is ' + state.order)
     state.order.patron = createUser(msg.patron)
     state.order.participants = [...msg.participants]
     state.order.total = msg.total

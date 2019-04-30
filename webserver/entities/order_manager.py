@@ -1,4 +1,5 @@
 from .order import Order
+from .food import Food
 from webserver import emit_order
 import webserver.storage as storage_helper
 from datetime import date
@@ -44,6 +45,29 @@ class OrderManager:
             return False
         emit_order(order.serialize())
         return True
+
+    @classmethod
+    def update_participant_dinner(cls, username, dinner):
+        """
+        username - (String) user login
+        dinner - (Dict) list of titles, restaurant and provider
+        """
+        storage = storage_helper.get_storage()
+        order = cls.get_order()
+        if order.is_done():
+            return False
+        # dishes - list of dishes that contains full dish information, including price
+        food_query = Food.dinner_condition(dinner["food_list"], dinner["restaurant"],
+                                           dinner["provider"])
+        print('Food query: {}'.format(food_query))
+        dishes = storage.find(Food, food_query)
+        if not order.update_participant_dinner(username, dishes,
+                                               dinner["restaurant"], dinner["provider"]):
+            return False
+        if not storage.save(order):
+            return False
+        emit_order(order.serialize())
+        return dishes
 
     @classmethod
     def calculate_patron(cls, order):

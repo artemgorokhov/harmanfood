@@ -50,13 +50,20 @@ const actions = {
     let olddinner = [...state.dinner]
     newdinner.push(createDish(payload))
     commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
+    let dinnerTitles = []
     newdinner.forEach(function (element) {
-      console.log('NEWDINNER: ' + Object.keys(element))
+      console.log('NEWDINNERTITLE: ' + Object.keys(element.title))
+      dinnerTitles.push({
+        title: element.title,
+        category: element.category
+      })
     })
     if (process.env.NODE_ENV !== 'development') {
       try {
         await axios.post('/api/menu', {
-          dinner: newdinner
+          food_list: dinnerTitles,
+          restaurant: state.chosen_restaurant.title,
+          provider: state.chosen_restaurant.provider
         })
       } catch (e) {
         console.error("Can't update dinner. Rolling back.")
@@ -75,10 +82,20 @@ const actions = {
     }
     newdinner.splice(dishIndex, 1)
     commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, newdinner)
+    let dinnerTitles = []
+    newdinner.forEach(function (element) {
+      console.log('SPLICEDDINNER: ' + Object.keys(element.title))
+      dinnerTitles.push({
+        title: element.title,
+        category: element.category
+      })
+    })
     if (process.env.NODE_ENV !== 'development') {
       try {
         await axios.post('/api/menu', {
-          dinner: newdinner
+          food_list: dinnerTitles,
+          provider: state.chosen_restaurant.provider,
+          restaurant: state.chosen_restaurant.title
         })
       } catch (e) {
         console.error("Can't update dinner. Rolling back.")
