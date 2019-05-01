@@ -7,10 +7,10 @@ from webserver.auth import requires_auth
 
 
 def create_dinner(payload):
-    food_list_strings = payload.get("food_list", None)
+    food_list_strings = payload.get("food_list", []) or []
     restaurant = payload.get("restaurant", None)
     provider = payload.get("provider", None)
-    if food_list_strings is None or restaurant is None or provider is None:
+    if restaurant is None or provider is None:
         abort(403, error_message="Dishes list is required")
     food_list = []
     for dish in food_list_strings:
@@ -48,7 +48,7 @@ class ApiFood(Resource):
         parser.add_argument("provider", type=str, help="Rest provider")
         payload = parser.parse_args()
         dishes = OrderManager.update_participant_dinner(g.current_user, create_dinner(payload))
-        if not dishes:
+        if dishes is None:
             abort(403, error_message="Order was not updated")
         return {
             "dishes": dishes

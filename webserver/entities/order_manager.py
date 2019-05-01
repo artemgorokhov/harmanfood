@@ -55,17 +55,18 @@ class OrderManager:
         storage = storage_helper.get_storage()
         order = cls.get_order()
         if order.is_done():
-            return False
+            return None
         # dishes - list of dishes that contains full dish information, including price
-        food_query = Food.dinner_condition(dinner["food_list"], dinner["restaurant"],
-                                           dinner["provider"])
-        print('Food query: {}'.format(food_query))
-        dishes = storage.find(Food, food_query)
+        dishes = []
+        if dinner['food_list']:
+            food_query = Food.dinner_condition(dinner["food_list"], dinner["restaurant"],
+                                               dinner["provider"])
+            dishes = storage.find(Food, food_query)
         if not order.update_participant_dinner(username, dishes,
                                                dinner["restaurant"], dinner["provider"]):
-            return False
+            return None
         if not storage.save(order):
-            return False
+            return None
         emit_order(order.serialize())
         return dishes
 

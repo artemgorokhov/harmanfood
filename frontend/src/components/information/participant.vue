@@ -71,5 +71,6 @@ export default {
     font: 0.7em Gill Sans MT, Gill Sans, My Gill Sans, sans-serif
     color: LightSlateGrey
     font-style: italic
+    padding-top: 0.5em
 
 </style>

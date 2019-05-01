@@ -73,8 +73,8 @@ class Order(DBItem):
     def update_participant_dinner(self, username, dishes, restaurant, provider):
         p = self.get_participant(username)
         if not p:
-            return False
-        p["food"] = list(dishes)
+            return None
+        p["food"] = list(dishes) if dishes else []
         p["restaurant"] = restaurant
         p["provider"] = provider
         total = 0
