@@ -1,7 +1,8 @@
+from functools import wraps
 from webserver.storage import DBItem
 import datetime
 from .order_state import get_state, ClosedState
-from .error import EntityError
+from .error import OrderError
 
 
 blank_order = {
@@ -11,6 +12,17 @@ blank_order = {
     'patron': None,
     'state': None
 }
+
+
+def order_in_progress(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if args[0].is_done():
+            raise OrderError("Can't update finished order")
+        if args[0].state.is_immutable():
+            raise OrderError("Can't update immutable order")
+        return f(*args, **kwargs)
+    return decorated
 
 
 class Order(DBItem):
@@ -46,10 +58,13 @@ class Order(DBItem):
 
     def on_event(self, event):
         if self.state is None:
-            raise EntityError("Trying to change state of uninitialized order")
+            raise OrderError("Trying to change state of uninitialized order")
         self.state = self.state.on_event(event)
 
+    @order_in_progress
     def add_participant(self, user):
+        if self.is_done():
+            raise OrderError("Can't update finished order")
         username = user.username
         if username in self.participants:
             print("Participant already there")
@@ -70,6 +85,7 @@ class Order(DBItem):
         self.participants[username] = participant
         return participant
 
+    @order_in_progress
     def update_participant_dinner(self, username, dishes, restaurant, provider):
         p = self.get_participant(username)
         if not p:
@@ -86,7 +102,10 @@ class Order(DBItem):
     def get_participant(self, username):
         return self.participants.get(username, {})
 
+    @order_in_progress
     def remove_participant(self, user):
+        if self.is_done():
+            raise OrderError("Can't update finished order")
         username = user.username
         if username not in self.participants:
             return
