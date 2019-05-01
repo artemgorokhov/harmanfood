@@ -5,7 +5,8 @@ export const mockInitialResp = {
       lastName: 'Горохов',
       phone: '+79519020046'
     },
-    phase: 'thequestion',
+    userstage: 'Initial',
+    orderstage: 'Initial'
     patron: false
   }
 }
@@ -236,7 +237,9 @@ export const mockOrderResp = {
     participants: [
       {
         fullName: 'Артем Горохов',
-        phase: 'Выбирает еду (Woking)',
+        userstage: 'ComposingDinner',
+        restaurant: 'Woking',
+        provider: 'delivery',
         food: [
           {
             title: 'Филадельфия 2',
@@ -253,11 +256,15 @@ export const mockOrderResp = {
       {
         fullName: 'Алексей Канаев',
         phase: 'Выбирает ресторан',
-        total: 0
+        total: 0,
+        userstage: 'ChoosingPlace'
       },
       {
         fullName: 'Дмитрий Логанов',
         phase: 'Выбирает еду (Burger King)',
+        userstage: 'ComposingDinner',
+        restaurant: 'Burger King',
+        provider: 'delivery',
         food: [
           {
             title: 'Картошечка фри',
@@ -271,6 +278,10 @@ export const mockOrderResp = {
         ],
         total: 349
       }
-    ]
+    ],
+    ordertotal: 1050,
+    orderstage: 'menu',
+    orderrestaurant: 'Woking',
+    orderprovider: 'delivery'
   }
 }
