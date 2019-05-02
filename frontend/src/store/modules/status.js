@@ -1,7 +1,7 @@
 import { ACTION_NAMES, MUTATION_NAMES} from '@/store/consts'
 
 const Stage = {
-	'Initial': {
+	'NotStarted': {
 		description: 'Пока не присоединился',
 		page: '/'
 	},
@@ -34,7 +34,7 @@ const Stage = {
 
 const state = function () {
 	return {
-		userstage: Stage.Initial
+		userstage: Stage.NotStarted
 	}
 }
 

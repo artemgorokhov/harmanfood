@@ -23,9 +23,9 @@ class ApiParticipate(Resource):
                 abort(403, error_message="Not able to add participant")
             return {
                 'participate': True,
-                'initial_stage': str(participant['stage']),
-                'initial_food': participant['food'],
-                'initial_restaurant': participant['restaurant']
+                'userstage': str(participant['stage']),
+                'food': participant['food'],
+                'restaurant': participant['restaurant']
             }
         else:
             return {

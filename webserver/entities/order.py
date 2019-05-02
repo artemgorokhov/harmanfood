@@ -1,7 +1,7 @@
 from functools import wraps
 from webserver.storage import DBItem
 import datetime
-from .order_state import get_state, ClosedState
+from .order_state import get_state, change_state, ClosedState
 from .error import OrderError
 
 
@@ -19,7 +19,8 @@ def order_in_progress(f):
     def decorated(*args, **kwargs):
         if args[0].is_done():
             raise OrderError("Can't update finished order")
-        if args[0].stage.is_immutable():
+        stage = get_state(args[0].stage)
+        if stage.is_immutable():
             raise OrderError("Can't update immutable order")
         return f(*args, **kwargs)
     return decorated
@@ -50,16 +51,8 @@ class Order(DBItem):
         if not record:
             return False
         for key in record:
-            if key == 'stage':
-                self.stage = get_state(record['stage'])
-            else:
-                self.__dict__[key] = record[key]
+            self.__dict__[key] = record[key]
         return True
-
-    def on_event(self, event):
-        if self.stage is None:
-            raise OrderError("Trying to change stage of uninitialized order")
-        self.stage = self.stage.on_event(event)
 
     @order_in_progress
     def add_participant(self, user):
@@ -75,7 +68,7 @@ class Order(DBItem):
             'firstName': user.firstName,
             'lastName': user.lastName,
             'phone': user.phone,
-            'stage': str(get_state('choosing restaurant')),
+            'stage': 'ChoosingPlace',
             'food': [],
             'restaurant': None,
             'provider': None,
@@ -91,13 +84,17 @@ class Order(DBItem):
         if not p:
             return None
         p["food"] = list(dishes) if dishes else []
+        event_name = 'restaurant_selected'
+        if not p["food"]:
+            event_name = 'menu_declined'
+        p["stage"] = change_state(p["stage"], event_name)
         p["restaurant"] = restaurant
         p["provider"] = provider
         total = 0
         for dish in dishes:
             total += int(dish["price"])
         p["total"] = total
-        return True
+        return p
 
     def get_participant(self, username):
         return self.participants.get(username, {})
@@ -115,7 +112,7 @@ class Order(DBItem):
         return isinstance(self.stage, ClosedState)
 
     def state_event(self, event):
-        self.stage = self.stage.on_event(event)
+        self.stage = change_state(self.stage, event)
 
     def get_state(self):
         return None if self.stage is None else str(self.stage)

@@ -62,13 +62,14 @@ class OrderManager:
             food_query = Food.dinner_condition(dinner["food_list"], dinner["restaurant"],
                                                dinner["provider"])
             dishes = storage.find(Food, food_query)
-        if not order.update_participant_dinner(username, dishes,
-                                               dinner["restaurant"], dinner["provider"]):
+        participant = order.update_participant_dinner(username, dishes,
+                                               dinner["restaurant"], dinner["provider"])
+        if not participant:
             return None
         if not storage.save(order):
             return None
         emit_order(order.serialize())
-        return dishes
+        return participant
 
     @classmethod
     def calculate_patron(cls, order):

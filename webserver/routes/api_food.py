@@ -47,9 +47,7 @@ class ApiFood(Resource):
         parser.add_argument("restaurant", type=str, help="Restaurant for dinner")
         parser.add_argument("provider", type=str, help="Rest provider")
         payload = parser.parse_args()
-        dishes = OrderManager.update_participant_dinner(g.current_user, create_dinner(payload))
-        if dishes is None:
+        participant = OrderManager.update_participant_dinner(g.current_user, create_dinner(payload))
+        if participant is None:
             abort(403, error_message="Order was not updated")
-        return {
-            "dishes": dishes
-        }
+        return participant

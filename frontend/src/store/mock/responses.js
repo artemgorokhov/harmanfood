@@ -5,8 +5,8 @@ export const mockInitialResp = {
       lastName: 'Горохов',
       phone: '+79519020046'
     },
-    userstage: 'Initial',
-    orderstage: 'Initial'
+    userstage: 'NotStarted',
+    orderstage: 'NotStarted',
     patron: false
   }
 }
