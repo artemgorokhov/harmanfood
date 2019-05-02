@@ -10,4 +10,9 @@ class ApiOrder(Resource):
         order = OrderManager.get_order()
         serialized_order = order.serialize(g.current_user)
         print('/api/order: {}'.format(serialized_order))
-        return serialized_order
+        user_order_info = order.get_participant(g.current_user)
+        print('USER ORDER: {}'.format(user_order_info))
+        return {
+            'order': serialized_order,
+            'user_order_info': user_order_info
+        }

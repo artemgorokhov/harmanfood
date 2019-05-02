@@ -55,13 +55,12 @@ const actions = {
       }
       console.log('Initial data is: ' + Object.keys(initialResp.data))
       commit(MUTATION_NAMES.SET_USER, initialResp.data.user)
-      commit(MUTATION_NAMES.SET_CURRENT_STAGE, initialResp.data.curre)
     } catch (error) {
       console.error('Error during loading initial data: ' + error)
       throw new Error(error)
     }
   },
-  async [ACTION_NAMES.LOAD_ORDER_DATA] ({commit}) {
+  async [ACTION_NAMES.LOAD_ORDER_DATA] ({commit, rootState}) {
     try {
       console.log('Loading data for info block')
       var infoResp = mockOrderResp
@@ -69,7 +68,11 @@ const actions = {
         infoResp = await axios.get('/api/order')
       }
       console.log('Order data is: ' + Object.keys(infoResp.data))
-      commit(MUTATION_NAMES.ORDER, infoResp.data)
+      let participant = infoResp.data.user_order_info
+      let restaurant = rootState.restaurants[participant.provider][participant.restaurant]
+      commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, restaurant)
+      commit(MUTATION_NAMES.SET_USER_STAGE, participant.stage)
+      commit(MUTATION_NAMES.ORDER, infoResp.data.order)
     } catch (e) {
       console.error(e)
       console.error("Can't load data for info block")

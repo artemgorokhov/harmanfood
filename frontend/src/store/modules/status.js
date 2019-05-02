@@ -17,7 +17,7 @@ const Stage = {
 		description: 'Выбирает еду',
 		page: '/home/food'
 	},
-	'Ready': {
+	'Delivery': {
 		description: 'Определился',
 		page: '/info'
 	},
@@ -34,12 +34,13 @@ const Stage = {
 
 const state = function () {
 	return {
-		userstage: Stage.NotStarted
+		userstage: Stage.NotStarted,
+		userrestaurant: null
 	}
 }
 
 const mutations = {
-	[MUTATION_NAMES.SET_CURRENT_STAGE] (state, stagename) {
+	[MUTATION_NAMES.SET_USER_STAGE] (state, stagename) {
 	    state.userstage = Stage[stagename]
 	    console.log('Current stage is ' + stagename)
 	}
