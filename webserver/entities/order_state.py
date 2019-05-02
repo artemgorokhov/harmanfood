@@ -14,11 +14,14 @@ class OrderState:
         """
         Base class for order states
         """
-        print("Current state: {}".format(self))
+        print("Current stage: {}".format(self))
 
     @abstractmethod
     def on_event(self, event):
         pass
+
+    def is_immutable(self):
+        return self.immutable
 
     def __str__(self):
         return self.state_id
@@ -29,6 +32,7 @@ class OrderState:
 
 class NotStartedState(OrderState):
     state_id = 'not started'
+    immutable = False
 
     def on_event(self, event):
         if event == 'start':
@@ -38,6 +42,7 @@ class NotStartedState(OrderState):
 
 class RestaurantState(OrderState):
     state_id = 'choosing restaurant'
+    immutable = False
 
     def on_event(self, event):
         if event == 'restaurant_selected':
@@ -47,6 +52,7 @@ class RestaurantState(OrderState):
 
 class MenuState(OrderState):
     state_id = 'choosing food'
+    immutable = False
 
     def on_event(self, event):
         if event == 'menu_selected':
@@ -56,6 +62,7 @@ class MenuState(OrderState):
 
 class DeliveryState(OrderState):
     state_id = 'delivering'
+    immutable = True
 
     def on_event(self, event):
         if event == 'delivered':
@@ -65,6 +72,7 @@ class DeliveryState(OrderState):
 
 class PaymentState(OrderState):
     state_id = 'payment'
+    immutable = True
 
     def on_event(self, event):
         if event == 'paid':
@@ -74,6 +82,7 @@ class PaymentState(OrderState):
 
 class ClosedState(OrderState):
     state_id = 'closed'
+    immutable = True
 
     def on_event(self, event):
         return self

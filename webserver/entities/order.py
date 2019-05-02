@@ -1,7 +1,8 @@
+from functools import wraps
 from webserver.storage import DBItem
 import datetime
 from .order_state import get_state, ClosedState
-from .error import EntityError
+from .error import OrderError
 
 
 blank_order = {
@@ -9,8 +10,19 @@ blank_order = {
     'date': None,
     'participants': {},
     'patron': None,
-    'state': None
+    'stage': None
 }
+
+
+def order_in_progress(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if args[0].is_done():
+            raise OrderError("Can't update finished order")
+        if args[0].stage.is_immutable():
+            raise OrderError("Can't update immutable order")
+        return f(*args, **kwargs)
+    return decorated
 
 
 class Order(DBItem):
@@ -38,18 +50,21 @@ class Order(DBItem):
         if not record:
             return False
         for key in record:
-            if key == 'state':
-                self.state = get_state(record['state'])
+            if key == 'stage':
+                self.stage = get_state(record['stage'])
             else:
                 self.__dict__[key] = record[key]
         return True
 
     def on_event(self, event):
-        if self.state is None:
-            raise EntityError("Trying to change state of uninitialized order")
-        self.state = self.state.on_event(event)
+        if self.stage is None:
+            raise OrderError("Trying to change stage of uninitialized order")
+        self.stage = self.stage.on_event(event)
 
+    @order_in_progress
     def add_participant(self, user):
+        if self.is_done():
+            raise OrderError("Can't update finished order")
         username = user.username
         if username in self.participants:
             print("Participant already there")
@@ -60,7 +75,7 @@ class Order(DBItem):
             'firstName': user.firstName,
             'lastName': user.lastName,
             'phone': user.phone,
-            'phase': str(get_state('choosing restaurant')),
+            'stage': str(get_state('choosing restaurant')),
             'food': [],
             'restaurant': None,
             'provider': None,
@@ -70,11 +85,12 @@ class Order(DBItem):
         self.participants[username] = participant
         return participant
 
+    @order_in_progress
     def update_participant_dinner(self, username, dishes, restaurant, provider):
         p = self.get_participant(username)
         if not p:
-            return False
-        p["food"] = list(dishes)
+            return None
+        p["food"] = list(dishes) if dishes else []
         p["restaurant"] = restaurant
         p["provider"] = provider
         total = 0
@@ -86,27 +102,30 @@ class Order(DBItem):
     def get_participant(self, username):
         return self.participants.get(username, {})
 
+    @order_in_progress
     def remove_participant(self, user):
+        if self.is_done():
+            raise OrderError("Can't update finished order")
         username = user.username
         if username not in self.participants:
             return
         del self.participants[username]
 
     def is_done(self):
-        return isinstance(self.state, ClosedState)
+        return isinstance(self.stage, ClosedState)
 
     def state_event(self, event):
-        self.state = self.state.on_event(event)
+        self.stage = self.stage.on_event(event)
 
     def get_state(self):
-        return None if self.state is None else str(self.state)
+        return None if self.stage is None else str(self.stage)
 
     def as_dict(self):
         d = {}
         for (key, value) in self.__dict__.items():
             if key == '_id':
                 continue
-            elif key == 'state':
+            elif key == 'stage':
                 d[key] = str(self.get_state())
             else:
                 d[key] = value

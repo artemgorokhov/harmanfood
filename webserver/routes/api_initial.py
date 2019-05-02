@@ -17,9 +17,9 @@ class ApiInitialData(Resource):
         current_order = OrderManager.get_order()
         user_order_info = current_order.get_participant(user)
         print('USER ORDER: {}'.format(user_order_info))
-        user_phase = NotStartedState() if not user_order_info else user_order_info['phase']
+        user_stage = NotStartedState() if not user_order_info else user_order_info['stage']
         return {
             'user': user.as_dict(),
-            'phase': str(user_phase),
+            'stage': str(user_stage),
             'orderIsDone': current_order.is_done()
         }
