@@ -14,7 +14,7 @@ class OrderState:
         """
         Base class for order states
         """
-        print("Current state: {}".format(self))
+        print("Current stage: {}".format(self))
 
     @abstractmethod
     def on_event(self, event):
