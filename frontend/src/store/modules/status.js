@@ -34,8 +34,7 @@ const Stage = {
 
 const state = function () {
 	return {
-		userstage: Stage.NotStarted,
-		userrestaurant: null
+		userstage: Stage.NotStarted
 	}
 }
 

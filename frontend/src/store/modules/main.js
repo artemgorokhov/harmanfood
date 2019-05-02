@@ -1,6 +1,7 @@
 import { MUTATION_NAMES, ACTION_NAMES } from '@/store/consts.js'
 import axios from 'axios'
 import { createUser } from '@/models/User'
+import { createDish } from '@/models/Dish'
 import { mockInitialResp, mockOrderResp } from '@/store/mock/responses'
 
 const state = function () {
@@ -73,6 +74,12 @@ const actions = {
       commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, restaurant)
       commit(MUTATION_NAMES.SET_USER_STAGE, participant.stage)
       commit(MUTATION_NAMES.ORDER, infoResp.data.order)
+      commit(MUTATION_NAMES.SWITCH_RESTAURANT)
+      let dinner = []
+      participant.food.forEach(function(food_item) {
+        dinner.push(createDish(food_item))
+      })
+      commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dinner)
     } catch (e) {
       console.error(e)
       console.error("Can't load data for info block")

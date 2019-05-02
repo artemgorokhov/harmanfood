@@ -74,10 +74,14 @@ const actions = {
   async [ACTION_NAMES.REMOVE_DISH_FROM_MY_DINNER] ({commit, state}, dish) {
     let newdinner = [...state.dinner]
     let olddinner = [...state.dinner]
+    newdinner.forEach(function(item){
+      console.log("THEDINNER: " + item)  
+    })
+    console.log("DISH: " + dish.unique)
     let dishIndex = newdinner.map(x => x.unique).indexOf(dish.unique)
     // This check does not take into account dish options yet
     if (dishIndex === -1) {
-      console.warning('The dish ' + dish.unique + ' was not found in dinner')
+      console.error('The dish ' + dish.unique + ' was not found in dinner')
       return
     }
     newdinner.splice(dishIndex, 1)
