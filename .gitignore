@@ -12,3 +12,6 @@ dist
 
 harmanfood.sublime-workspace
 package-lock.json
+
+# GCloud files
+lib
