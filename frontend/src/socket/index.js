@@ -2,7 +2,9 @@ import store from '@/store'
 import SocketIO from 'socket.io-client'
 import VueSocketIO from 'vue-socket.io'
 
-export const SocketInstance = SocketIO('/ws')
+export const SocketInstance = SocketIO('/ws', {
+	transports: ['websocket']
+})
 
 export default new VueSocketIO({
   debug: true,
