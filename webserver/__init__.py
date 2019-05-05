@@ -6,8 +6,7 @@ from flask_socketio import SocketIO
 from config import config
 
 # Extensions
-db_client = MongoClient()
-db = db_client.harmanfood
+db = MongoClient().harmanfood
 socketio = SocketIO()
 
 
@@ -25,6 +24,12 @@ def create_app(config_name=None):
     app.config.from_object(config[config_name])
 
     socketio.init_app(app)
+
+    # Init database
+    global db
+    db_url = config[config_name].DB_URL
+    db_client = MongoClient(db_url)
+    db = db_client.harmanfood
 
     # Register routes
     from webserver import routes
