@@ -1,6 +1,6 @@
 export const MUTATION_NAMES = {
   SET_USER: 'set user',
-  SET_CURRENT_STAGE: 'current stage',
+  SET_USER_STAGE: 'user stage',
   FLAG_DATA_LOADED: 'flag data loaded',
   ORDER: 'order',
   PATRON: 'patron',

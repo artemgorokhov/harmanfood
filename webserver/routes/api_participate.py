@@ -1,5 +1,5 @@
 from flask import g
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, abort
 from webserver.auth import requires_auth, authenticate
 import webserver.storage as storage_helper
 from webserver.entities import OrderManager, User
@@ -20,15 +20,12 @@ class ApiParticipate(Resource):
                 return authenticate()
             participant = OrderManager.add_participant(user)
             if not participant:
-                return {
-                    'participate': False,
-                    'reason': 'Order is done'
-                }
+                abort(403, error_message="Not able to add participant")
             return {
                 'participate': True,
-                'initial_stage': str(participant['phase']),
-                'initial_food': participant['food'],
-                'initial_restaurant': participant['restaurant']
+                'userstage': str(participant['stage']),
+                'food': participant['food'],
+                'restaurant': participant['restaurant']
             }
         else:
             return {

@@ -1,12 +1,12 @@
 import { MUTATION_NAMES, ACTION_NAMES } from '@/store/consts.js'
 import axios from 'axios'
 import { createUser } from '@/models/User'
+import { createDish } from '@/models/Dish'
 import { mockInitialResp, mockOrderResp } from '@/store/mock/responses'
 
 const state = function () {
   return {
     user: createUser(),
-    currentStage: null,
     order: {
       patron: createUser(),
       participants: [],
@@ -21,10 +21,6 @@ const mutations = {
   [MUTATION_NAMES.SET_USER] (state, payload) {
     state.user = createUser(payload)
     console.log('Now user is ' + state.user.firstName)
-  },
-  [MUTATION_NAMES.SET_CURRENT_STAGE] (state, stage) {
-    state.currentStage = stage
-    console.log('Current stage is ' + state.currentStage)
   },
   [MUTATION_NAMES.FLAG_DATA_LOADED] (state) {
     console.log('MUTATION ' + state.user.firstName + ' loaded: ' + state.user.isLoaded)
@@ -60,13 +56,12 @@ const actions = {
       }
       console.log('Initial data is: ' + Object.keys(initialResp.data))
       commit(MUTATION_NAMES.SET_USER, initialResp.data.user)
-      commit(MUTATION_NAMES.SET_CURRENT_STAGE, initialResp.data.curre)
     } catch (error) {
       console.error('Error during loading initial data: ' + error)
       throw new Error(error)
     }
   },
-  async [ACTION_NAMES.LOAD_ORDER_DATA] ({commit}) {
+  async [ACTION_NAMES.LOAD_ORDER_DATA] ({commit, rootState}) {
     try {
       console.log('Loading data for info block')
       var infoResp = mockOrderResp
@@ -74,7 +69,19 @@ const actions = {
         infoResp = await axios.get('/api/order')
       }
       console.log('Order data is: ' + Object.keys(infoResp.data))
-      commit(MUTATION_NAMES.ORDER, infoResp.data)
+      let participant = infoResp.data.user_order_info
+      if (participant.stage === 'ComposingDinner') {
+        let restaurant = rootState.restaurants[participant.provider][participant.restaurant]
+        commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, restaurant)
+      }
+      commit(MUTATION_NAMES.SET_USER_STAGE, participant.stage)
+      commit(MUTATION_NAMES.ORDER, infoResp.data.order)
+      commit(MUTATION_NAMES.SWITCH_RESTAURANT)
+      let dinner = []
+      participant.food.forEach(function(food_item) {
+        dinner.push(createDish(food_item))
+      })
+      commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dinner)
     } catch (e) {
       console.error(e)
       console.error("Can't load data for info block")

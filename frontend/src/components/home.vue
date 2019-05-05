@@ -2,13 +2,8 @@
     <div class="container mainContent is-fluid columns">
         <div class="column is-8">
             <router-view/>
-            <footer class="has-background-dark status-footer">
-                <div class="content has-text-centered">
-                    <a class="button"
-                        v-on:click="back">Back</a>
-                    <a class="button is-success"
-                        v-on:click="ready">Я готов</a>
-                </div>
+            <footer class="has-background-dark">
+                <status-block/>
             </footer>
         </div>
         <information-block class="column"/>
@@ -18,19 +13,16 @@
 <script>
 import InformationBlock from './information/info.vue'
 import MainContent from './maincontent.vue'
+import StatusBlock from './statusblock.vue'
 
 export default{
 	components: {
         InformationBlock,
+        StatusBlock,
         MainContent
 	},
     methods: {
-        back: function() {
-            this.$router.replace( {path: '/home/restaurants'} )
-        },
-        ready: function() {
-            console.log("I am ready")
-        }
+        
     }
 }
 </script>
@@ -42,10 +34,4 @@ export default{
 
 .flexHome
     flex: 1 1 100%
-
-.status-footer
-    padding: 1rem
-    height: 2rem
-    position: absolute
-    bottom: 3rem
 </style>

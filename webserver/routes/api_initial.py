@@ -3,7 +3,6 @@ from flask_restful import Resource
 from webserver.auth import requires_auth, authenticate
 import webserver.storage as storage_helper
 from webserver.entities import User, OrderManager
-from webserver.entities.order_state import NotStartedState
 
 
 class ApiInitialData(Resource):
@@ -15,11 +14,7 @@ class ApiInitialData(Resource):
         if user.get_id() is None:
             return authenticate()
         current_order = OrderManager.get_order()
-        user_order_info = current_order.get_participant(user)
-        print('USER ORDER: {}'.format(user_order_info))
-        user_phase = NotStartedState() if not user_order_info else user_order_info['phase']
         return {
             'user': user.as_dict(),
-            'phase': str(user_phase),
             'orderIsDone': current_order.is_done()
         }

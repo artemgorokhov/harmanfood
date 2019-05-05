@@ -40,13 +40,11 @@ export default {
       console.log('Data alredy loaded')
       next(false)
     }
-    fromRoute = from
     next(vm => {
       console.log('Loading from path: ' + from.path)
       store.dispatch(ACTION_NAMES.LOAD_DATA)
           .then(response => {
-            console.log("LOADED! Go to " + from.path)
-            vm.$router.replace(from.path)
+            vm.$router.replace(vm.$store.state.stage.userstage.page)
           }, error => {
             console.log('Load error :( Go to Error page')
             vm.$router.replace('/error')

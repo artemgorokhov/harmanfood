@@ -23,7 +23,11 @@ const mutations = {
     state.dinner = [...dishes]
   },
   [MUTATION_NAMES.RESTAURANT_ON_VIEW] (state, restaurant) {
-    state.restaurant_on_view = Object.assign({}, restaurant)
+    if (!restaurant) {
+      state.restaurant_on_view = null
+    } else {
+      state.restaurant_on_view = Object.assign({}, restaurant)
+    }
   },
   [MUTATION_NAMES.SET_MENU_FOR_RESTAURANT] (state, food) {
     state.menu = Object.assign({}, food)
@@ -74,10 +78,14 @@ const actions = {
   async [ACTION_NAMES.REMOVE_DISH_FROM_MY_DINNER] ({commit, state}, dish) {
     let newdinner = [...state.dinner]
     let olddinner = [...state.dinner]
+    newdinner.forEach(function(item){
+      console.log("THEDINNER: " + item)  
+    })
+    console.log("DISH: " + dish.unique)
     let dishIndex = newdinner.map(x => x.unique).indexOf(dish.unique)
     // This check does not take into account dish options yet
     if (dishIndex === -1) {
-      console.warning('The dish ' + dish.unique + ' was not found in dinner')
+      console.error('The dish ' + dish.unique + ' was not found in dinner')
       return
     }
     newdinner.splice(dishIndex, 1)
@@ -132,7 +140,10 @@ const actions = {
     }
   },
   async [ACTION_NAMES.SET_VIEW_RESTAURANT] ({commit, state, rootState}, payload) {
-    let rest = rootState.restaurants[payload.provider][payload.title]
+    let rest = null
+    if (payload) {
+      rest = rootState.restaurants[payload.provider][payload.title]
+    }
     commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, rest)
   }
 }
@@ -149,6 +160,12 @@ const getters = {
     }
     console.log('Getting dishes from another restaurant')
     return []
+  },
+  isChoosingFood: (state) => () => {
+    return !!state.restaurant_on_view
+  },
+  hasSomethingForDinner: (state) => () => {
+    return !!state.dinner
   }
 }
 
