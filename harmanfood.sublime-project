@@ -23,17 +23,17 @@
 			"path": "webserver"
 		},
 		{
-			"file_include_patterns":
-			[
-				"harmanfood.*",
-				"README.md",
-				"requirements.txt",
-				".gitignore"
-			],
-			"folder_exclude_patterns":
-			[
-				"**/**"
-			],
+			// "file_include_patterns":
+			// [
+			// 	"harmanfood.*",
+			// 	"README.md",
+			// 	"requirements.txt",
+			// 	".gitignore"
+			// ],
+			// "folder_exclude_patterns":
+			// [
+			// 	"**/**"
+			// ],
 			"path": "."
 		}
 	],
