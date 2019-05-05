@@ -45,14 +45,7 @@ const mutations = {
 	}
 }
 
-const getters = {
-	isChoosingFood: (state) => () => {
-		return state.userstage === Stage.ComposingDinner
-	}
-}
-
 export const stage = {
 	state,
-	mutations,
-	getters
+	mutations
 }

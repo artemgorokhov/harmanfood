@@ -23,7 +23,11 @@ const mutations = {
     state.dinner = [...dishes]
   },
   [MUTATION_NAMES.RESTAURANT_ON_VIEW] (state, restaurant) {
-    state.restaurant_on_view = Object.assign({}, restaurant)
+    if (!restaurant) {
+      state.restaurant_on_view = null
+    } else {
+      state.restaurant_on_view = Object.assign({}, restaurant)
+    }
   },
   [MUTATION_NAMES.SET_MENU_FOR_RESTAURANT] (state, food) {
     state.menu = Object.assign({}, food)
@@ -136,7 +140,10 @@ const actions = {
     }
   },
   async [ACTION_NAMES.SET_VIEW_RESTAURANT] ({commit, state, rootState}, payload) {
-    let rest = rootState.restaurants[payload.provider][payload.title]
+    let rest = null
+    if (payload) {
+      rest = rootState.restaurants[payload.provider][payload.title]
+    }
     commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, rest)
   }
 }
@@ -153,6 +160,12 @@ const getters = {
     }
     console.log('Getting dishes from another restaurant')
     return []
+  },
+  isChoosingFood: (state) => () => {
+    return !!state.restaurant_on_view
+  },
+  hasSomethingForDinner: (state) => () => {
+    return !!state.dinner
   }
 }
 

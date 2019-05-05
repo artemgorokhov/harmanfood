@@ -1,10 +1,11 @@
 <template>
 	<div class="status-footer">
         <div class="content has-text-centered">
-            <a v-if="showBackButton"
+            <a v-if="$store.getters.isChoosingFood()"
                 class="button"
                 v-on:click="backToRestaurants">Другой ресторан</a>
-            <a class="button is-success"
+            <a v-if="$store.getters.hasSomethingForDinner()"
+                class="button is-success"
                 v-on:click="ready">Я готов</a>
         </div>
     </div>
@@ -25,11 +26,6 @@
             },
             ready: function() {
                 console.log("I am ready")
-            }
-        },
-        computed: {
-            showBackButton: function() {
-                return this.$store.getters.isChoosingFood()
             }
         }
     }

@@ -63,6 +63,10 @@ export default {
             menu: {}
         }
     },
+    beforeRouteLeave: function(to, from, next) {
+        this.$store.dispatch(ACTION_NAMES.SET_VIEW_RESTAURANT, null)
+        next()
+    },
     methods: {
         selectedDishes() {
             console.log("Getting selected dishes")

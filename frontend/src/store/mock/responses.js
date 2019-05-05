@@ -229,59 +229,78 @@ export const mockFood = {
 
 export const mockOrderResp = {
   data: {
-    patron: {
-      firstName: 'Дмитрий',
-      lastName: 'Логанов',
-      phone: '+79875573518'
+    order: {
+      patron: {
+        firstName: 'Дмитрий',
+        lastName: 'Логанов',
+        phone: '+79875573518'
+      },
+      participants: [
+        {
+          fullName: 'Артем Горохов',
+          stage: 'ComposingDinner',
+          restaurant: 'Woking',
+          provider: 'delivery',
+          food: [
+            {
+              title: 'Филадельфия 2',
+              price: 199
+            },
+            {
+              title: 'Лапша с курицей',
+              options: ['терияки'],
+              price: 229
+            }
+          ],
+          total: 498
+        },
+        {
+          fullName: 'Алексей Канаев',
+          phase: 'Выбирает ресторан',
+          total: 0,
+          stage: 'ChoosingPlace'
+        },
+        {
+          fullName: 'Дмитрий Логанов',
+          phase: 'Выбирает еду (Burger King)',
+          stage: 'ComposingDinner',
+          restaurant: 'Burger King',
+          provider: 'delivery',
+          food: [
+            {
+              title: 'Картошечка фри',
+              price: 100
+            },
+            {
+              title: 'Бургер с говядиной',
+              options: ['чили', 'без лука'],
+              price: 249
+            }
+          ],
+          total: 349
+        }
+      ],
+      ordertotal: 1050,
+      orderstage: 'menu',
+      orderrestaurant: 'Woking',
+      orderprovider: 'delivery'
     },
-    participants: [
-      {
-        fullName: 'Артем Горохов',
-        userstage: 'ComposingDinner',
-        restaurant: 'Woking',
-        provider: 'delivery',
-        food: [
-          {
-            title: 'Филадельфия 2',
-            price: 199
-          },
-          {
-            title: 'Лапша с курицей',
-            options: ['терияки'],
-            price: 229
-          }
-        ],
-        total: 498
-      },
-      {
-        fullName: 'Алексей Канаев',
-        phase: 'Выбирает ресторан',
-        total: 0,
-        userstage: 'ChoosingPlace'
-      },
-      {
-        fullName: 'Дмитрий Логанов',
-        phase: 'Выбирает еду (Burger King)',
-        userstage: 'ComposingDinner',
-        restaurant: 'Burger King',
-        provider: 'delivery',
-        food: [
-          {
-            title: 'Картошечка фри',
-            price: 100
-          },
-          {
-            title: 'Бургер с говядиной',
-            options: ['чили', 'без лука'],
-            price: 249
-          }
-        ],
-        total: 349
-      }
-    ],
-    ordertotal: 1050,
-    orderstage: 'menu',
-    orderrestaurant: 'Woking',
-    orderprovider: 'delivery'
+    user_order_info: {
+      fullName: 'Артем Горохов',
+      stage: 'ComposingDinner',
+      restaurant: 'Woking',
+      provider: 'delivery',
+      food: [
+        {
+          title: 'Филадельфия 2',
+          price: 199
+        },
+        {
+          title: 'Лапша с курицей',
+          options: ['терияки'],
+          price: 229
+        }
+      ]
+    }
   }
 }

@@ -70,8 +70,10 @@ const actions = {
       }
       console.log('Order data is: ' + Object.keys(infoResp.data))
       let participant = infoResp.data.user_order_info
-      let restaurant = rootState.restaurants[participant.provider][participant.restaurant]
-      commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, restaurant)
+      if (participant.stage === 'ComposingDinner') {
+        let restaurant = rootState.restaurants[participant.provider][participant.restaurant]
+        commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, restaurant)
+      }
       commit(MUTATION_NAMES.SET_USER_STAGE, participant.stage)
       commit(MUTATION_NAMES.ORDER, infoResp.data.order)
       commit(MUTATION_NAMES.SWITCH_RESTAURANT)
