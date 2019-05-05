@@ -21,5 +21,4 @@ __pycache__/
 webserver/venv
 venv
 design
-frontend
-
+frontend/node_modules
