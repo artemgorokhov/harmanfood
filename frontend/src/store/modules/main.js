@@ -117,8 +117,15 @@ const actions = {
   }
 }
 
+const getters = {
+  isLoaded: (state) => () => {
+    return state.loaded
+  }
+}
+
 export const mainModule = {
   state,
   mutations,
-  actions
+  actions,
+  getters
 }

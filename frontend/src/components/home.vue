@@ -14,15 +14,20 @@
 import InformationBlock from './information/info.vue'
 import MainContent from './maincontent.vue'
 import StatusBlock from './statusblock.vue'
-import {visibilityHandlers} from '@/assets/js/visibility'
+// import {visibilityHandlers} from '@/assets/js/visibility'
+// import store from '@/store'
+// import {SocketInstance} from '@/socket'
 
-console.log('Registering onHide')
-visibilityHandlers.onHide = function() {
-    console.error('HIDE!')
-}
-visibilityHandlers.onShow = function() {
-    console.error('SHOW!')
-}
+// visibilityHandlers.onHide = function() {
+//     console.log('Disconnecting socket')
+//     SocketInstance.disconnect()
+// }
+// visibilityHandlers.onShow = function() {
+//     if (store.getters.isLoaded()) {
+//         console.log('Connecting socket')
+//         SocketInstance.connect()
+//     }
+// }
 
 export default{
 	components: {
