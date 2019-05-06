@@ -14,6 +14,15 @@
 import InformationBlock from './information/info.vue'
 import MainContent from './maincontent.vue'
 import StatusBlock from './statusblock.vue'
+import {visibilityHandlers} from '@/assets/js/visibility'
+
+console.log('Registering onHide')
+visibilityHandlers.onHide = function() {
+    console.error('HIDE!')
+}
+visibilityHandlers.onShow = function() {
+    console.error('SHOW!')
+}
 
 export default{
 	components: {

@@ -49,6 +49,7 @@ const mutations = {
 const actions = {
   async [ACTION_NAMES.LOAD_MAIN_INFO] ({commit}) {
     try {
+      console.log('ACTION: LOAD_MAIN_INFO')
       console.log('Getting main data for ' + process.env.NODE_ENV)
       var initialResp = mockInitialResp
       if (process.env.NODE_ENV !== 'development') {
@@ -63,25 +64,27 @@ const actions = {
   },
   async [ACTION_NAMES.LOAD_ORDER_DATA] ({commit, rootState}) {
     try {
-      console.log('Loading data for info block')
+      console.log('ACTION: LOAD_ORDER_DATA')
       var infoResp = mockOrderResp
       if (process.env.NODE_ENV !== 'development') {
         infoResp = await axios.get('/api/order')
       }
       console.log('Order data is: ' + Object.keys(infoResp.data))
       let participant = infoResp.data.user_order_info
-      if (participant.stage === 'ComposingDinner') {
-        let restaurant = rootState.restaurants[participant.provider][participant.restaurant]
-        commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, restaurant)
+      if (participant.stage) {
+        if (participant.stage === 'ComposingDinner') {
+          let restaurant = rootState.restaurants[participant.provider][participant.restaurant]
+          commit(MUTATION_NAMES.RESTAURANT_ON_VIEW, restaurant)
+        }
+        commit(MUTATION_NAMES.SET_USER_STAGE, participant.stage)
+        commit(MUTATION_NAMES.ORDER, infoResp.data.order)
+        commit(MUTATION_NAMES.SWITCH_RESTAURANT)
+        let dinner = []
+        participant.food.forEach(function (foodItem) {
+          dinner.push(createDish(foodItem))
+        })
+        commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dinner)
       }
-      commit(MUTATION_NAMES.SET_USER_STAGE, participant.stage)
-      commit(MUTATION_NAMES.ORDER, infoResp.data.order)
-      commit(MUTATION_NAMES.SWITCH_RESTAURANT)
-      let dinner = []
-      participant.food.forEach(function(food_item) {
-        dinner.push(createDish(food_item))
-      })
-      commit(MUTATION_NAMES.SET_DISHES_FOR_DINNER, dinner)
     } catch (e) {
       console.error(e)
       console.error("Can't load data for info block")
@@ -89,6 +92,7 @@ const actions = {
   },
   async [ACTION_NAMES.LOAD_DATA] ({commit, dispatch}) {
     try {
+      console.log('ACTION: LOAD_DATA')
       await dispatch(ACTION_NAMES.LOAD_MAIN_INFO)
       await dispatch(ACTION_NAMES.UPDATE_RESTAURANT_LIST)
       await dispatch(ACTION_NAMES.LOAD_ORDER_DATA)
