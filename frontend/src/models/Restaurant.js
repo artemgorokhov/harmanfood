@@ -35,5 +35,9 @@ export class Restaurant {
 }
 
 export function createRestaurant (data) {
-  return new Restaurant(data)
+  if (data) {
+    return new Restaurant(data)
+  } else {
+    return null
+  }
 }

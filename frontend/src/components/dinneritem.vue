@@ -2,7 +2,7 @@
     <div class="is-unselectable dish-item has-text-dark">
         <article class="media">
             <div class="media-left dish-picture">
-                <figure class="image is-32x32">
+                <figure class="image is-48x48">
                     <i class="fas"
                         :class="categoryClass(dish.category)"></i>
                 </figure>

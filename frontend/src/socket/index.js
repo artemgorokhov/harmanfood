@@ -3,7 +3,8 @@ import SocketIO from 'socket.io-client'
 import VueSocketIO from 'vue-socket.io'
 
 export const SocketInstance = SocketIO('/ws', {
-	transports: ['websocket']
+  transports: ['websocket']
+  // autoConnect: false
 })
 
 export default new VueSocketIO({
