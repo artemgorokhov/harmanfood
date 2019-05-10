@@ -39,7 +39,10 @@ export default {
             this.decisionButtonDisabled = true;
             var _this = this
             if (process.env.NODE_ENV === 'development') {
-                _this.$router.replace( {path: '/home/restaurants'})
+                if (iWannaEat)
+                    _this.$router.replace( {path: '/home/restaurants'})
+                else
+                    _this.$router.replace( {path: '/summary'})
                 return
             }
             axios.post('/api/participate', {the_answer: iWannaEat})
@@ -47,7 +50,7 @@ export default {
                     console.log('Participate response: ' + Object.keys(response.data))
                     console.log('RESULT: ' + response.data.participate)
                     if (!response.data.participate) {
-                        _this.$router.replace( {path: '/info'} )
+                        _this.$router.replace( {path: '/summary'} )
                     } else {
                         _this.$router.replace( {path: '/home/restaurants'} )
                     }

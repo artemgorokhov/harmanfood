@@ -7,6 +7,7 @@ import TheQuestion from '@/components/thequestion.vue'
 import Restaurants from '@/components/restaurants.vue'
 import Food from '@/components/food.vue'
 import Loading from '@/components/loading.vue'
+import History from '@/components/history/history.vue'
 import ErrorPage from '@/components/error.vue'
 
 var checkDataLoaded = function (to, from, next) {
@@ -31,7 +32,7 @@ const routes = [
   },
   { path: '/loading', component: Loading },
   { path: '/error', component: ErrorPage },
-  { path: '/info', component: ErrorPage }
+  { path: '/summary', component: History }
 ]
 
 Vue.use(Router)

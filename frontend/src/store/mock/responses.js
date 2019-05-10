@@ -287,7 +287,7 @@ export const mockOrderResp = {
     },
     user_order_info: {
       fullName: 'Артем Горохов',
-      stage: 'ComposingDinner',
+      stage: 'NotStarted',
       restaurant: 'Woking',
       provider: 'delivery',
       food: [
