@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container history-view">
         <order-summary-item/>
     </div>
 </template>
