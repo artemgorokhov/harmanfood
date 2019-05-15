@@ -3,13 +3,25 @@
     	<div class="order-name">
     		{{ ordername }}
     	</div>
+		<div class="columns">
+			<div class="column is-half">
+				<patron/>
+			</div>
+			<div class="column">
+				right
+			</div>
+		</div>
     </div>
 </template>
 
 <script>
 	import { getNow } from '@/assets/js/date_representation'
+	import Patron from '@/components/information/patron.vue'
     export default {
-        name: 'order-summary-item',
+		name: 'order-summary-item',
+		components: {
+			Patron
+		},
         data() {
             return {}
         },
@@ -27,6 +39,8 @@
 	max-width: 50em
 	margin-left: auto
 	margin-right: auto
-	margin-top: 5em
 
+.order-name
+	font-size: 2em
+	text-align: center
 </style>

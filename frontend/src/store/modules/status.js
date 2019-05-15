@@ -7,7 +7,7 @@ const Stage = {
   },
   'Declined': {
     description: 'Отказывается есть',
-    page: '/info'
+    page: '/summary'
   },
   'ChoosingPlace': {
     description: 'Выбирает ресторан',
@@ -19,7 +19,7 @@ const Stage = {
   },
   'Delivery': {
     description: 'Определился',
-    page: '/info'
+    page: '/summary'
   },
   'Error': {
     description: 'Зашел в тупик',
@@ -45,7 +45,14 @@ const mutations = {
   }
 }
 
+const getters = {
+  isImmutable: (state) => () => {
+    return [Stage.Error, Stage.Declined, Stage.Delivery].includes(state.userstage)
+  }
+}
+
 export const stage = {
   state,
-  mutations
+  mutations,
+  getters
 }

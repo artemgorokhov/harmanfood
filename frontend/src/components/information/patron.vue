@@ -3,8 +3,9 @@
         <p class="is-size-7 has-text-grey">Кормилец</p>
         <p class="is-size-3" id="patronName">{{ patron.fullName }}</p>
         <p class="is-size-7">{{ patron.phone }}</p>
-        <a class="button is-text is-small"
-            @click.prevent="iAmPatron">Хочу заказать</a>
+        <a v-if="$store.getters.isImmutable()"
+            class="button is-text is-small"
+            @click.prevent="iWannaBePatron">Хочу заказать</a>
     </div>
 </template>
 
@@ -18,7 +19,7 @@ export default {
         }
     },
     methods: {
-        iAmPatron: function () {
+        iWannaBePatron: function () {
             this.$store.dispatch(ACTION_NAMES.I_AM_PATRON)
         }
     }

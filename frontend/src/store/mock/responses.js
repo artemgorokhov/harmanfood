@@ -304,3 +304,16 @@ export const mockOrderResp = {
     }
   }
 }
+
+export const mockAnswerResp = {
+  yes: {
+    data: {
+      userstage: 'ChoosingPlace'
+    }
+  },
+  no: {
+    data: {
+      userstage: 'Declined'
+    }
+  }
+}

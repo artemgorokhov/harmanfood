@@ -25,7 +25,7 @@
 <script>
 import Vue from 'vue'
 import axios from 'axios'
-import { MUTATION_NAMES } from '@/store/consts'
+import { MUTATION_NAMES, ACTION_NAMES } from '@/store/consts'
 
 export default {
     name: 'the-question',
@@ -38,29 +38,18 @@ export default {
         sendAnswer: function(iWannaEat) {
             this.decisionButtonDisabled = true;
             var _this = this
-            if (process.env.NODE_ENV === 'development') {
-                if (iWannaEat)
-                    _this.$router.replace( {path: '/home/restaurants'})
-                else
-                    _this.$router.replace( {path: '/summary'})
-                return
-            }
-            axios.post('/api/participate', {the_answer: iWannaEat})
-                .then(function(response) {
-                    console.log('Participate response: ' + Object.keys(response.data))
-                    console.log('RESULT: ' + response.data.participate)
-                    if (!response.data.participate) {
-                        _this.$router.replace( {path: '/summary'} )
-                    } else {
-                        _this.$router.replace( {path: '/home/restaurants'} )
-                    }
-                    _this.decisionButtonDisabled = false
-                })
-                .catch(function() {
-                    _this.decisionButtonDisabled = false
-                    console.error('Something went wrong with your participation')
-                    _this.$router.replace( {path: '/error'} )
-                })
+            this.$store.dispatch(ACTION_NAMES.SEND_THE_ANSWER, {the_answer: iWannaEat})
+            .then(() => {
+                let thepage = _this.$store.state.stage.userstage.page
+                console.log('The page: ' + thepage)
+                _this.$router.replace(thepage)
+                _this.decisionButtonDisabled = false
+            })
+            .catch(function(error) {
+                _this.decisionButtonDisabled = false
+                console.error('Something went wrong with your participation: ' + error)
+                _this.$router.replace( {path: '/error'} )
+            })
         }
     },
     computed: {

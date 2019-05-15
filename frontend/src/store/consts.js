@@ -16,6 +16,7 @@ export const ACTION_NAMES = {
   LOAD_MAIN_INFO: 'get user information',
   LOAD_ORDER_DATA: 'get data for info block',
   LOAD_DATA: 'load main data',
+  SEND_THE_ANSWER: 'send the answer',
   I_AM_PATRON: 'i am patron',
   UPDATE_MENU: 'update restaurant menu',
   UPDATE_RESTAURANT_LIST: 'update restaurants list',

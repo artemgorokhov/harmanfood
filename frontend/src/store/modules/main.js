@@ -2,7 +2,7 @@ import { MUTATION_NAMES, ACTION_NAMES } from '@/store/consts.js'
 import axios from 'axios'
 import { createUser } from '@/models/User'
 import { createDish } from '@/models/Dish'
-import { mockInitialResp, mockOrderResp } from '@/store/mock/responses'
+import { mockInitialResp, mockOrderResp, mockAnswerResp } from '@/store/mock/responses'
 
 const state = function () {
   return {
@@ -112,6 +112,20 @@ const actions = {
       commit(MUTATION_NAMES.PATRON, newpatron)
     } catch (error) {
       console.error('Patron request failed: ' + error)
+      throw new Error(error)
+    }
+  },
+  async [ACTION_NAMES.SEND_THE_ANSWER] ({commit, state}, payload) {
+    try {
+      console.log('My answer is: ' + payload.the_answer)
+      let theResp = payload.the_answer ? mockAnswerResp.yes : mockAnswerResp.no
+      if (process.env.NODE_ENV !== 'development') {
+        theResp = await axios.post('/api/participate', payload)
+      }
+      console.log('Participate response: ' + theResp.data.userstage)
+      commit(MUTATION_NAMES.SET_USER_STAGE, theResp.data.userstage)
+    } catch (error) {
+      console.error('The answer request failed: ' + error)
       throw new Error(error)
     }
   }
