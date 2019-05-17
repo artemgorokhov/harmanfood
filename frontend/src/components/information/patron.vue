@@ -3,7 +3,7 @@
         <p class="is-size-7 has-text-grey">Кормилец</p>
         <p class="is-size-3" id="patronName">{{ patron.fullName }}</p>
         <p class="is-size-7">{{ patron.phone }}</p>
-        <a v-if="$store.getters.isImmutable()"
+        <a v-if="!$store.getters.isImmutable()"
             class="button is-text is-small"
             @click.prevent="iWannaBePatron">Хочу заказать</a>
     </div>
