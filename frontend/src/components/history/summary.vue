@@ -5,34 +5,35 @@
     	</div>
 		<div class="columns">
 			<div class="column is-half">
-				<div class="patronSummary">
-					<p class="is-size-7 has-text-grey">Кормилец</p>
-					<p class="is-size-3 has-text-right">{{ patron.fullName }}</p>
-					<p class="is-size-7 has-text-right">{{ patron.phone }}</p>
+				<div id="patronSummary" class="has-text-right">
+					<p class="is-size-3">{{ patron.fullName }}</p>
+					<p class="is-size-7">{{ patron.phone }}</p>
 				</div>
-				<div id="orderPlace">
-					<p class="is-size-7">Ресторан</p>
-					<p class="has-text-right">{{ order.restaurantTitle }}</p>
-					<p class="is-size-7 has-text-right">{{ order.provider }}</p>
+				<div id="orderPlace" class="has-text-right">
+					<p class="is-size-5">{{ order.restaurantTitle }} ({{ order.provider }})</p>
 				</div>
 				<div id="dishesSummary">
 
 				</div>
 			</div>
 			<div class="column">
-				right
+				<participant-item v-for="p in participants" :key="p.id" v-bind="p"/>
 			</div>
 		</div>
+        <div id="orderTotal" class="is-size-3 has-text-info has-text-centered">
+            <div class="has-text-dark">Итого: 1234 &#x20bd; </div><div id="fullPrice">2345  &#x20bd;</div>
+        </div>
     </div>
 </template>
 
 <script>
 	import { getNow } from '@/assets/js/date_representation'
-	import Patron from '@/components/information/patron.vue'
+	import ParticipantItem from '@/components/information/participant.vue'
+
     export default {
 		name: 'order-summary-item',
 		components: {
-			Patron
+			ParticipantItem
 		},
         data() {
             return {}
@@ -49,19 +50,31 @@
 					restaurantTitle: "Sova",
 					provider: "delivery"
 				}
-			}
+			},
+            participants() {
+                return this.$store.state.main.order.participants
+            }
         }
     }
 </script>
 
 <style lang="sass">
+.order-name
+    font-size: 3em
+    font-family: 'Roboto', sans-serif
+    text-align: center
+
 .orderSummaryItem
 	background-color: rgba(230, 230, 235, 1)
 	max-width: 50em
 	margin-left: auto
 	margin-right: auto
 
-.order-name
-	font-size: 2em
-	text-align: center
+#patronSummary
+    border-bottom: 1px solid grey
+
+#fullPrice
+    text-decoration: line-through
+    font-size: 0.5em
+    color: grey
 </style>
