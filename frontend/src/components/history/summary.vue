@@ -9,12 +9,7 @@
 					<p class="is-size-3">{{ patron.fullName }}</p>
 					<p class="is-size-7">{{ patron.phone }}</p>
 				</div>
-				<div id="orderPlace" class="has-text-right">
-					<p class="is-size-5">{{ order.restaurantTitle }} ({{ order.provider }})</p>
-				</div>
-				<div id="dishesSummary">
-
-				</div>
+				<dishes-summary v-bind="order"/>
 			</div>
 			<div class="column">
 				<participant-item v-for="p in participants" :key="p.id" v-bind="p"/>
@@ -28,12 +23,14 @@
 
 <script>
 	import { getNow } from '@/assets/js/date_representation'
-	import ParticipantItem from '@/components/information/participant.vue'
+	import ParticipantItem from '@/components/information/participant'
+	import DishesSummary from './dishessummary'
 
     export default {
 		name: 'order-summary-item',
 		components: {
-			ParticipantItem
+			ParticipantItem,
+			DishesSummary
 		},
         data() {
             return {}
@@ -47,8 +44,9 @@
 			},
 			order() {
 			    return {
-					restaurantTitle: "Sova",
-					provider: "delivery"
+					orderrestaurant: "Woking",
+					orderprovider: "delivery",
+					participants: this.participants
 				}
 			},
             participants() {
@@ -60,6 +58,7 @@
 
 <style lang="sass">
 .order-name
+    padding-bottom: 0.7em
     font-size: 3em
     font-family: 'Roboto', sans-serif
     text-align: center
