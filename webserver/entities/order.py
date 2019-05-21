@@ -145,7 +145,11 @@ class Order(DBItem):
                 'phone': self.patron['phone']
             }
             d['iampatron'] = True if myusername == self.patron['username'] else False
+            d['restaurant'] = self.patron['restaurant']
+            d['provider'] = self.patron['provider']
         else:
             d['patron'] = None
             d['iampatron'] = False
+            d['restaurant'] = ''
+            d['provider'] = ''
         return d

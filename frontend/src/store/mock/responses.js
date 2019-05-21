@@ -280,10 +280,10 @@ export const mockOrderResp = {
           total: 349
         }
       ],
-      ordertotal: 1050,
+      total: 1050,
       orderstage: 'menu',
-      orderrestaurant: 'Woking',
-      orderprovider: 'delivery'
+      restaurant: 'Woking',
+      provider: 'delivery'
     },
     user_order_info: {
       fullName: 'Артем Горохов',
@@ -315,5 +315,11 @@ export const mockAnswerResp = {
     data: {
       userstage: 'Declined'
     }
+  }
+}
+
+export const mockReadyResp = {
+  data: {
+    userstage: 'Delivery'
   }
 }

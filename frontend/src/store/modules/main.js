@@ -2,7 +2,7 @@ import { MUTATION_NAMES, ACTION_NAMES } from '@/store/consts.js'
 import axios from 'axios'
 import { createUser } from '@/models/User'
 import { createDish } from '@/models/Dish'
-import { mockInitialResp, mockOrderResp, mockAnswerResp } from '@/store/mock/responses'
+import { mockInitialResp, mockOrderResp, mockAnswerResp, mockReadyResp } from '@/store/mock/responses'
 
 const state = function () {
   return {
@@ -11,7 +11,9 @@ const state = function () {
       patron: createUser(),
       participants: [],
       phase: null,
-      total: 0
+      total: 0,
+      restaurant: '',
+      provider: ''
     },
     loaded: false
   }
@@ -31,6 +33,8 @@ const mutations = {
     state.order.participants = [...payload.participants]
     state.order.total = payload.total
     state.order.phase = payload.phase
+    state.order.restaurant = payload.restaurant
+    state.order.provider = payload.provider
   },
   [MUTATION_NAMES.PATRON] (state, payload) {
     state.order.patron = createUser(payload)
@@ -126,6 +130,20 @@ const actions = {
       commit(MUTATION_NAMES.SET_USER_STAGE, theResp.data.userstage)
     } catch (error) {
       console.error('The answer request failed: ' + error)
+      throw new Error(error)
+    }
+  },
+  async [ACTION_NAMES.READY_TO_EAT] ({commit}) {
+    try {
+      console.log('I am ready to eat')
+      let readyResp = mockReadyResp
+      if (process.env.NODE_ENV !== 'development') {
+        readyResp = await axios.post('/api/ready')
+      }
+      console.log('Ready response: ' + readyResp.data.status)
+      commit(MUTATION_NAMES.SET_USER_STAGE, readyResp.data.userstage)
+    } catch (error) {
+      console.error('The ready request failed: ' + error)
       throw new Error(error)
     }
   }

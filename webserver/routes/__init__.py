@@ -5,6 +5,7 @@ from .api_order import ApiOrder
 from .api_initial import ApiInitialData
 from .api_login import ApiLogin
 from .api_participate import ApiParticipate
+from .api_ready import ApiReady
 from flask import Blueprint
 from flask_restful import Api
 
@@ -18,3 +19,4 @@ api.add_resource(ApiLogin, "/api/login")
 api.add_resource(ApiParticipate, "/api/participate")
 api.add_resource(ApiFood, "/api/menu")
 api.add_resource(ApiOrder, "/api/order")
+api.add_resource(ApiReady, "/api/ready")

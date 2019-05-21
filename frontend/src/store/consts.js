@@ -24,5 +24,6 @@ export const ACTION_NAMES = {
   ADD_DISH_TO_MY_DINNER: 'add dish to my dinner',
   REMOVE_DISH_FROM_MY_DINNER: 'remove dish from my dinner',
   SWITCH_RESTAURANT: 'change restaurant of my dinner',
-  SET_VIEW_RESTAURANT: 'set restaurant on view'
+  SET_VIEW_RESTAURANT: 'set restaurant on view',
+  READY_TO_EAT: 'I am ready to eat'
 }

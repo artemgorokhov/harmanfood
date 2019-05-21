@@ -2,7 +2,7 @@
   <div>
     <div v-if="isValidPlace">
       <div id="order-place" class="has-text-right">
-        <p class="is-size-5">{{ orderrestaurant }} ({{ orderprovider }})</p>
+        <p class="is-size-5">{{ restaurant }} ({{ provider }})</p>
       </div>
       <ul class="food-list-summary has-text-right">
         <li v-for="(amount, title) in dishList" :key="title">
@@ -23,8 +23,8 @@ export default {
   name: 'dishes-summary',
   props: {
     participants: Array,
-    orderrestaurant: String,
-    orderprovider: String
+    restaurant: String,
+    provider: String
   },
   computed: {
     dishList: function() {
@@ -34,8 +34,8 @@ export default {
       let dishes = {}
       this.participants.forEach(participant => {
         console.log('each participant')
-        if (participant.restaurant === this.orderrestaurant &&
-            participant.provider === this.orderprovider) {
+        if (participant.restaurant === this.restaurant &&
+            participant.provider === this.provider) {
               console.log('inside his if')
               participant.food.forEach(dish => {
                 console.log('each dish')
@@ -51,7 +51,7 @@ export default {
       return dishes
     },
     isValidPlace: function() {
-      return this.orderrestaurant && this.orderprovider
+      return this.restaurant && this.provider
     }
   }
 }

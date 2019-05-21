@@ -16,7 +16,7 @@
 			</div>
 		</div>
         <div id="orderTotal" class="is-size-3 has-text-info has-text-centered">
-            <div class="has-text-dark">Итого: 1234 &#x20bd; </div><div id="fullPrice">2345  &#x20bd;</div>
+            <div class="has-text-dark">Итого: {{ order.total }} &#x20bd; </div><div id="fullPrice">2345  &#x20bd;</div>
         </div>
     </div>
 </template>
@@ -43,11 +43,7 @@
 				return this.$store.state.main.order.patron
 			},
 			order() {
-			    return {
-					orderrestaurant: "Woking",
-					orderprovider: "delivery",
-					participants: this.participants
-				}
+			    return this.$store.state.main.order
 			},
             participants() {
                 return this.$store.state.main.order.participants
